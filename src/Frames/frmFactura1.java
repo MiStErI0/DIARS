@@ -350,7 +350,7 @@ public class frmFactura1 extends javax.swing.JFrame {
                     System.out.println("error: "+e);
 
                 }
-                fact n=new fact(fa.getCorrelativoAcc(),getEmpresa(),, fechaNac, fechaNac);
+//                fact n=new fact(fa.getCorrelativoAcc(),getEmpresa(),, fechaNac, fechaNac);
                 
                 
             }

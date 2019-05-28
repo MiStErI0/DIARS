@@ -70,60 +70,60 @@ public class daofacturas {
     /*Implementar Archivos*/
     public void listar(JTable t,DefaultTableModel dtm){
       dtm.setRowCount(0);
-       for(fact obj:fact){
-          Object vec[]=new Object[5];
-          vec[0]    =   obj.getCodigo();
-          vec[1]    =   obj.getCodCliente();
-          vec[2]    =   obj.getCodDetalle();
-          vec[3]    =   obj.getFechaCompra();
-          vec[4]    =   obj.getEstado();
-          dtm.addRow(vec);
-       }
+//       for(fact obj:fact){
+//          Object vec[]=new Object[5];
+//          vec[0]    =   obj.getCodigo();
+//          vec[1]    =   obj.getCodCliente();
+//          vec[2]    =   obj.getCodDetalle();
+//          vec[3]    =   obj.getFechaCompra();
+//          vec[4]    =   obj.getEstado();
+//          dtm.addRow(vec);
+//       }
        t.setModel(dtm);
     }
 
      /*Implementar Archivos*/
     public void grabar(){
-      try{  
-         PrintWriter pw;
-         String linea;
-         pw = new PrintWriter(new FileWriter(Archivo));         
-         for(fact obj:fact){
-             linea = (obj.getCodigo() + ";" +
-                      obj.getCodCliente()+ ";" +
-                      obj.getCodDetalle()+ ";" +
-                      obj.getFechaCompra()+ ";" +
-                      obj.getEstado()
-                     );
-             pw.println(linea); 
-         }  
-         pw.close();
-      }
-      catch(Exception e){
-         System.out.println(e.getMessage());
-      }      
+//      try{  
+//         PrintWriter pw;
+//         String linea;
+//         pw = new PrintWriter(new FileWriter(Archivo));         
+//         for(fact obj:fact){
+//             linea = (obj.getCodigo() + ";" +
+//                      obj.getCodCliente()+ ";" +
+//                      obj.getCodDetalle()+ ";" +
+//                      obj.getFechaCompra()+ ";" +
+//                      obj.getEstado()
+//                     );
+//             pw.println(linea); 
+//         }  
+//         pw.close();
+//      }
+//      catch(Exception e){
+//         System.out.println(e.getMessage());
+//      }      
     }
      public void cargar(){
-    try{
-       BufferedReader br;
-       String linea = null;
-       String[] array = null;
-       br = new BufferedReader(new FileReader(Archivo));
-       
-       while((linea = br.readLine())!= null){
-         array = linea.split(";");
-         fact e = new fact(    Integer.parseInt(array[0].trim()),
-                               Integer.parseInt(array[1].trim()),
-                               Integer.parseInt(array[2].trim()), 
-                               array[3].trim(),
-                               array[4].trim());
-         adicionar(e);
-       }
-       br.close();
-    }
-    catch(Exception e){
-      System.out.println(e.getMessage());
-    }
+//    try{
+//       BufferedReader br;
+//       String linea = null;
+//       String[] array = null;
+//       br = new BufferedReader(new FileReader(Archivo));
+//       
+//       while((linea = br.readLine())!= null){
+//         array = linea.split(";");
+//         fact e = new fact(    Integer.parseInt(array[0].trim()),
+//                               Integer.parseInt(array[1].trim()),
+//                               Integer.parseInt(array[2].trim()), 
+//                               array[3].trim(),
+//                               array[4].trim());
+//         adicionar(e);
+//       }
+//       br.close();
+//    }
+//    catch(Exception e){
+//      System.out.println(e.getMessage());
+//    }
     }  
     
 }
