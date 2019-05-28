@@ -1,0 +1,3 @@
+johan;johan;123456789;25f9e794323b453885f5181f1b624d0b;Administrador
+pepelucho;lucho;123456;e10adc3949ba59abbe56e057f20f883e;Estandar
+johan SAlas;minero;123123;4297f44b13955235245b2497399d7a93;Administrador
