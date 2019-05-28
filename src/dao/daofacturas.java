@@ -64,7 +64,9 @@ public class daofacturas {
        if(tamaño() == 0)
            return 1;
        else{
-          return Integer.parseInt((obtener(tamaño() - 1).getCodigo()))+ 1;
+           int b;
+           b=(obtener(tamaño() - 1).getCodigo())+ 1;
+          return b;
        }
     }
     /*Implementar Archivos*/
