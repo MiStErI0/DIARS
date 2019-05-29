@@ -5,6 +5,11 @@
  */
 package Frames;
 
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +21,13 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmMenuPrincipal
      */
+    ImageIcon menu = new ImageIcon("src\\machis\\Menuf.jpg");
     public frmMenuPrincipal() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
+        Icon mn =new ImageIcon(menu.getImage().getScaledInstance(Menufondo.getWidth(), Menufondo.getHeight(),Image.SCALE_DEFAULT));
+        Menufondo.setIcon(mn);
+        Menufondo.repaint();
     }
 
     /**
@@ -30,7 +39,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        Menufondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         Administrador = new javax.swing.JMenu();
         registrar = new javax.swing.JMenuItem();
@@ -41,12 +50,18 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         mnuCerrar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(Menufondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 531, 400));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 153, 204));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuBar1.setForeground(new java.awt.Color(0, 153, 204));
+        jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jMenuBar1.setOpaque(false);
 
         Administrador.setText("Administrador");
+        Administrador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Administrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdministradorActionPerformed(evt);
@@ -67,6 +82,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(Administrador);
 
         mnuNF.setText("Empleado");
+        mnuNF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mnuNF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuNFActionPerformed(evt);
@@ -84,6 +100,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuNF);
 
         ayuda.setText("ayuda");
+        ayuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ayuda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ayudaMouseClicked(evt);
@@ -92,6 +109,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(ayuda);
 
         mnuCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar.jpg"))); // NOI18N
+        mnuCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mnuCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnuCerrarMouseClicked(evt);
@@ -105,19 +123,6 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(mnuCerrar);
 
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -198,9 +203,9 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JMenu Administrador;
+    private javax.swing.JLabel Menufondo;
     private javax.swing.JMenu ayuda;
     private javax.swing.JMenuItem facturas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu mnuCerrar;
     public javax.swing.JMenu mnuNF;

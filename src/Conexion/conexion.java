@@ -20,31 +20,18 @@ public class conexion {
 
     public conexion() {
     }
+    private final String url ="jdbc:mysql://localhost:3306/machis?useTimezone=true&serverTimezone=UTC&useSSL=false";
+    private final String user="root";
+    private final String password="database";
     
-   
-   private static final String url ="jdbc:mysql://localhost:3306/machis?useTimezone=true&serverTimezone=UTC&useSSL=false";
-    private static final String user="root";
-    private static final String password="database";
-    
-    public static synchronized Connection getConexion(){
-        Connection cn=null;
+    public Connection getMysql(){
+        Connection c = null;     
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            cn=DriverManager.getConnection(url,user,password);
-            System.out.println(" me conecte");
-        } catch (Exception e) {
-            System.out.println(" no me conecte "+ e.getMessage());
-        }
-        
-        return cn;
-    }
-    
-    public static synchronized void CierraConexion(Connection cn){
-        try {
-            cn.close();
-        } catch (Exception e) {
-            System.out.println(" error al cerrar "+ e.getMessage());
-        }
-    }
-    
+            DriverManager.registerDriver(new Driver());
+            c = DriverManager.getConnection(url, user, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+        return c;
+    }   
 }
