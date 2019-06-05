@@ -6,6 +6,8 @@
 package dao;
 import java.sql.*;
 import Conexion.Conexion;
+import clases.Trabajador;
+import java.util.ArrayList;
 
 /**
  *
@@ -43,10 +45,41 @@ public class daoTrabajador {
             cs.setString(8, traFechaNac);
             cs.setString(9, traEstado);
             cs.setString(10, dirId);
+            
+            int numFAfectadas = cs.executeUpdate();
+            
+            if(numFAfectadas>0){
+                rptaRegistroTrabajador = "Registro exitoso.";
+            }      
         } catch (Exception e) {
         }
         return rptaRegistroTrabajador;
     }
     
-    
+    public ArrayList<Trabajador> listTrabajador(){
+        ArrayList listaTrabajador = new ArrayList();
+        Trabajador trabajador;
+        try {
+            Connection acceDB = conexion.getMysql();
+            PreparedStatement ps = acceDB.prepareStatement("select * from trabajador");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                trabajador = new Trabajador();
+                trabajador.setTraId(rs.getString(1));
+                trabajador.setTraNombre(rs.getString(2));
+                trabajador.setTraApellidop(rs.getString(3));
+                trabajador.setTraApellidom(rs.getString(4));
+                trabajador.setTraCorreo(rs.getString(5));
+                trabajador.setTraTelefono(rs.getString(6));
+                trabajador.setTraDni(rs.getString(7));
+                trabajador.setTraFechaNac(rs.getString(8));
+                trabajador.setTraEstado(rs.getString(9));
+                trabajador.setDirId(rs.getString(10));
+                listaTrabajador.add(trabajador);
+            }
+        } catch (Exception e) {
+        }
+        
+        return listaTrabajador;
+    }
 }

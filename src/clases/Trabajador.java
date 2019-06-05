@@ -10,15 +10,15 @@ package clases;
  * @author Luigi
  */
 public class Trabajador {
-    String traId;
-    String traNombre;
-    String traApellidop;
-    String traApellidom;
-    String traCorreo;
-    String traTelefono;
-    String traDni;
+    String traId;//
+    String traNombre;//
+    String traApellidop;//
+    String traApellidom;//
+    String traCorreo;//
+    String traTelefono;//
+    String traDni;//
     String traFechaNac;
-    String traEstado;
+    String traEstado;//
     String dirId;
 
     public String getTraId() {
