@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  *
  * @author User
  */
-public class conexion {
+public class Conexion {
 
-    public conexion() {
+    public Conexion() {
     }
     private final String url ="jdbc:mysql://localhost:3306/machis?useTimezone=true&serverTimezone=UTC&useSSL=false";
     private final String user="root";
@@ -30,7 +30,7 @@ public class conexion {
             DriverManager.registerDriver(new Driver());
             c = DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
-            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }      
         return c;
     }   
