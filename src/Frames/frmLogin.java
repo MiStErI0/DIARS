@@ -1,6 +1,8 @@
 package Frames;
-import clases.login;
+
+import clases.usuario;
 import dao.daoLogin;
+import dao.daousuarios;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -11,36 +13,38 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class frmLogin extends javax.swing.JFrame {
-    daoLogin ven=new daoLogin("login.txt");
+
+    daousuarios ven = new daousuarios();
     ImageIcon fondo = new ImageIcon("src\\machis\\fondo.jpg");
     ImageIcon logo = new ImageIcon("src\\machis\\Logo.png");
     ImageIcon ingresar = new ImageIcon("src\\machis\\ingresar.png");
-    ImageIcon salir = new ImageIcon("src\\machis\\salir.png");  
-    ImageIcon usua = new ImageIcon("src\\machis\\User.png");  
+    ImageIcon salir = new ImageIcon("src\\machis\\salir.png");
+    ImageIcon usua = new ImageIcon("src\\machis\\User.png");
+
     public frmLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
         iconos();
-    
+
     }
-    
-    private void iconos(){
-    Icon fn = new ImageIcon(fondo.getImage().getScaledInstance(fondolg.getWidth(), fondolg.getHeight(), Image.SCALE_DEFAULT));
-    Icon lg = new ImageIcon(logo.getImage().getScaledInstance(imglogo.getWidth(), imglogo.getHeight(), Image.SCALE_DEFAULT));
-    Icon in = new ImageIcon(ingresar.getImage().getScaledInstance(btnIngresar.getWidth(), btnIngresar.getHeight(), Image.SCALE_DEFAULT));
-    Icon sa = new ImageIcon(salir.getImage().getScaledInstance(btnSalir.getWidth(), btnSalir.getHeight(), Image.SCALE_DEFAULT));
-    Icon us = new ImageIcon(usua.getImage().getScaledInstance(usuario.getWidth(), usuario.getHeight(), Image.SCALE_DEFAULT));
-    imglogo.setIcon(lg);
-    fondolg.setIcon(fn);
-    btnIngresar.setIcon(in);
-    btnSalir.setIcon(sa);
-    usuario.setIcon(us);
-    imglogo.repaint();
-    fondolg.repaint();
-    btnIngresar.repaint();
-    btnSalir.repaint();
-    usuario.repaint();
-    
+
+    private void iconos() {
+        Icon fn = new ImageIcon(fondo.getImage().getScaledInstance(fondolg.getWidth(), fondolg.getHeight(), Image.SCALE_DEFAULT));
+        Icon lg = new ImageIcon(logo.getImage().getScaledInstance(imglogo.getWidth(), imglogo.getHeight(), Image.SCALE_DEFAULT));
+        Icon in = new ImageIcon(ingresar.getImage().getScaledInstance(btnIngresar.getWidth(), btnIngresar.getHeight(), Image.SCALE_DEFAULT));
+        Icon sa = new ImageIcon(salir.getImage().getScaledInstance(btnSalir.getWidth(), btnSalir.getHeight(), Image.SCALE_DEFAULT));
+        Icon us = new ImageIcon(usua.getImage().getScaledInstance(usuario.getWidth(), usuario.getHeight(), Image.SCALE_DEFAULT));
+        imglogo.setIcon(lg);
+        fondolg.setIcon(fn);
+        btnIngresar.setIcon(in);
+        btnSalir.setIcon(sa);
+        usuario.setIcon(us);
+        imglogo.repaint();
+        fondolg.repaint();
+        btnIngresar.repaint();
+        btnSalir.repaint();
+        usuario.repaint();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -119,43 +123,38 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
-        if(getUser().length()==0 || getPassword().length()==0){
+        if (getUser().length() == 0 || getPassword().length() == 0) {
             JOptionPane.showMessageDialog(this, "No deben haber campos vacios");
-          
-        }
-        String pass=DigestUtils.md5Hex(getPassword());
-        login v=ven.buscar(getUser());
-        if(v!=null){
-            if(pass.equalsIgnoreCase(v.getEncriptada())){
-                if("Administrador".equalsIgnoreCase(v.getTipo())){
-                    System.out.print(v.getTipo());
-                JOptionPane.showMessageDialog(this,"Bienvenido "+v.getUsuario(),v.getTipo(),1);
-                frmMenuPrincipal r;
-                r = new frmMenuPrincipal();
-                r.setVisible(true);
-                dispose();     
-                }else{
-                JOptionPane.showMessageDialog(this,"Bienvenido "+v.getUsuario(),v.getTipo(),1);
-                frmMenuPrincipal a= new frmMenuPrincipal();
-                a.Administrador.setEnabled(false);
-                a.setVisible(true);
-//                }}
+
+        } else {
+
+            String pass = getPassword();
+            usuario v = ven.buscar(getUser());
+            if (v != null) {
+                if (pass.equals(v.getContraseña())) {
+                    JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
+                    frmMenuPrincipal r;
+                    r = new frmMenuPrincipal();
+                    r.setVisible(true);
+                    dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "contraseña invalida");
+
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario no existe");
             }
-            else{
-                        JOptionPane.showMessageDialog(this, "contraseña invalida");
-                      
-        }}else{
-            JOptionPane.showMessageDialog(this, "Usuario no existe");
+
         }
-        
-        
+
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-     
+
         dispose();
-     
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
@@ -193,10 +192,12 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
     }
-    public String getUser(){
+
+    public String getUser() {
         return txtuser.getText();
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return password.getText();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

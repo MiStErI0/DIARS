@@ -5,8 +5,6 @@ public class login {
     private String usuario;
     private String Contraseña;
     private String encriptada;
-        //nepe
-    //me llega al webo
     private String tipo;
 
     public login( String nombres, String usuario, String Contraseña,String Encriptada, String tipo) {

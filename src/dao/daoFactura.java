@@ -13,7 +13,7 @@ import clases.factura;
 
 public class daoFactura {
     List<factura> ven;
-public daoFactura(){ //constructor
+    public daoFactura(){ //constructor
 
     ven = new ArrayList<factura>();
     }
