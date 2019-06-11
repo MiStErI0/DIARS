@@ -5,7 +5,7 @@
  */
 package dao;
 import java.sql.*;
-import Conexion.Conexion;
+import ConexionBD.Conexion;
 import clases.Trabajador;
 import java.util.ArrayList;
 

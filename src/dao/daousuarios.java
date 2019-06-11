@@ -5,7 +5,7 @@
  */
 package dao;
 
-import Conexion.Conexion;
+import ConexionBD.Conexion;
 import clases.usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
