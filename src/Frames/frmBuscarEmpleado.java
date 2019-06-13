@@ -9,12 +9,12 @@ package Frames;
  *
  * @author Luigi
  */
-public class frmBuscarTrabajador extends javax.swing.JFrame {
+public class frmBuscarEmpleado extends javax.swing.JFrame {
 
     /**
      * Creates new form frmBuscarTrabajador
      */
-    public frmBuscarTrabajador() {
+    public frmBuscarEmpleado() {
         initComponents();
     }
 
@@ -36,7 +36,7 @@ public class frmBuscarTrabajador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Buscar Trabajador");
+        jLabel1.setText("Buscar Empleado");
 
         jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -68,7 +68,7 @@ public class frmBuscarTrabajador extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(564, Short.MAX_VALUE))
+                        .addContainerGap(572, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -109,20 +109,21 @@ public class frmBuscarTrabajador extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmBuscarTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmBuscarTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmBuscarTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmBuscarTrabajador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmBuscarEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmBuscarTrabajador().setVisible(true);
+                new frmBuscarEmpleado().setVisible(true);
             }
         });
     }

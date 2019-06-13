@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package Frames;
-
+import clases.provincia;
+import dao.daoDePrDis;
 /**
  *
  * @author Estudiante
@@ -14,8 +15,10 @@ public class frmCliente extends javax.swing.JFrame {
     /**
      * Creates new form frmCliente
      */
+    dao.daoDePrDis dpd=new daoDePrDis();
     public frmCliente() {
         initComponents();
+        dpd.cargarDepartame(cmbdepar);
     }
 
     /**
@@ -43,11 +46,11 @@ public class frmCliente extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbdepar = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbprovin = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cmbdis = new javax.swing.JComboBox<>();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -87,15 +90,25 @@ public class frmCliente extends javax.swing.JFrame {
 
         jLabel10.setText("Departamento :");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbdepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbdepar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbdeparItemStateChanged(evt);
+            }
+        });
 
         jLabel11.setText("Provincia :");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbprovin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selec. Provincia" }));
+        cmbprovin.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbprovinItemStateChanged(evt);
+            }
+        });
 
         jLabel12.setText("Distrito :");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbdis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selec. Distrito" }));
 
         jLabel13.setText("Dni :");
 
@@ -177,12 +190,12 @@ public class frmCliente extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jComboBox2, 0, 180, Short.MAX_VALUE)
-                                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(cmbdepar, 0, 180, Short.MAX_VALUE)
+                                        .addComponent(cmbdis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGap(18, 18, 18)
                                     .addComponent(jLabel11)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cmbprovin, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                                     .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING))))
@@ -234,13 +247,13 @@ public class frmCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbdepar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbprovin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbdis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
@@ -267,6 +280,18 @@ public class frmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void cmbdeparItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbdeparItemStateChanged
+        // TODO add your handling code here:
+        dpd.cargarProvi(cmbprovin, cmbdepar.getSelectedItem().toString());
+        cmbdis.removeAllItems();
+        cmbdis.addItem("Selec. Distrito");
+    }//GEN-LAST:event_cmbdeparItemStateChanged
+
+    private void cmbprovinItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbprovinItemStateChanged
+        // TODO add your handling code here:
+        dpd.cargarDistri(cmbdis, cmbprovin.getSelectedItem().toString());
+    }//GEN-LAST:event_cmbprovinItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -303,17 +328,24 @@ public class frmCliente extends javax.swing.JFrame {
             }
         });
     }
+    
+//    private void carProvincia()
+//    {
+//        if(cmbdepar.is==true){
+//        
+//        }
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbdepar;
+    private javax.swing.JComboBox<String> cmbdis;
+    private javax.swing.JComboBox<String> cmbprovin;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

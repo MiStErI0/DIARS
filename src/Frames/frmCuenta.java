@@ -5,6 +5,9 @@
  */
 package Frames;
 
+import modelo.Colorear_filas;
+import dao.daomesa;
+import javax.swing.table.TableColumn;
 /**
  *
  * @author Luigi
@@ -14,8 +17,26 @@ public class frmCuenta extends javax.swing.JFrame {
     /**
      * Creates new form frmCuenta
      */
+    daomesa dme = new daomesa();
+    
+    Colorear_filas color_fila = new Colorear_filas();
+    
     public frmCuenta() {
         initComponents();
+        dme.cargar_cabecera(jMesa);
+//        
+        jMesa.setDefaultRenderer(jMesa.getColumnClass(1),color_fila );
+        
+        ocultar_Co();
+    }
+    
+    private void ocultar_Co()
+    {
+        TableColumn columna = jMesa.getColumnModel().getColumn(1);
+        columna.setMaxWidth(0);
+        columna.setMinWidth(0);
+        columna.setPreferredWidth(0);
+        jMesa.doLayout();
     }
 
     /**
@@ -35,7 +56,7 @@ public class frmCuenta extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jMesa = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -68,7 +89,7 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jLabel5.setText("Mesa :");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jMesa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -79,7 +100,7 @@ public class frmCuenta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jMesa);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,13 +138,10 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jLabel11.setText("Total :");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/receipt.png"))); // NOI18N
         jButton1.setText("PRE - CUENTA");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cash.png"))); // NOI18N
         jButton2.setText("PAGAR");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/error.png"))); // NOI18N
         jButton3.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -141,9 +159,9 @@ public class frmCuenta extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -292,9 +310,9 @@ public class frmCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTable jMesa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

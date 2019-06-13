@@ -1,0 +1,99 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dao;
+
+import ConexionBD.Conexion;
+import clases.mesa;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author johan07
+ */
+public class daomesa {
+
+    private ArrayList<mesa> me;
+
+    public daomesa() {
+
+        me =(ArrayList)getMesa();
+    }
+
+    private List<mesa> getMesa() {
+        List<mesa> mes = new ArrayList();
+        String Sql = "select * from mesa";
+        Connection c = null;
+
+        try {
+            c = new Conexion().getMysql();
+            ResultSet rs = null;
+            PreparedStatement pst;
+            pst = c.prepareCall(Sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                mesa e = new mesa(rs.getString("IDMESA"), rs.getString("NOMBRE"), rs.getInt("ESTADO"), rs.getInt("COLOR"));
+                mes.add(e);
+            }
+            rs.close();
+            rs = null;
+            pst.close();
+            pst = null;
+            c.close();
+            c = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(daomesa.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                c.close();
+                c = null;
+            } catch (SQLException ex1) {
+                Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+
+        return mes;
+    }
+
+    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
+        
+        if (tamaño()==0) {
+            //JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
+        } else {
+            dtmtable.setRowCount(0);//Limpia las filas del JTable
+            for (mesa m:me) {
+                Object vec[] = new Object[2];
+                vec[0] = m.getMesa();
+                vec[1] = m.getColor();
+                //agregar al JTable
+                dtmtable.addRow(vec);
+            }
+            jm.setModel(dtmtable);
+        }
+
+    }
+
+    public void cargar_cabecera(JTable tbl) {
+        DefaultTableModel dtmCabecera = new DefaultTableModel();        
+        dtmCabecera.addColumn("MESA");
+        dtmCabecera.addColumn("COLOR");    
+        tbl.setModel(dtmCabecera);
+        cargar_tabla(dtmCabecera, tbl);
+        
+    }
+    public int tamaño(){
+        return me.size();
+    }
+}

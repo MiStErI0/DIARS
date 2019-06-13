@@ -2,72 +2,62 @@
 package clases;
 
 public class producto {
-private int cod;
-private String prod;
-private double prec;
-private int cant;
+private String idproducto;
+private String producto;
+private Float stock_min;
+private Float stock_max;
+private Integer estado;
 
-public producto(int c,String p,double pr,int ca){
-   cod=c;
-   prod=p;
-   prec=pr;
-   cant=ca;
-}
-
-    /**
-     * @return the cod
-     */
-    public int getCod() {
-        return cod;
+    public producto() {
     }
 
-    /**
-     * @param cod the cod to set
-     */
-    public void setCod(int cod) {
-        this.cod = cod;
+    public producto(String idproducto, String producto, Float stock_min, Float stock_max, Integer estado) {
+        this.idproducto = idproducto;
+        this.producto = producto;
+        this.stock_min = stock_min;
+        this.stock_max = stock_max;
+        this.estado = estado;
     }
 
-    /**
-     * @return the prod
-     */
-    public String getProd() {
-        return prod;
+    public String getIdproducto() {
+        return idproducto;
     }
 
-    /**
-     * @param prod the prod to set
-     */
-    public void setProd(String prod) {
-        this.prod = prod;
+    public void setIdproducto(String idproducto) {
+        this.idproducto = idproducto;
     }
 
-    /**
-     * @return the prec
-     */
-    public double getPrec() {
-        return prec;
+    public String getProducto() {
+        return producto;
     }
 
-    /**
-     * @param prec the prec to set
-     */
-    public void setPrec(double prec) {
-        this.prec = prec;
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
-    /**
-     * @return the cant
-     */
-    public int getCant() {
-        return cant;
+    public Float getStock_min() {
+        return stock_min;
     }
 
-    /**
-     * @param cant the cant to set
-     */
-    public void setCant(int cant) {
-        this.cant = cant;
+    public void setStock_min(Float stock_min) {
+        this.stock_min = stock_min;
     }
 
+    public Float getStock_max() {
+        return stock_max;
+    }
+
+    public void setStock_max(Float stock_max) {
+        this.stock_max = stock_max;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+    
+    
 }
