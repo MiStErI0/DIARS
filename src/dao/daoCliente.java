@@ -21,14 +21,19 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class daoCliente {
+    
+    ArrayList<cliente> clien ;
 
-    public daoCliente(String Archivo) {
+    public daoCliente() {
+        
+        clien=(ArrayList) getClien();
 
     }
     
     private List<cliente> getClien() {
-        List<departamento> lista = new ArrayList();
-        String sql = "select * from departamento";
+        List<cliente> lista = new ArrayList();
+        String sql = "SELECT c.idcliente,p.NOMBRE_RS,p.APELLIDOP,p.APELLIDOM,p.CORREO,p.TELEFONO,p.DNI_RUC,p.FECHA_NACI,p.ESTADO FROM persona as p\n" +
+"			inner join cliente as c on c.idpersona=p.idpersona";
         Connection c = null;
         try {
             c = new Conexion().getMysql();
@@ -36,8 +41,7 @@ public class daoCliente {
             PreparedStatement pst = c.prepareCall(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                departamento e = new departamento(rs.getString("IDDEPARTAMENTO"), rs.getString("DEPARTAMENTO"));
-                System.out.println(e.getIddepartamento()+ " " + e.getDepartamento());
+                cliente e = new cliente(rs.getString("IDCLIENTE"), rs.getString("NOMBRE_RS"),rs.getString("APELLIDOP"),rs.getString("APELLIDOM"),rs.getString("CORREO"),rs.getLong("TELEFONO"),rs.getLong("DNI_RUC"),rs.getString("FECHA_NACI"),rs.getInt("ESTADO"));
                 lista.add(e);
             }
             rs.close();
