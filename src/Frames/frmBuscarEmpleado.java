@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Frames;
-
+import dao.daoEmpleado;
 /**
  *
  * @author Luigi
@@ -14,9 +14,12 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarTrabajador
      */
-    
+    daoEmpleado emple=new daoEmpleado();
     public frmBuscarEmpleado() {
         initComponents();
+        
+        emple.cargar_cabecera(tblEmpleado);
+                
     }
 
     /**
@@ -31,7 +34,7 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEmpleado = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,7 +44,7 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
 
         jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEmpleado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,7 +55,7 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblEmpleado);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
         jButton2.setText("Buscar");
@@ -133,7 +136,7 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblEmpleado;
     // End of variables declaration//GEN-END:variables
 }

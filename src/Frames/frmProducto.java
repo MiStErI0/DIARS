@@ -1,22 +1,21 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Frames;
-import dao.daoProducto;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import clases.producto;
+
+/**
+ *
+ * @author Estudiante
+ */
 public class frmProducto extends javax.swing.JFrame {
-daoProducto opro=new daoProducto("productos.txt");
-    DefaultTableModel dtmAlumno = new DefaultTableModel();
-    
+
     /**
      * Creates new form frmProducto
      */
     public frmProducto() {
         initComponents();
-        llenaCabecera();
-        opro.listar(dtmAlumno,tproducto);
-        this.bloquear_estado(false);
-        this.bloquear_controles();
     }
 
     /**
@@ -28,276 +27,120 @@ daoProducto opro=new daoProducto("productos.txt");
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtprod = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtprec = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tproducto = new javax.swing.JTable();
-        btnAñadir = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        btnNuevo = new javax.swing.JButton();
-        txtStock = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("PRODUCTOS ");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Producto");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("Producto:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 130, -1));
+        jLabel2.setText("Id Producto :");
 
-        txtprod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtprodActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtprod, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 266, 40));
+        jLabel3.setText("Nombre de Producto :");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setText("Precio:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 120, -1));
+        jLabel4.setText("Stock :");
 
-        txtprec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtprecActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtprec, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 266, 40));
+        jLabel5.setText("Estado :");
 
-        tproducto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        tproducto.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tproducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tproductoMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tproductoMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tproducto);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
+        jButton1.setText("Agregar");
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 570, 100));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
+        jButton2.setText("Nuevo");
 
-        btnAñadir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_anadir.jpg"))); // NOI18N
-        btnAñadir.setBorderPainted(false);
-        btnAñadir.setContentAreaFilled(false);
-        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAñadirActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, 84, 40));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
+        jButton3.setText("Actualizar");
 
-        btnEliminar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_eliminar.jpg"))); // NOI18N
-        btnEliminar.setContentAreaFilled(false);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 370, 130, -1));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/borrar.png"))); // NOI18N
+        jButton4.setText("Borrar");
 
-        btnModificar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_modificar.jpg"))); // NOI18N
-        btnModificar.setBorderPainted(false);
-        btnModificar.setContentAreaFilled(false);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 450, 120, -1));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        jButton5.setText("Cancelar");
 
-        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_buscar.jpg"))); // NOI18N
-        btnBuscar.setBorderPainted(false);
-        btnBuscar.setContentAreaFilled(false);
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, 84, 40));
-
-        btnCerrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_cerrar.jpg"))); // NOI18N
-        btnCerrar.setContentAreaFilled(false);
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 450, 84, -1));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel5.setText("Stock:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
-
-        btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/button_nuevo.jpg"))); // NOI18N
-        btnNuevo.setBorderPainted(false);
-        btnNuevo.setContentAreaFilled(false);
-        btnNuevo.setDefaultCapable(false);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 110, 40));
-        getContentPane().add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 260, 40));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel5))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField1)
+                                        .addComponent(jTextField2)
+                                        .addComponent(jTextField3)
+                                        .addComponent(jComboBox1, 0, 150, Short.MAX_VALUE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(45, 45, 45)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(26, 26, 26)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-    this.bloquear_estado(true);//Activo los controles
-        txtprod.requestFocus();//el puntero del mouse sobre la caja de texto
-        limpiar();//Limpiar las cajas de texto
-        this.bloquear_controles1();  
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-   txtprod.setEnabled(true);
-   if(txtprod.getText().equals("")){
-       JOptionPane.showMessageDialog(this,"No hay algo que buscar", "Sin resultado",2);
-   txtprod.requestFocus();
-    }else{
-    int msg = JOptionPane.showConfirmDialog(this,"Deseas Buscar el Producto","Buscar",JOptionPane.YES_NO_OPTION);    
-    if(msg == JOptionPane.YES_OPTION){
-        producto a = opro.buscar(getNom_Pro());
-        if(a == null){
-            JOptionPane.showMessageDialog(this,"No se encuentro!!!");
-            this.txtprod.requestFocus();
-        }else{
-            txtprod.setText(a.getProd());
-            txtprec.setText("" + a.getPrec());
-        }
-    }
-    else{
-    
-    }
-    bloquear_controles2();
-    bloquear_estado(true);
-    }
-        
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-    int msg = JOptionPane.showConfirmDialog(this,"Deseas Añadir el Producto","Añadir",JOptionPane.YES_NO_OPTION);
-    if(msg == JOptionPane.YES_OPTION){
-        producto a = new producto(opro.getCorrelativo(),getNom_Pro(),getPrecio(),getStock());
-        opro.adicionar(a);
-        opro.listar(dtmAlumno, tproducto);
-        opro.grabar();//Grabar datos al archivo
-        JOptionPane.showMessageDialog(this,"Producto añadido Satisfactoriamente!!!");
-    }
-    else
-    {
-         txtprod.requestFocus();
-        opro.listar(dtmAlumno, tproducto);
-    }
-    this.bloquear_controles(); 
-     this.bloquear_estado(false);
-    }//GEN-LAST:event_btnAñadirActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    int msg = JOptionPane.showConfirmDialog(this,"Deseas Eliminar el Producto","Eliminar",JOptionPane.YES_NO_OPTION);  
-     if(msg == JOptionPane.YES_OPTION){
-         producto a = opro.buscar(getNom_Pro());
-         opro.eliminar(a);
-         opro.listar(dtmAlumno, tproducto);
-         opro.grabar();//Grabar datos al archivo
-         JOptionPane.showMessageDialog(this,"Producto Eliminado!!!","Mensaje",2);
-     }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-    int msg = JOptionPane.showConfirmDialog(this,"Deseas Modificar el Producto","Modificar",JOptionPane.YES_NO_OPTION);
-       if(msg == JOptionPane.YES_OPTION){
-          producto a = opro.buscar(getNom_Pro());
-          if(a != null){
-              //modificar datos
-              a.setPrec(getPrecio());
-              opro.listar(dtmAlumno, tproducto);//actualizar la lista
-              opro.grabar();//Grabar datos al archivo
-              JOptionPane.showMessageDialog(this,"Producto Actualizado!!!","Mensaje",1);
-          }else{
-            JOptionPane.showMessageDialog(this,"No se encontro!!!","Mensaje",3);
-          }
- 
-       }
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-    dispose();
-    }//GEN-LAST:event_btnCerrarActionPerformed
-
-    private void txtprecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtprecActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtprecActionPerformed
-
-    private void txtprodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtprodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtprodActionPerformed
-
-    private void tproductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tproductoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tproductoMouseClicked
-
-    private void tproductoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tproductoMousePressed
-        if(evt.getClickCount()==2){
-//            frmFactura3 fac = new frmFactura3();
-            int fil=tproducto.getSelectedRow();
-            
-            String m,n,ñ,o;
-            m=tproducto.getValueAt(fil, 0).toString();
-            n=tproducto.getValueAt(fil, 1).toString();
-            ñ=tproducto.getValueAt(fil, 2).toString();
-            o=tproducto.getValueAt(fil, 3).toString();
-            
-            frmFactura1.txtCod.setText(m);
-            frmFactura1.txtPro.setText(n);
-            frmFactura1.txtPrecio.setText(ñ);
-            frmFactura1.txtStock.setText(o);
-            System.out.print(tproducto.getValueAt(fil, 0).toString());
-            this.dispose();    
-        }
-    
-    }//GEN-LAST:event_tproductoMousePressed
-    
     /**
      * @param args the command line arguments
      */
@@ -324,6 +167,7 @@ daoProducto opro=new daoProducto("productos.txt");
             java.util.logging.Logger.getLogger(frmProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -332,79 +176,21 @@ daoProducto opro=new daoProducto("productos.txt");
             }
         });
     }
-/*Obtener elementos de los objetos swing*/
 
-    public String getNom_Pro()   {return txtprod.getText();}
-    public double getPrecio()     {return Double.parseDouble(txtprec.getText());}
-    public int getStock()       {return Integer.parseInt(txtStock.getText());   }
-    
-    //Agregar columnas al JTAble
-    public void llenaCabecera(){
-      dtmAlumno.addColumn("Codigo");
-      dtmAlumno.addColumn("Producto");
-      dtmAlumno.addColumn("Precio");
-      dtmAlumno.addColumn("Stock");
-      tproducto.setModel(dtmAlumno);
-    }
-    
-    public void limpiar(){
-
-        this.txtprod.setText("");
-        this.txtprec.setText("");
-
-    } 
-        /*BLOQUEAR ACTIVAR*/
-    public void bloquear_estado(boolean estado){
-
-       this.txtprod.setEnabled(estado);
-       this.txtprec.setEnabled(estado);
-       this.txtStock.setEnabled(estado);
-
-
-    }
-     
-   public void bloquear_controles(){
-       btnNuevo.setEnabled(true);
-       btnBuscar.setEnabled(true);
-
-       btnAñadir.setEnabled(false);
-       btnModificar.setEnabled(false);
-       btnEliminar.setEnabled(false);
-   } 
-   public void bloquear_controles1(){
-       btnNuevo.setEnabled(false);
-       btnBuscar.setEnabled(true);
-
-       btnAñadir.setEnabled(true);
-       btnModificar.setEnabled(false);
-       btnEliminar.setEnabled(false);
-   }
-   /*Buscar*/
-   public void bloquear_controles2(){
-       btnNuevo.setEnabled(true);
-       btnBuscar.setEnabled(true);
-
-       btnAñadir.setEnabled(false);
-       btnModificar.setEnabled(true);
-       btnEliminar.setEnabled(true);
-   }
-    /*Fin*/
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAñadir;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tproducto;
-    private javax.swing.JTextField txtStock;
-    private javax.swing.JTextField txtprec;
-    private javax.swing.JTextField txtprod;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

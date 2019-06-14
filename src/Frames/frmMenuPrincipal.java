@@ -148,9 +148,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarActionPerformed
 
     private void facturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturasActionPerformed
-    frmFactura1 frm = new frmFactura1();
-    dispose();
-    frm.setVisible(true);
+
     }//GEN-LAST:event_facturasActionPerformed
 
     private void ayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ayudaMouseClicked
