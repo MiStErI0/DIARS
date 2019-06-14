@@ -14,7 +14,7 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarTrabajador
      */
-    dao.
+    
     public frmBuscarEmpleado() {
         initComponents();
     }
