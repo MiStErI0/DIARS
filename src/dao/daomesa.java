@@ -70,7 +70,7 @@ public class daomesa {
     public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
         
         if (tamaño()==0) {
-            //JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
+            JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
         } else {
             dtmtable.setRowCount(0);//Limpia las filas del JTable
             for (mesa m:me) {
