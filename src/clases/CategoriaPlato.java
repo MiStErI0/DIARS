@@ -18,6 +18,12 @@ public class CategoriaPlato {
         nombreCategoria = "";
     }
 
+    public CategoriaPlato(String idCategoriaPlato, String nombreCategoria) {
+        this.idCategoriaPlato = idCategoriaPlato;
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    
     public String getIdCategoriaPlato() {
         return idCategoriaPlato;
     }

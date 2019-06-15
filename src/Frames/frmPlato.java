@@ -5,6 +5,8 @@
  */
 package Frames;
 
+import dao.daoPlato;
+
 /**
  *
  * @author Estudiante
@@ -14,8 +16,11 @@ public class frmPlato extends javax.swing.JFrame {
     /**
      * Creates new form frmPlato
      */
+    dao.daoPlato daoPla = new daoPlato();
     public frmPlato() {
         initComponents();
+        daoPla.cargarCategoriaPlato(cboCategoriaPlato);
+        LlenaComboEstadoPlato();
     }
 
     /**
@@ -60,8 +65,6 @@ public class frmPlato extends javax.swing.JFrame {
         jLabel5.setText("Precio :");
 
         jLabel6.setText("Estado :");
-
-        cboEstadoPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
         jButton1.setText("Nuevo");
@@ -206,6 +209,7 @@ public class frmPlato extends javax.swing.JFrame {
         cboEstadoPlato.addItem("0");
         cboEstadoPlato.addItem("1");
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboCategoriaPlato;

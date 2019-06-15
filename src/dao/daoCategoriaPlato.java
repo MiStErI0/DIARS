@@ -19,6 +19,7 @@ public class daoCategoriaPlato {
         conexion = new Conexion();
     }
     
+    
     public String insertCategoriaPlato(String idCategoriaPlato,String nombreCategoria){
         String respuestaRegistro = null;
         try {
