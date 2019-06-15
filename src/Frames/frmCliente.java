@@ -19,6 +19,7 @@ public class frmCliente extends javax.swing.JFrame {
     public frmCliente() {
         initComponents();
         dpd.cargarDepartame(cmbdepar);
+        LlenaComboEstadoCliente();
     }
 
     /**
@@ -40,7 +41,7 @@ public class frmCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboEstadoCliente = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -59,11 +60,11 @@ public class frmCliente extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnNuevoCliente = new javax.swing.JButton();
+        btnAgregarCliente = new javax.swing.JButton();
+        btnActualizarCliente = new javax.swing.JButton();
+        btnBorrarCliente = new javax.swing.JButton();
+        btnCancelarCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,8 +82,6 @@ public class frmCliente extends javax.swing.JFrame {
         jLabel6.setText("Correo :");
 
         jLabel7.setText("Estado :");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setText("Telefono :");
 
@@ -116,23 +115,28 @@ public class frmCliente extends javax.swing.JFrame {
 
         jLabel15.setText("Referencia :");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
-        jButton1.setText("Nuevo");
+        btnNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
+        btnNuevoCliente.setText("Nuevo");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/agregar.png"))); // NOI18N
-        jButton2.setText("Agregar");
+        btnAgregarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/agregar.png"))); // NOI18N
+        btnAgregarCliente.setText("Agregar");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
-        jButton3.setText("Actualizar");
+        btnActualizarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
+        btnActualizarCliente.setText("Actualizar");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/borrar.png"))); // NOI18N
-        jButton4.setText("Borrar");
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
-        jButton5.setText("Cancelar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/borrar.png"))); // NOI18N
+        btnBorrarCliente.setText("Borrar");
+        btnBorrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnBorrarClienteActionPerformed(evt);
+            }
+        });
+
+        btnCancelarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        btnCancelarCliente.setText("Cancelar");
+        btnCancelarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarClienteActionPerformed(evt);
             }
         });
 
@@ -179,7 +183,7 @@ public class frmCliente extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(cboEstadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel10)
@@ -200,14 +204,14 @@ public class frmCliente extends javax.swing.JFrame {
                                     .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                                     .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(59, 59, 59)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(50, 50, 50)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(40, 40, 40)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBorrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnCancelarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -236,7 +240,7 @@ public class frmCliente extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboEstadoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -264,22 +268,22 @@ public class frmCliente extends javax.swing.JFrame {
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnNuevoCliente)
+                    .addComponent(btnAgregarCliente)
+                    .addComponent(btnActualizarCliente)
+                    .addComponent(btnBorrarCliente))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(btnCancelarCliente)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnCancelarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarClienteActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnCancelarClienteActionPerformed
 
     private void cmbdeparItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbdeparItemStateChanged
         // TODO add your handling code here:
@@ -292,6 +296,10 @@ public class frmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         dpd.cargarDistri(cmbdis, cmbprovin.getSelectedItem().toString());
     }//GEN-LAST:event_cmbprovinItemStateChanged
+
+    private void btnBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,17 +343,21 @@ public class frmCliente extends javax.swing.JFrame {
 //        
 //        }
 //    }
+    public void LlenaComboEstadoCliente(){
+        cboEstadoCliente.addItem("0");
+        cboEstadoCliente.addItem("1");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizarCliente;
+    private javax.swing.JButton btnAgregarCliente;
+    private javax.swing.JButton btnBorrarCliente;
+    private javax.swing.JButton btnCancelarCliente;
+    private javax.swing.JButton btnNuevoCliente;
+    private javax.swing.JComboBox<String> cboEstadoCliente;
     private javax.swing.JComboBox<String> cmbdepar;
     private javax.swing.JComboBox<String> cmbdis;
     private javax.swing.JComboBox<String> cmbprovin;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

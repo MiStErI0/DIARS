@@ -6,6 +6,7 @@ package dao;
  */
 import ConexionBD.Conexion;
 import clases.empleado;
+import clases.TipoCargo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -24,14 +27,61 @@ import javax.swing.table.DefaultTableModel;
 public class daoEmpleado {
     
     ArrayList<empleado> emple ;
+    ArrayList<TipoCargo> TipoCargo;
 
     public daoEmpleado() {
         
-        emple=(ArrayList) getClien();
+        emple=(ArrayList) getEmpleado();
+        TipoCargo = (ArrayList) getTipoCargo();
 
     }
     
-    private List<empleado> getClien() {
+    private List<TipoCargo> getTipoCargo() {
+        List<TipoCargo> lista = new ArrayList();
+        String sql = "select * from cargo";
+        Connection c = null;
+        try {
+            c = new Conexion().getMysql();
+            ResultSet rs = null;
+            PreparedStatement pst = c.prepareCall(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                TipoCargo tipcar = new TipoCargo(rs.getString("IDCARGO"), rs.getString("CARGO"));
+                System.out.println(tipcar.getIdCargoEmpleado()+ " " + tipcar.getNombreCargoEmpleado());
+                lista.add(tipcar);
+            }
+            rs.close();
+
+            rs = null;
+            c.close();
+            c = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                c.close();
+                c = null;
+            } catch (SQLException ex1) {
+                Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+
+        return lista;
+    }
+    
+    public void cargarTipoDeCargo(JComboBox jm)
+    {
+        DefaultComboBoxModel TipCarComboCargo = new DefaultComboBoxModel();
+        TipCarComboCargo.addElement("Selec. Departamento");
+        for(TipoCargo tc:TipoCargo)
+        {
+            TipCarComboCargo.addElement(tc.getNombreCargoEmpleado());
+        }
+        
+        jm.setModel(TipCarComboCargo);
+    }
+    
+    
+    private List<empleado> getEmpleado() {
         List<empleado> lista = new ArrayList();
         String sql = "SELECT e.idempleado,p.NOMBRE_RS,p.APELLIDOP,p.APELLIDOM,p.CORREO,p.TELEFONO,p.DNI_RUC,p.FECHA_NACI,p.ESTADO FROM persona as p\n" +
 "			inner join empleado as e on e.idpersona=p.idpersona";

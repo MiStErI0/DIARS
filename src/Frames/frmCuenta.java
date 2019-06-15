@@ -30,8 +30,8 @@ public class frmCuenta extends javax.swing.JFrame {
     public frmCuenta() {
         initComponents();
         dme.cargar_cabecera(jMesa);
-        cmt.cargarCompro(cmbCom);
-        cmt.cargarMetodo(cmbMeto);
+        cmt.cargarCompro(cboComprobanteDePago);
+        cmt.cargarMetodo(cboMetodoDePago);
         jMesa.setDefaultRenderer(jMesa.getColumnClass(1),color_fila );
         new Thread(new Hilo()).start();
         ocultar_Co();
@@ -70,9 +70,9 @@ public class frmCuenta extends javax.swing.JFrame {
         tblprod = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        cmbMeto = new javax.swing.JComboBox<>();
+        cboMetodoDePago = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        cmbCom = new javax.swing.JComboBox<>();
+        cboComprobanteDePago = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -130,11 +130,7 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jLabel7.setText("Metodo de Pago");
 
-        cmbMeto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel8.setText("Comprobante de Pago");
-
-        cmbCom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel9.setText("Sub Total :");
 
@@ -156,6 +152,11 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cancel.png"))); // NOI18N
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,8 +216,8 @@ public class frmCuenta extends javax.swing.JFrame {
                                             .addComponent(jLabel7))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cmbCom, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cmbMeto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(cboComprobanteDePago, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cboMetodoDePago, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -234,13 +235,13 @@ public class frmCuenta extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
                         .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbMeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cboMetodoDePago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
-                    .addComponent(cmbCom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboComprobanteDePago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
@@ -267,6 +268,11 @@ public class frmCuenta extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -319,10 +325,12 @@ public class frmCuenta extends javax.swing.JFrame {
         }
     }
     
+   
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbCom;
+    private javax.swing.JComboBox<String> cboComprobanteDePago;
+    private javax.swing.JComboBox<String> cboMetodoDePago;
     private javax.swing.JComboBox<String> cmbMes;
-    private javax.swing.JComboBox<String> cmbMeto;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

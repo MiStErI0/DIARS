@@ -5,6 +5,8 @@
  */
 package Frames;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Estudiante
@@ -14,8 +16,10 @@ public class frmBuscarMesa extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarMesa
      */
+    DefaultTableModel dtmMesa = new DefaultTableModel();
     public frmBuscarMesa() {
         initComponents();
+        cargarCabeceraTableMesa();
     }
 
     /**
@@ -31,7 +35,7 @@ public class frmBuscarMesa extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtMesa = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,7 +46,7 @@ public class frmBuscarMesa extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
         jButton1.setText("Buscar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtMesa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,7 +57,7 @@ public class frmBuscarMesa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtMesa);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
         jButton2.setText("Cancelar");
@@ -145,12 +149,19 @@ public class frmBuscarMesa extends javax.swing.JFrame {
         });
     }
 
+    public void cargarCabeceraTableMesa(){
+        dtmMesa.addColumn("ID Mesa"); 
+        dtmMesa.addColumn("Nombre de Mesa"); 
+        dtmMesa.addColumn("Estado de Mesa"); 
+        dtmMesa.addColumn("Color"); 
+        jtMesa.setModel(dtmMesa);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtMesa;
     // End of variables declaration//GEN-END:variables
 }
