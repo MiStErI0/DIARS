@@ -180,7 +180,13 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
-        //int 
+        int rptaDelete = daoCatPla.deleteCategoriaPlato(getIdCategoriaPlato());
+         if(rptaDelete > 0){
+            JOptionPane.showMessageDialog(null, "Edicion exitosa.");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
+        } 
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**

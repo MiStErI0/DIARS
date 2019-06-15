@@ -75,7 +75,7 @@ public class daoCategoriaPlato {
         int numFA = 0;
         try {
             Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_deleteiaPlatoCategoriaPlato(?)}");
+            CallableStatement cs = acceDB.prepareCall("{call sp_deleteCategoriaPlato(?)}");
             cs.setString(1, idCategoriaPlato);
             
             numFA = cs.executeUpdate();
