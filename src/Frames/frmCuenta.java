@@ -6,10 +6,14 @@
 package Frames;
 
 import modelo.Colorear_filas;
+import ConexionBD.Conexion;
 import dao.daomesa;
 import dao.daoComTip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Timer;
@@ -23,6 +27,7 @@ public class frmCuenta extends javax.swing.JFrame {
     /**
      * Creates new form frmCuenta
      */
+    Conexion conexion;
     daomesa dme = new daomesa();
     daoComTip cmt=new daoComTip();
     Colorear_filas color_fila = new Colorear_filas();
@@ -35,6 +40,8 @@ public class frmCuenta extends javax.swing.JFrame {
         jMesa.setDefaultRenderer(jMesa.getColumnClass(1),color_fila );
         new Thread(new Hilo()).start();
         ocultar_Co();
+        conexion = new Conexion();
+        CargarComboCajero();
         
         this.setLocationRelativeTo(null);
     }
@@ -62,7 +69,7 @@ public class frmCuenta extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        cmbMes = new javax.swing.JComboBox<>();
+        cboMesero = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jMesa = new javax.swing.JTable();
@@ -95,7 +102,7 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jLabel4.setText("Mesero :");
 
-        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboMesero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Mesa :");
 
@@ -201,7 +208,7 @@ public class frmCuenta extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
-                                        .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(154, 154, 154)
@@ -234,7 +241,7 @@ public class frmCuenta extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
-                        .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cboMetodoDePago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -325,12 +332,27 @@ public class frmCuenta extends javax.swing.JFrame {
         }
     }
     
-   
+   public void CargarComboCajero(){
+       Connection con = null;
+       try {
+           con = conexion.getMysql();
+           String sql = "select p.NOMBRE_RS from persona as p inner join empleado as e inner join cargo as c on e.idpersona=p.idpersona and e.IDCARGO=c.IDCARGO where e.IDCARGO='CA00003';";
+            PreparedStatement ps = con.prepareCall(sql);
+            ResultSet rs = null;
+            rs = ps.executeQuery();
+            cboMesero.removeAllItems();
+            while(rs.next()) {
+                cboMesero.addItem(rs.getString(1));
+            }
+            rs.close();
+       } catch (Exception e) {
+       }
+   }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboComprobanteDePago;
+    private javax.swing.JComboBox<String> cboMesero;
     private javax.swing.JComboBox<String> cboMetodoDePago;
-    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

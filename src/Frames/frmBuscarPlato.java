@@ -6,7 +6,13 @@
 package Frames;
 
 import javax.swing.table.DefaultTableModel;
-
+import dao.daoPlato;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author Estudiante
@@ -16,10 +22,13 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarPlato
      */
+    daoPlato daoPla = new daoPlato();
     DefaultTableModel dtmPlato = new DefaultTableModel();
+    int filaseleccionada;
     public frmBuscarPlato() {
         initComponents();
         cargarCabeceraTableMesa();
+        //listarTable();
     }
 
     /**

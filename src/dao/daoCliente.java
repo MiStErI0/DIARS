@@ -7,6 +7,7 @@ package dao;
 
 import ConexionBD.Conexion;
 import clases.cliente;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,13 +21,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class daoCliente {
-    
+    Conexion conexion;
     ArrayList<cliente> clien ;
 
     public daoCliente() {
         
         clien=(ArrayList) getClien();
-
+        conexion = new Conexion();
     }
     
     private List<cliente> getClien() {
@@ -103,4 +104,10 @@ public class daoCliente {
          return clien.size();
      }
 
+     
+    
+    
+   
+    
+    
 }

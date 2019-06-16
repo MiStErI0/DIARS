@@ -15,9 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +26,7 @@ public class daoPlato {
     
     public daoPlato() {
         CategoriaPlato = (ArrayList) getCategoriaPlato();
+        conexion = new Conexion();
     }
     
     private List<CategoriaPlato> getCategoriaPlato() {

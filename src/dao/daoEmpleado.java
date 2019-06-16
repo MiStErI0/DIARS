@@ -154,5 +154,8 @@ public class daoEmpleado {
      public int tamaño(){
          return emple.size();
      }
+     
+     
+    
 
 }
