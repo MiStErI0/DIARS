@@ -3,18 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmBuscarCliente.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmFactura1.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmBuscarEmpleado.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/dao/daoDePrDis.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmTrabajador.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmProducto.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmMesa.java</file>
+            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/dao/daoCategoriaPlato.java</file>
             <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmBuscarCategoriaPlato.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmBuscarPlato.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmBuscarMesa.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmRegistro.java</file>
-            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmCliente.java</file>
+            <file>file:/C:/Users/Luigi/Documents/GitHub/DIARS/src/Frames/frmCategoriaPlato.java</file>
         </group>
     </open-files>
 </project-private>

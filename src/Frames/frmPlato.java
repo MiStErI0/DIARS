@@ -1,11 +1,15 @@
-/*
+      /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Frames;
-
 import dao.daoPlato;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,10 +21,14 @@ public class frmPlato extends javax.swing.JFrame {
      * Creates new form frmPlato
      */
     dao.daoPlato daoPla = new daoPlato();
+    Connection conn = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
     public frmPlato() {
         initComponents();
         daoPla.cargarCategoriaPlato(cboCategoriaPlato);
         LlenaComboEstadoPlato();
+        txtIdCategoriaPlato.setVisible(true);
     }
 
     /**
@@ -48,6 +56,7 @@ public class frmPlato extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        txtIdCategoriaPlato = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +68,15 @@ public class frmPlato extends javax.swing.JFrame {
         jLabel3.setText("Categoria :");
 
         cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCategoriaPlato.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cboCategoriaPlatoPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel4.setText("Nombre de Plato :");
 
@@ -104,7 +122,10 @@ public class frmPlato extends javax.swing.JFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(40, 40, 40)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdCategoriaPlato, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -123,7 +144,7 @@ public class frmPlato extends javax.swing.JFrame {
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(39, 39, 39)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +159,8 @@ public class frmPlato extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -168,6 +190,27 @@ public class frmPlato extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        /*String tmp = (String)cboCategoriaPlato.getSelectedItem();
+        String sql = "select * from categoria_plato where CATEGORIA=?";
+        System.out.println(tmp);
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1,tmp);
+            rs=pst.executeQuery();
+            if(rs.next()){
+                String add = rs.getString("IDCATEGORIA_PLATO");
+                String add2 = rs.getString("CATEGORIA");
+                txtIdCategoriaPlato.setText(add);
+                System.out.println(add);
+            }
+            
+        } catch (Exception e) {
+        }
+        */
+    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
@@ -228,5 +271,6 @@ public class frmPlato extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtIdCategoriaPlato;
     // End of variables declaration//GEN-END:variables
 }
