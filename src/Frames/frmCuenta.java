@@ -7,7 +7,7 @@ package Frames;
 
 import modelo.Colorear_filas;
 import ConexionBD.Conexion;
-import dao.daomesa;
+import dao.daoMesa;
 import dao.daoComTip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +28,7 @@ public class frmCuenta extends javax.swing.JFrame {
      * Creates new form frmCuenta
      */
     Conexion conexion;
-    daomesa dme = new daomesa();
+    daoMesa dme = new daoMesa();
     daoComTip cmt=new daoComTip();
     Colorear_filas color_fila = new Colorear_filas();
     
@@ -41,7 +41,7 @@ public class frmCuenta extends javax.swing.JFrame {
         new Thread(new Hilo()).start();
         ocultar_Co();
         conexion = new Conexion();
-        CargarComboCajero();
+        CargarComboMesero();
         
         this.setLocationRelativeTo(null);
     }
@@ -332,7 +332,7 @@ public class frmCuenta extends javax.swing.JFrame {
         }
     }
     
-   public void CargarComboCajero(){
+   public void CargarComboMesero(){
        Connection con = null;
        try {
            con = conexion.getMysql();

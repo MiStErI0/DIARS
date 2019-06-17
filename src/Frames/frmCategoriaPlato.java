@@ -24,6 +24,10 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
     
     public frmCategoriaPlato() {
         initComponents();
+        limpiar();
+        btnActualizar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+        btnAgregar.setEnabled(false);
     }
     
     daoCategoriaPlato daoCatPla = new daoCategoriaPlato();
@@ -47,6 +51,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnBuscarCategoriaPlato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +64,11 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
         btnAgregar.setText("Agregar");
@@ -92,6 +102,14 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarCategoriaPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
+        btnBuscarCategoriaPlato.setText("Buscar");
+        btnBuscarCategoriaPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarCategoriaPlatoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,12 +117,6 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
@@ -116,9 +128,17 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtnombreCategoria)))
-                        .addGap(28, 28, 28)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarCategoriaPlato, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(41, 41, 41))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,11 +153,12 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtidCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnBuscarCategoriaPlato))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtnombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
@@ -145,7 +166,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
                     .addComponent(btnBorrar))
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,6 +182,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         String respuestaRegistro = daoCatPla.insertCategoriaPlato(getIdCategoriaPlato(), getNombreCategoriaPlato());
         if(respuestaRegistro != null){
             JOptionPane.showMessageDialog(null, respuestaRegistro);
+            btnAgregar.setEnabled(false);
         }
         else{
             JOptionPane.showMessageDialog(null, "REGISTRO ERRONEO.");
@@ -172,10 +194,14 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
          int rptaEdit = daoCatPla.editCategoriaPlato(getIdCategoriaPlato(),getNombreCategoriaPlato());
          if(rptaEdit > 0){
             JOptionPane.showMessageDialog(null, "Edicion exitosa.");
+            btnActualizar.setEnabled(false);
+            btnBorrar.setEnabled(false);
+            limpiar();
         }
         else{
             JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
         }
+        
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -183,11 +209,31 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         int rptaDelete = daoCatPla.deleteCategoriaPlato(getIdCategoriaPlato());
          if(rptaDelete > 0){
             JOptionPane.showMessageDialog(null, "Edicion exitosa.");
+            btnActualizar.setEnabled(false);
+            btnBorrar.setEnabled(false);
+            limpiar();
         }
         else{
             JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
         } 
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+        btnAgregar.setEnabled(true);
+        btnNuevo.setEnabled(false);
+        btnActualizar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnBuscarCategoriaPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaPlatoActionPerformed
+        // TODO add your handling code here:
+        frmBuscarCategoriaPlato frmBusCatPla = new frmBuscarCategoriaPlato();
+        frmBusCatPla.show();
+        
+        dispose();
+    }//GEN-LAST:event_btnBuscarCategoriaPlatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,11 +280,17 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         return txtnombreCategoria.getText();
     }
     
+    public void limpiar(){
+        txtidCategoriaPlato.setText("");
+        txtnombreCategoria.setText("");
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
+    public static javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnBorrar;
+    public static javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBuscarCategoriaPlato;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;

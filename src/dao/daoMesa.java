@@ -6,7 +6,7 @@
 package dao;
 
 import ConexionBD.Conexion;
-import clases.mesa;
+import clases.Mesa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,17 +23,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author johan07
  */
-public class daomesa {
+public class daoMesa {
+    Conexion conexion;
+    private ArrayList<Mesa> me;
 
-    private ArrayList<mesa> me;
-
-    public daomesa() {
+    public daoMesa() {
 
         me =(ArrayList)getMesa();
+        conexion = new Conexion();
     }
 
-    private List<mesa> getMesa() {
-        List<mesa> mes = new ArrayList();
+    private List<Mesa> getMesa() {
+        List<Mesa> mes = new ArrayList();
         String Sql = "select * from mesa";
         Connection c = null;
 
@@ -45,7 +46,7 @@ public class daomesa {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                mesa e = new mesa(rs.getString("IDMESA"), rs.getString("NOMBRE"), rs.getInt("ESTADO"), rs.getInt("COLOR"));
+                Mesa e = new Mesa(rs.getString("IDMESA"), rs.getString("NOMBRE"), rs.getInt("ESTADO"), rs.getInt("COLOR"));
                 mes.add(e);
             }
             rs.close();
@@ -55,7 +56,7 @@ public class daomesa {
             c.close();
             c = null;
         } catch (SQLException ex) {
-            Logger.getLogger(daomesa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(daoMesa.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 c.close();
                 c = null;
@@ -73,7 +74,7 @@ public class daomesa {
             JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
         } else {
             dtmtable.setRowCount(0);//Limpia las filas del JTable
-            for (mesa m:me) {
+            for (Mesa m:me) {
                 Object vec[] = new Object[2];
                 vec[0] = m.getMesa();
                 vec[1] = m.getColor();
@@ -96,4 +97,26 @@ public class daomesa {
     public int tamaño(){
         return me.size();
     }
+    
+    public ArrayList<Mesa> listMesa(){
+        ArrayList listaMesa = new ArrayList();
+        Mesa mesa;
+        try {
+            Connection acceDB = conexion.getMysql();
+            PreparedStatement ps = acceDB.prepareStatement("select * from mesa");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                mesa = new Mesa();
+                mesa.setIdmesa(rs.getString(1));
+                mesa.setMesa(rs.getString(2));
+                mesa.setEstado(rs.getInt(3));
+                mesa.setColor(rs.getInt(4));
+                listaMesa.add(mesa);
+            }
+        } catch (Exception e) {
+        }
+        return listaMesa;
+    }
+    
+    
 }

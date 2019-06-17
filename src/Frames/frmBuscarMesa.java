@@ -5,7 +5,13 @@
  */
 package Frames;
 
+import dao.daoMesa;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -16,10 +22,12 @@ public class frmBuscarMesa extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarMesa
      */
+    daoMesa daomes = new daoMesa();
     DefaultTableModel dtmMesa = new DefaultTableModel();
     public frmBuscarMesa() {
         initComponents();
         cargarCabeceraTableMesa();
+        listarTable();
     }
 
     /**
@@ -155,6 +163,27 @@ public class frmBuscarMesa extends javax.swing.JFrame {
         dtmMesa.addColumn("Estado de Mesa"); 
         dtmMesa.addColumn("Color"); 
         jtMesa.setModel(dtmMesa);
+    }
+    
+    public void listarTable(){
+        Object[] columna = new Object[5];
+        int numRegistros = daomes.listMesa().size();
+        
+        for (int i = 0; i < numRegistros; i++){
+            columna[0] = daomes.listMesa().get(i).getIdmesa();
+            columna[1] = daomes.listMesa().get(i).getMesa();
+            columna[2] = daomes.listMesa().get(i).getEstado();
+            columna[3] = daomes.listMesa().get(i).getColor();
+            dtmMesa.addRow(columna);
+        }
+        jtMesa.setModel(dtmMesa);  
+    }
+    
+    public void filtro(String filtro, JTable jtableBuscar){
+        dtmMesa= (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmMesa);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filtro));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

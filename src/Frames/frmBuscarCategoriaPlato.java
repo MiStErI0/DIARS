@@ -148,7 +148,9 @@ public class frmBuscarCategoriaPlato extends javax.swing.JFrame {
                 
                 JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
                 frmcatpla.show();
-                
+                frmcatpla.btnActualizar.setEnabled(true);
+                frmcatpla.btnBorrar.setEnabled(true);
+                dispose();
                                             
             }
         }catch (HeadlessException ex){

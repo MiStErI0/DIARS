@@ -9,17 +9,17 @@ package clases;
  *
  * @author johan07
  */
-public class mesa {
+public class Mesa {
     
     private String idmesa;
     private String mesa;
     private Integer estado;
     private Integer color;
 
-    public mesa() {
+    public Mesa() {
     }
 
-    public mesa(String idmesa, String mesa, Integer estado, Integer color) {
+    public Mesa(String idmesa, String mesa, Integer estado, Integer color) {
         this.idmesa = idmesa;
         this.mesa = mesa;
         this.estado = estado;

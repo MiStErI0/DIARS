@@ -5,7 +5,7 @@
  */
 package Frames;
 
-import javax.swing.table.DefaultTableModel;
+
 import dao.daoPlato;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -28,7 +28,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     public frmBuscarPlato() {
         initComponents();
         cargarCabeceraTableMesa();
-        //listarTable();
+        listarTable();
     }
 
     /**
@@ -41,19 +41,25 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBuscarPlato = new javax.swing.JTextField();
+        btnBuscarPlato = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtPlato = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Plato");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
-        jButton1.setText("Buscar");
+        txtBuscarPlato.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarPlatoKeyTyped(evt);
+            }
+        });
+
+        btnBuscarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
+        btnBuscarPlato.setText("Buscar");
 
         jtPlato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,13 +72,18 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtPlato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtPlatoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtPlato);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -86,11 +97,11 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(43, 43, 43)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -100,22 +111,55 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtBuscarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarPlato))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnCancelar)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtBuscarPlatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPlatoKeyTyped
+        // TODO add your handling code here:
+        filtro("(?i)" + txtBuscarPlato.getText(), jtPlato);
+    }//GEN-LAST:event_txtBuscarPlatoKeyTyped
+
+    private void jtPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPlatoMouseClicked
+        // TODO add your handling code here:
+        frmPlato frmpla = new frmPlato();
+        try{
+            filaseleccionada = jtPlato.getSelectedRow();        
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
+                frmpla.txtIdPlato.setText(jtPlato.getValueAt(filaseleccionada,0).toString());              
+                frmpla.txtNombrePlato.setText(jtPlato.getValueAt(filaseleccionada,1).toString());
+                frmpla.txtPrecioPlato.setText(jtPlato.getValueAt(filaseleccionada,2).toString());
+                frmpla.txtEstadoPlato.setText(jtPlato.getValueAt(filaseleccionada,3).toString());
+                frmpla.txtIdCategoriaPlato.setText(jtPlato.getValueAt(filaseleccionada,4).toString());
+                
+                JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
+                frmpla.show();
+                frmpla.btnActualizarPlato.setEnabled(true);
+                frmpla.btnBorrarPlato.setEnabled(true);
+                dispose();
+                                            
+            }
+        }catch (HeadlessException ex){
+            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jtPlatoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -155,19 +199,41 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
     public void cargarCabeceraTableMesa(){
         dtmPlato.addColumn("ID Plato"); 
-        dtmPlato.addColumn("Categoria de Plato"); 
         dtmPlato.addColumn("Nombre de Plato"); 
-        dtmPlato.addColumn("Precio");
-        dtmPlato.addColumn("Estado"); 
+        dtmPlato.addColumn("Precio"); 
+        dtmPlato.addColumn("Estado");
+        dtmPlato.addColumn("Categoria de Plato"); 
         jtPlato.setModel(dtmPlato);
     }
     
+    public void listarTable(){
+        Object[] columna = new Object[5];
+        int numRegistros = daoPla.listPlato().size();
+        
+        for (int i = 0; i < numRegistros; i++){
+            columna[0] = daoPla.listPlato().get(i).getIdPlato();
+            columna[1] = daoPla.listPlato().get(i).getPlato();
+            columna[2] = daoPla.listPlato().get(i).getPrecio();
+            columna[3] = daoPla.listPlato().get(i).getEstado();
+            columna[4] = daoPla.listPlato().get(i).getIdCategoriaPlato();
+            dtmPlato.addRow(columna);
+        }
+        jtPlato.setModel(dtmPlato);  
+    }
+    
+    public void filtro(String filtro, JTable jtableBuscar){
+        dtmPlato= (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmPlato);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filtro));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnBuscarPlato;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable jtPlato;
+    private javax.swing.JTextField txtBuscarPlato;
     // End of variables declaration//GEN-END:variables
 }

@@ -22,10 +22,12 @@ public class frmPlato extends javax.swing.JFrame {
      * Creates new form frmPlato
      */
     //Conexion conexion;
+    Conexion conexion;
     daoPlato daoPla = new daoPlato();
     
     public frmPlato() {
         initComponents();
+        conexion = new Conexion();
         daoPla.cargarCategoriaPlato(cboCategoriaPlato);
         LlenaComboEstadoPlato();
         txtIdCategoriaPlato.setVisible(true);
@@ -215,20 +217,20 @@ public class frmPlato extends javax.swing.JFrame {
 
     private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-        /*String tmp = (String)cboCategoriaPlato.getSelectedItem();
+        String tmp = (String)cboCategoriaPlato.getSelectedItem();
         try {
             Connection accesoDB = conexion.getMysql();
-            PreparedStatement ps = accesoDB.prepareStatement("select * from categoria_plato where CATEGORIA=?");
+            PreparedStatement ps = accesoDB.prepareStatement("select IDCATEGORIA_PLATO from categoria_plato where CATEGORIA=?");
             ps.setString(1,tmp);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 String add = rs.getString("IDCATEGORIA_PLATO");
                 txtIdCategoriaPlato.setText(add);
-                System.out.println(add);
+                //System.out.println(add);
             }
             
         } catch (Exception e) {
-        }*/
+        }
         
     }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
 
@@ -328,9 +330,9 @@ public class frmPlato extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarPlato;
+    public static javax.swing.JButton btnActualizarPlato;
     private javax.swing.JButton btnAgregarPlato;
-    private javax.swing.JButton btnBorrarPlato;
+    public static javax.swing.JButton btnBorrarPlato;
     private javax.swing.JButton btnCancelarPlato;
     private javax.swing.JButton btnNuevoPlato;
     private javax.swing.JComboBox<String> cboCategoriaPlato;
@@ -341,10 +343,10 @@ public class frmPlato extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txtEstadoPlato;
-    private javax.swing.JTextField txtIdCategoriaPlato;
-    private javax.swing.JTextField txtIdPlato;
-    private javax.swing.JTextField txtNombrePlato;
-    private javax.swing.JTextField txtPrecioPlato;
+    public static javax.swing.JTextField txtEstadoPlato;
+    public static javax.swing.JTextField txtIdCategoriaPlato;
+    public static javax.swing.JTextField txtIdPlato;
+    public static javax.swing.JTextField txtNombrePlato;
+    public static javax.swing.JTextField txtPrecioPlato;
     // End of variables declaration//GEN-END:variables
 }
