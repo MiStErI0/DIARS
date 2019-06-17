@@ -24,6 +24,7 @@ public class frmBuscarMesa extends javax.swing.JFrame {
      */
     daoMesa daomes = new daoMesa();
     DefaultTableModel dtmMesa = new DefaultTableModel();
+    int filaseleccionada;
     public frmBuscarMesa() {
         initComponents();
         cargarCabeceraTableMesa();
@@ -40,19 +41,25 @@ public class frmBuscarMesa extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtBuscarMesa = new javax.swing.JTextField();
+        btnBuscarMesa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtMesa = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnCancelarMesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Mesa");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
-        jButton1.setText("Buscar");
+        txtBuscarMesa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarMesaKeyTyped(evt);
+            }
+        });
+
+        btnBuscarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
+        btnBuscarMesa.setText("Buscar");
 
         jtMesa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,13 +72,18 @@ public class frmBuscarMesa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtMesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtMesaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtMesa);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        btnCancelarMesa.setText("Cancelar");
+        btnCancelarMesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarMesaActionPerformed(evt);
             }
         });
 
@@ -89,12 +101,12 @@ public class frmBuscarMesa extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnCancelarMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtBuscarMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnBuscarMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
@@ -104,22 +116,54 @@ public class frmBuscarMesa extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtBuscarMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarMesa))
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnCancelarMesa)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarMesaActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCancelarMesaActionPerformed
+
+    private void txtBuscarMesaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarMesaKeyTyped
+        // TODO add your handling code here:
+        filtro("(?i)" + txtBuscarMesa.getText(), jtMesa);
+    }//GEN-LAST:event_txtBuscarMesaKeyTyped
+
+    private void jtMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMesaMouseClicked
+        // TODO add your handling code here:
+        frmMesa frmMes = new frmMesa();
+        try{
+            filaseleccionada = jtMesa.getSelectedRow();        
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
+                frmMes.txtIdMesa.setText(jtMesa.getValueAt(filaseleccionada,0).toString());              
+                frmMes.txtNombreMesa.setText(jtMesa.getValueAt(filaseleccionada,1).toString());
+                frmMes.cboEstadoMesa.setSelectedItem(jtMesa.getValueAt(filaseleccionada,2).toString());
+                frmMes.cboColorMesa.setSelectedItem(jtMesa.getValueAt(filaseleccionada,3).toString());
+                
+                JOptionPane.showMessageDialog(this,"¡Mesa encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
+                frmMes.show();
+                frmMes.btnActualizarMesa.setEnabled(true);
+                frmMes.btnBorrarMesa.setEnabled(true);
+                dispose();
+                                            
+            }
+        }catch (HeadlessException ex){
+            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jtMesaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -186,11 +230,11 @@ public class frmBuscarMesa extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(filtro));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnBuscarMesa;
+    private javax.swing.JButton btnCancelarMesa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable jtMesa;
+    private javax.swing.JTextField txtBuscarMesa;
     // End of variables declaration//GEN-END:variables
 }
