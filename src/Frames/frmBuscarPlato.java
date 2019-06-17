@@ -21,7 +21,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
     /**
      * Creates new form frmBuscarPlato
-     */
+       */
     daoPlato daoPla = new daoPlato();
     DefaultTableModel dtmPlato = new DefaultTableModel();
     int filaseleccionada;
