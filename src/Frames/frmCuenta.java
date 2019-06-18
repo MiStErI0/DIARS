@@ -9,6 +9,7 @@ import modelo.Colorear_filas;
 import ConexionBD.Conexion;
 import dao.daoMesa;
 import dao.daoComTip;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.TableColumn;
 /**
@@ -31,6 +33,7 @@ public class frmCuenta extends javax.swing.JFrame {
     daoMesa dme = new daoMesa();
     daoComTip cmt=new daoComTip();
     Colorear_filas color_fila = new Colorear_filas();
+    int filaseleccionada;
     
     public frmCuenta() {
         initComponents();
@@ -117,6 +120,11 @@ public class frmCuenta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jMesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMesaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jMesa);
 
         tblprod.setModel(new javax.swing.table.DefaultTableModel(
@@ -280,6 +288,39 @@ public class frmCuenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMesaMouseClicked
+        // TODO add your handling code here:
+        try{
+            filaseleccionada = jMesa.getSelectedRow();        
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                String colormesa = "";
+                colormesa = jMesa.getValueAt(filaseleccionada,1).toString();
+                System.out.println(colormesa);
+                if(colormesa.equals("0")){
+                    
+                    JOptionPane.showMessageDialog(this,"La mesa seleccionada no cuenta con registros pendiente\n" + "Por favor elija otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if(colormesa.equals("1")){
+                    
+                    JOptionPane.showMessageDialog(this,"La mesa seleccionada aun no se ha imprimido la precuenta\n" + "Por favor procesa a realizar la Pre-Cuenta","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if(colormesa.equals("2")){
+                    
+                    JOptionPane.showMessageDialog(this,"Se ha seleccionado \n"+ jMesa.getValueAt(filaseleccionada,0).toString()   +"\n" + "Se procede a mostrar sus pedidos","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                }
+                
+                                            
+            }
+        }catch (HeadlessException ex){
+            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMesaMouseClicked
 
     /**
      * @param args the command line arguments

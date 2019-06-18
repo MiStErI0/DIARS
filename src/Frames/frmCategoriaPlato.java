@@ -179,7 +179,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        String respuestaRegistro = daoCatPla.insertCategoriaPlato(getIdCategoriaPlato(), getNombreCategoriaPlato());
+        String respuestaRegistro = daoCatPla.insertCategoriaPlato(getNombreCategoriaPlato());
         if(respuestaRegistro != null){
             JOptionPane.showMessageDialog(null, respuestaRegistro);
             btnAgregar.setEnabled(false);

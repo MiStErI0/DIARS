@@ -29,11 +29,11 @@ public class daoMesa {
 
     public daoMesa() {
 
-        me =(ArrayList)getMesa();
+        me =(ArrayList)getMesaColor();
         conexion = new Conexion();
     }
 
-    private List<Mesa> getMesa() {
+    private List<Mesa> getMesaColor() {
         List<Mesa> mes = new ArrayList();
         String Sql = "select * from mesa";
         Connection c = null;

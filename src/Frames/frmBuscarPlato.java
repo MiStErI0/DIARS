@@ -143,11 +143,18 @@ public class frmBuscarPlato extends javax.swing.JFrame {
             }
             else{
                 //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
-                frmpla.txtIdPlato.setText(jtPlato.getValueAt(filaseleccionada,0).toString());              
-                frmpla.txtNombrePlato.setText(jtPlato.getValueAt(filaseleccionada,1).toString());
-                frmpla.txtPrecioPlato.setText(jtPlato.getValueAt(filaseleccionada,2).toString());
-                frmpla.txtEstadoPlato.setText(jtPlato.getValueAt(filaseleccionada,3).toString());
-                frmpla.txtIdCategoriaPlato.setText(jtPlato.getValueAt(filaseleccionada,4).toString());
+                Object[] columna = new Object[5];
+                int numRegistros = daoPla.listPlato().size();
+
+                for (int i = 0; i < numRegistros; i++){
+                    columna[0] = daoPla.listPlato().get(i).getIdPlato();
+                    columna[1] = daoPla.listPlato().get(i).getPlato();
+                    columna[2] = daoPla.listPlato().get(i).getPrecio();
+                    columna[3] = daoPla.listPlato().get(i).getEstado();
+                    columna[4] = daoPla.listPlato().get(i).getIdCategoriaPlato();
+                    dtmPlato.addRow(columna);
+                }
+                jtPlato.setModel(dtmPlato);
                 
                 JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
                 frmpla.show();

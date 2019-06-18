@@ -7,6 +7,8 @@ package Frames;
 
 import ConexionBD.Conexion;
 import dao.daoPlato;
+import dao.daoMesa;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -14,8 +16,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import modelo.Colorear_filas;
 
 /**
  *
@@ -28,15 +33,33 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
      */
     Conexion conexion;
     daoPlato daoPla = new daoPlato();
+    daoMesa daoMes = new daoMesa();
+    Colorear_filas color_fila = new Colorear_filas();
+    int filaseleccionada;
+    DefaultTableModel dtmPlato = new DefaultTableModel();
+    
     public frmRegistrarPedido() {
         initComponents();
-        
+        daoMes.cargar_cabecera(jtMesa);
         conexion = new Conexion();
         CargarComboMesero();
         llenacomboPersonas();
         daoPla.cargarCategoriaPlato(cboCategoriaPlato);
+        jtMesa.setDefaultRenderer(jtMesa.getColumnClass(1),color_fila );
+        cargarCabeceraTablePlato();
+        ocultar_Co();
+        
+        this.setLocationRelativeTo(null);
     }
-
+    
+    private void ocultar_Co()
+    {
+        TableColumn columna = jtMesa.getColumnModel().getColumn(1);
+        columna.setMaxWidth(0);
+        columna.setMinWidth(0);
+        columna.setPreferredWidth(0);
+        jtMesa.doLayout();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,9 +78,9 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         cboMeseroPedido = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtMesa = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jtPlato = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -74,6 +97,15 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jLabel2.setText("Categoria de Plato :");
 
         cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCategoriaPlato.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cboCategoriaPlatoPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel3.setText("Numero de Mesa :");
 
@@ -85,7 +117,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
 
         jLabel5.setText("Mesero :");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtMesa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -96,10 +128,15 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
+        jtMesa.setColumnSelectionAllowed(true);
+        jtMesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtMesaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtMesa);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jtPlato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -110,7 +147,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jtPlato);
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -237,6 +274,57 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jtMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMesaMouseClicked
+        // TODO add your handling code here:
+        try{
+            filaseleccionada = jtMesa.getSelectedRow();        
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                String colormesa = "";
+                colormesa = jtMesa.getValueAt(filaseleccionada,1).toString();
+                System.out.println(colormesa);
+                if(colormesa.equals("0")){
+                    
+                    JOptionPane.showMessageDialog(this,"Se ha seleccionado \n"+ jtMesa.getValueAt(filaseleccionada,0).toString(),"Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if(colormesa.equals("1")){
+                    
+                    JOptionPane.showMessageDialog(this,"La mesa seleccionada ya cuenta con un registro\n" + "Por favor procesa a seleccionar otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else if(colormesa.equals("2")){
+                    
+                    JOptionPane.showMessageDialog(this,"La mesa seleccionada ya cuenta con un registro\n" + "Por favor procesa a seleccionar otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                }
+                
+                                            
+            }
+        }catch (HeadlessException ex){
+            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jtMesaMouseClicked
+
+    private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        /*String tmp = (String)cboCategoriaPlato.getSelectedItem();
+        try {
+            Connection accesoDB = conexion.getMysql();
+            PreparedStatement ps = accesoDB.prepareStatement("select * from plato as p inner join categoria_plato as c on p.IDCATEGORIA_PLATO = c.IDCATEGORIA_PLATO where p.IDCATEGORIA_PLATO = ?");
+            ps.setString(1,tmp);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String add = rs.getString("IDCATEGORIA_PLATO");
+                txtIdCategoriaPlato.setText(add);
+                //System.out.println(add);
+            }
+            
+        } catch (Exception e) {
+        }*/
+    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +385,10 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     }
     
     
+    public void cargarCabeceraTablePlato(){ 
+        dtmPlato.addColumn("Nombre de Plato"); 
+        jtPlato.setModel(dtmPlato);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboCategoriaPlato;
@@ -315,8 +407,8 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTable jtMesa;
+    private javax.swing.JTable jtPlato;
     // End of variables declaration//GEN-END:variables
 }

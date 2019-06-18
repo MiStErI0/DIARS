@@ -20,13 +20,13 @@ public class daoCategoriaPlato {
     }
     
     
-    public String insertCategoriaPlato(String idCategoriaPlato,String nombreCategoria){
+    public String insertCategoriaPlato(String nombreCategoria){
         String respuestaRegistro = null;
         try {
             Connection accesoDB = conexion.getMysql();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertCategoriaPlato(?,?)}");
-            cs.setString(1, idCategoriaPlato);
-            cs.setString(2, nombreCategoria);
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertCategoriaPlato(fn_idcategoria_plato(),?)}");
+            
+            cs.setString(1, nombreCategoria);
             
             int numFAfectadas = cs.executeUpdate();
             if(numFAfectadas>0){
