@@ -47,6 +47,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         daoPla.cargarCategoriaPlato(cboCategoriaPlato);
         jtMesa.setDefaultRenderer(jtMesa.getColumnClass(1),color_fila );
         cargarCabeceraTablePlato();
+        //daoPla.cargar_cabeceraTablaPlato(jtPlato);
         ocultar_Co();
         
         this.setLocationRelativeTo(null);
@@ -104,6 +105,11 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 cboCategoriaPlatoPopupMenuWillBecomeInvisible(evt);
             }
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        cboCategoriaPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboCategoriaPlatoActionPerformed(evt);
             }
         });
 
@@ -308,22 +314,35 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_jtMesaMouseClicked
 
     private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+   
+    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+
+    private void cboCategoriaPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoActionPerformed
         // TODO add your handling code here:
-        /*String tmp = (String)cboCategoriaPlato.getSelectedItem();
+        
+        dtmPlato.setRowCount(0);
+        String tmp = (String)cboCategoriaPlato.getSelectedItem();
         try {
             Connection accesoDB = conexion.getMysql();
-            PreparedStatement ps = accesoDB.prepareStatement("select * from plato as p inner join categoria_plato as c on p.IDCATEGORIA_PLATO = c.IDCATEGORIA_PLATO where p.IDCATEGORIA_PLATO = ?");
+            PreparedStatement ps = accesoDB.prepareStatement("select PLATO from plato as p inner join categoria_plato as c on p.IDCATEGORIA_PLATO = c.IDCATEGORIA_PLATO where c.CATEGORIA = ?");
             ps.setString(1,tmp);
+            
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                String add = rs.getString("IDCATEGORIA_PLATO");
-                txtIdCategoriaPlato.setText(add);
+            System.out.println(tmp);
+            while(rs.next()){
+                System.out.println(rs.getString(1));
+                dtmPlato.addRow(new Object[]{
+                    rs.getString(1)
+                });
                 //System.out.println(add);
             }
+            jtPlato.setModel(dtmPlato);
+            rs.close();
             
         } catch (Exception e) {
-        }*/
-    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
+        }
+        //daoPla.cargar_cabeceraTablaPlato(jtPlato);
+    }//GEN-LAST:event_cboCategoriaPlatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,6 +408,9 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         dtmPlato.addColumn("Nombre de Plato"); 
         jtPlato.setModel(dtmPlato);
     }
+    
+   
+       
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboCategoriaPlato;

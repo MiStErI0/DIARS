@@ -15,6 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,9 +26,11 @@ import javax.swing.JComboBox;
 public class daoPlato {
     Conexion conexion;
     ArrayList<CategoriaPlato> CategoriaPlato;
+    ArrayList<Plato> ListPlato;
     
     public daoPlato() {
         CategoriaPlato = (ArrayList) getCategoriaPlato();
+        ListPlato = (ArrayList) listPlato();
         conexion = new Conexion();
     }
     
@@ -113,6 +118,35 @@ public class daoPlato {
         } catch (Exception e) {
         }
         return listaPlato;
+    }
+    
+    public int tamaño(){
+        return ListPlato.size();
+    }
+    
+    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
+        
+        if (tamaño()==0) {
+            System.out.println("sin Registro");
+        } else {
+            dtmtable.setRowCount(0);//Limpia las filas del JTable
+            for (Plato p:ListPlato) {
+                Object vec[] = new Object[1];
+                vec[0] = p.getPlato();
+                //agregar al JTable
+                dtmtable.addRow(vec);
+            }
+            jm.setModel(dtmtable);
+        }
+
+    }
+    
+    public void cargar_cabeceraTablaPlato(JTable tbl) {
+        DefaultTableModel dtmCabecera = new DefaultTableModel();        
+        dtmCabecera.addColumn("PLATO");  
+        tbl.setModel(dtmCabecera);
+        cargar_tabla(dtmCabecera, tbl);
+        
     }
     
     public int editPlato(String IdPlato, String Plato, double Precio, int Estado, String IdCategoriaPlato){
