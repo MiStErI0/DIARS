@@ -36,10 +36,13 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     daoMesa daoMes = new daoMesa();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
+    String cantidad;
     DefaultTableModel dtmPlato = new DefaultTableModel();
+    DefaultTableModel dtmPedido = new DefaultTableModel();
     
     public frmRegistrarPedido() {
         initComponents();
+        cargarCabeceraTablePedido();
         daoMes.cargar_cabecera(jtMesa);
         conexion = new Conexion();
         CargarComboMesero();
@@ -49,6 +52,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         cargarCabeceraTablePlato();
         //daoPla.cargar_cabeceraTablaPlato(jtPlato);
         ocultar_Co();
+        ocultar_ColPla();
         
         this.setLocationRelativeTo(null);
     }
@@ -56,6 +60,14 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     private void ocultar_Co()
     {
         TableColumn columna = jtMesa.getColumnModel().getColumn(1);
+        columna.setMaxWidth(0);
+        columna.setMinWidth(0);
+        columna.setPreferredWidth(0);
+        jtMesa.doLayout();
+    }
+    private void ocultar_ColPla()
+    {
+        TableColumn columna = jtPlato.getColumnModel().getColumn(1);
         columna.setMaxWidth(0);
         columna.setMinWidth(0);
         columna.setPreferredWidth(0);
@@ -83,12 +95,14 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtPlato = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jtPedido = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAgregarPedido = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtcantidad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,9 +167,14 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtPlato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtPlatoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtPlato);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jtPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -166,7 +185,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(jtPedido);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -185,8 +204,15 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/remove.png"))); // NOI18N
         jButton2.setText("Remover");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
-        jButton3.setText("Agregar");
+        btnAgregarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
+        btnAgregarPedido.setText("Agregar");
+        btnAgregarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPedidoActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Cantidad :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,13 +239,19 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
@@ -257,7 +289,11 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                .addGap(50, 50, 50))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,7 +301,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
                                     .addComponent(jButton2)
-                                    .addComponent(jButton3))
+                                    .addComponent(btnAgregarPedido))
                                 .addGap(19, 19, 19))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jSeparator1)
@@ -324,15 +360,16 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         String tmp = (String)cboCategoriaPlato.getSelectedItem();
         try {
             Connection accesoDB = conexion.getMysql();
-            PreparedStatement ps = accesoDB.prepareStatement("select PLATO from plato as p inner join categoria_plato as c on p.IDCATEGORIA_PLATO = c.IDCATEGORIA_PLATO where c.CATEGORIA = ?");
+            PreparedStatement ps = accesoDB.prepareStatement("select p.PLATO, p.PRECIO from plato as p inner join categoria_plato as c on p.IDCATEGORIA_PLATO = c.IDCATEGORIA_PLATO where c.CATEGORIA = ?");
             ps.setString(1,tmp);
             
             ResultSet rs = ps.executeQuery();
             System.out.println(tmp);
             while(rs.next()){
-                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(1)+" " +rs.getString(2));
                 dtmPlato.addRow(new Object[]{
-                    rs.getString(1)
+                    rs.getString(1),
+                    rs.getString(2)
                 });
                 //System.out.println(add);
             }
@@ -343,6 +380,61 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         }
         //daoPla.cargar_cabeceraTablaPlato(jtPlato);
     }//GEN-LAST:event_cboCategoriaPlatoActionPerformed
+
+    private void jtPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPlatoMouseClicked
+        // TODO add your handling code here:
+        
+//        try {
+//            filaseleccionada = jtPlato.getSelectedRow();
+//            if(filaseleccionada == -1){
+//                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            else{
+//                //dtmPedido.setRowCount(0);
+//                dtmPedido = (DefaultTableModel) jtPedido.getModel();
+//                String filaelemento[] = {
+//                    jtPlato.getValueAt(filaseleccionada, 0).toString(),
+//                    jtPlato.getValueAt(filaseleccionada, 0).toString(),
+//                    jtPlato.getValueAt(filaseleccionada, 0).toString()
+//                };
+//                dtmPedido.addRow(filaelemento);
+//                System.out.println(jtPlato.getValueAt(filaseleccionada, 0).toString());
+//            }
+//        } catch (Exception e) {
+//        }
+    }//GEN-LAST:event_jtPlatoMouseClicked
+
+    private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
+        // TODO add your handling code here:
+        try {
+            filaseleccionada = jtPlato.getSelectedRow();
+            double importe;
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                //dtmPedido.setRowCount(0);
+                cantidad = txtcantidad.getText();
+                if(cantidad.length()==0){
+                    JOptionPane.showMessageDialog(this,"No se ha introducido una cantidad","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                }
+                else{
+                    importe = (Integer.parseInt(cantidad) * Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 1).toString()));
+                    dtmPedido = (DefaultTableModel) jtPedido.getModel();
+                    String filaelemento[] = {
+                        cantidad,
+                        jtPlato.getValueAt(filaseleccionada, 0).toString(),
+                        jtPlato.getValueAt(filaseleccionada, 1).toString(),
+                        String.valueOf(importe)
+                    };
+                    dtmPedido.addRow(filaelemento);
+                    System.out.println(jtPlato.getValueAt(filaseleccionada, 0).toString());
+                }
+                
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,31 +498,41 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     
     public void cargarCabeceraTablePlato(){ 
         dtmPlato.addColumn("Nombre de Plato"); 
+        dtmPlato.addColumn("Precio"); 
         jtPlato.setModel(dtmPlato);
     }
     
+    public void cargarCabeceraTablePedido(){ 
+        dtmPedido.addColumn("Cantidad"); 
+        dtmPedido.addColumn("Plato"); 
+        dtmPedido.addColumn("Precio");
+        dtmPedido.addColumn("Importe"); 
+        jtPedido.setModel(dtmPedido);
+    }
    
        
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarPedido;
     private javax.swing.JComboBox<String> cboCategoriaPlato;
     private javax.swing.JComboBox<String> cboMeseroPedido;
     private javax.swing.JComboBox<String> cboPersonas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jtMesa;
+    private javax.swing.JTable jtPedido;
     private javax.swing.JTable jtPlato;
+    private javax.swing.JTextField txtcantidad;
     // End of variables declaration//GEN-END:variables
 }
