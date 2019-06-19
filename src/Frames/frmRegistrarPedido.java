@@ -99,7 +99,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEliminarPedido = new javax.swing.JButton();
         btnAgregarPedido = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtcantidad = new javax.swing.JTextField();
@@ -201,8 +201,13 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/remove.png"))); // NOI18N
-        jButton2.setText("Remover");
+        btnEliminarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/remove.png"))); // NOI18N
+        btnEliminarPedido.setText("Remover");
+        btnEliminarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPedidoActionPerformed(evt);
+            }
+        });
 
         btnAgregarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
         btnAgregarPedido.setText("Agregar");
@@ -253,7 +258,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3)
@@ -300,7 +305,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton1)
-                                    .addComponent(jButton2)
+                                    .addComponent(btnEliminarPedido)
                                     .addComponent(btnAgregarPedido))
                                 .addGap(19, 19, 19))))
                     .addGroup(layout.createSequentialGroup()
@@ -436,6 +441,30 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
+    private void btnEliminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPedidoActionPerformed
+        // TODO add your handling code here:
+        int respuesta ;
+        int fila;
+        try {
+            filaseleccionada = jtPlato.getSelectedRow();
+            double importe;
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila a eliminar","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                //dtmPedido.setRowCount(0);
+                respuesta = JOptionPane.showConfirmDialog(null, "¿ Estas seguro de eliminar este plato del pedido ?","Eliminar",JOptionPane.YES_NO_OPTION); 
+                if (respuesta==JOptionPane.YES_OPTION) {
+                    dtmPedido = (DefaultTableModel) jtPedido.getModel();
+                    dtmPedido.removeRow(filaseleccionada);
+                }
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se realizo la eliminacion del plato, verifique.","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarPedidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -514,11 +543,11 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarPedido;
+    private javax.swing.JButton btnEliminarPedido;
     private javax.swing.JComboBox<String> cboCategoriaPlato;
     private javax.swing.JComboBox<String> cboMeseroPedido;
     private javax.swing.JComboBox<String> cboPersonas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
