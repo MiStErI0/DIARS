@@ -25,13 +25,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class daoPlato {
     Conexion conexion;
-    ArrayList<CategoriaPlato> CategoriaPlato;
-    ArrayList<Plato> ListPlato;
+    ArrayList<CategoriaPlato> cap;
+    ArrayList<Plato> Plat;
     
     public daoPlato() {
-        CategoriaPlato = (ArrayList) getCategoriaPlato();
-        ListPlato = (ArrayList) listPlato();
-        conexion = new Conexion();
+        cap = (ArrayList) getCategoriaPlato();
+
     }
     
     private List<CategoriaPlato> getCategoriaPlato() {
@@ -70,7 +69,7 @@ public class daoPlato {
     {
         DefaultComboBoxModel CatPlaComboCat = new DefaultComboBoxModel();
         CatPlaComboCat.addElement("Selec. Categoria");
-        for(CategoriaPlato cp:CategoriaPlato)
+        for(CategoriaPlato cp:cap)
         {
             CatPlaComboCat.addElement(cp.getNombreCategoria());
         }
@@ -99,55 +98,65 @@ public class daoPlato {
         return respuestaRegistro;
     }
     
-    public ArrayList<Plato> listPlato(){
+    public ArrayList<Plato> listPlato(String idCate){
+        
+        for(CategoriaPlato cp:cap)
+        {
+            if(cp.getNombreCategoria().equals(idCate))
+            {
+                idCate=cp.getIdCategoriaPlato();
+                break;
+            }
+        
+        }
+        
         ArrayList listaPlato = new ArrayList();
-        Plato plato;
+        String Sql;
+        Connection c;
+        if(idCate == null)
+        {
+            Sql="select * from plato;";
+        }else{
+            Sql="SELECT * FROM plato where IDCATEGORIA_PLATO='"+idCate+"';";
+        }
         try {
-            Connection acceDB = conexion.getMysql();
-            PreparedStatement ps = acceDB.prepareStatement("select * from plato");
-            ResultSet rs = ps.executeQuery();
+            c = new Conexion().getMysql();
+            ResultSet rs = null;
+            PreparedStatement pst = c.prepareCall(Sql);
+            rs = pst.executeQuery();
             while (rs.next()) {                
-                plato = new Plato();
-                plato.setIdPlato(rs.getString(1));
-                plato.setPlato(rs.getString(2));
-                plato.setPrecio(rs.getDouble(3));
-                plato.setEstado(rs.getInt(4));
-                plato.setIdCategoriaPlato(rs.getString(5));
-                listaPlato.add(plato);
+                Plato p = new Plato(rs.getString(1),rs.getString(2),rs.getDouble(3),rs.getInt(4),rs.getString(5));
+                System.out.println("dsadsadasdsadasdd");
+                listaPlato.add(p);
             }
         } catch (Exception e) {
+                            System.out.println("no ingreso gg");
+
         }
         return listaPlato;
     }
     
-    public int tamaño(){
-        return ListPlato.size();
-    }
-    
-    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
-        
-        if (tamaño()==0) {
-            System.out.println("sin Registro");
-        } else {
-            dtmtable.setRowCount(0);//Limpia las filas del JTable
-            for (Plato p:ListPlato) {
-                Object vec[] = new Object[1];
-                vec[0] = p.getPlato();
-                //agregar al JTable
-                dtmtable.addRow(vec);
-            }
-            jm.setModel(dtmtable);
-        }
 
-    }
     
-    public void cargar_cabeceraTablaPlato(JTable tbl) {
-        DefaultTableModel dtmCabecera = new DefaultTableModel();        
-        dtmCabecera.addColumn("PLATO");  
-        tbl.setModel(dtmCabecera);
-        cargar_tabla(dtmCabecera, tbl);
+    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm,String idCate) {
         
+            Plat=listPlato(idCate);
+            dtmtable.setRowCount(0);//Limpia las filas del JTable
+            Plat.stream().map((p) -> {
+                Object vec[] = new Object[5];
+                vec[0] = p.getIdPlato();
+                vec[1] = p.getPlato();
+                vec[2] = p.getPrecio();
+                vec[3] = p.getEstado();
+                vec[4] = p.getIdCategoriaPlato();
+            return vec;
+        }).forEachOrdered((vec) -> {
+            //agregar al JTable
+            dtmtable.addRow(vec);
+        });
+            jm.setModel(dtmtable);
     }
+
     
     public int editPlato(String IdPlato, String Plato, double Precio, int Estado, String IdCategoriaPlato){
         int numFA = 0;

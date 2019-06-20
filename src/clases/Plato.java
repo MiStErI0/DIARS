@@ -17,11 +17,6 @@ public class Plato {
     String IdCategoriaPlato;
 
     public Plato(){
-        IdPlato = "";
-        Plato = "";
-        Precio = 0; 
-        Estado = 0;
-        IdCategoriaPlato = "";
     }
     
     public Plato(String IdPlato, String Plato, double Precio, int Estado, String IdCategoriaPlato) {

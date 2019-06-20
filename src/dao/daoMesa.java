@@ -24,12 +24,13 @@ import javax.swing.table.DefaultTableModel;
  * @author johan07
  */
 public class daoMesa {
+
     Conexion conexion;
     private ArrayList<Mesa> me;
 
     public daoMesa() {
 
-        me =(ArrayList)getMesaColor();
+        me = (ArrayList) getMesaColor();
         conexion = new Conexion();
     }
 
@@ -68,18 +69,26 @@ public class daoMesa {
         return mes;
     }
 
-    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
-        
-        if (tamaño()==0) {
-            JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
+    public void cargar_tabla(DefaultTableModel dtmtable, JTable jm) {
+        String a = "DELIVERY";
+        boolean bus;
+
+        if (tamaño() == 0) {
+            JOptionPane.showMessageDialog(null, "Lista sin elementos!!!", "Validar", 2);
         } else {
             dtmtable.setRowCount(0);//Limpia las filas del JTable
-            for (Mesa m:me) {
+            for (Mesa m : me) {
                 Object vec[] = new Object[2];
-                vec[0] = m.getMesa();
-                vec[1] = m.getColor();
-                //agregar al JTable
-                dtmtable.addRow(vec);
+                bus = m.getMesa().contains(a);
+                if (!bus) {
+                    System.out.println("palabra encontrada");
+                    vec[0] = m.getMesa();
+                    vec[1] = m.getColor();
+                    //agregar al JTable
+                    dtmtable.addRow(vec);
+                } else
+                    System.out.println("palabra no encontrada");
+
             }
             jm.setModel(dtmtable);
         }
@@ -87,25 +96,26 @@ public class daoMesa {
     }
 
     public void cargar_cabecera(JTable tbl) {
-        DefaultTableModel dtmCabecera = new DefaultTableModel();        
+        DefaultTableModel dtmCabecera = new DefaultTableModel();
         dtmCabecera.addColumn("MESA");
-        dtmCabecera.addColumn("COLOR");    
+        dtmCabecera.addColumn("COLOR");
         tbl.setModel(dtmCabecera);
         cargar_tabla(dtmCabecera, tbl);
-        
+
     }
-    public int tamaño(){
+
+    public int tamaño() {
         return me.size();
     }
-    
-    public ArrayList<Mesa> listMesa(){
+
+    public ArrayList<Mesa> listMesa() {
         ArrayList listaMesa = new ArrayList();
         Mesa mesa;
         try {
             Connection acceDB = conexion.getMysql();
             PreparedStatement ps = acceDB.prepareStatement("select * from mesa");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 mesa = new Mesa();
                 mesa.setIdmesa(rs.getString(1));
                 mesa.setMesa(rs.getString(2));
@@ -117,6 +127,5 @@ public class daoMesa {
         }
         return listaMesa;
     }
-    
-    
+
 }

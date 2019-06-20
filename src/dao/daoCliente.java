@@ -27,7 +27,6 @@ public class daoCliente {
     public daoCliente() {
         
         clien=(ArrayList) getClien();
-        conexion = new Conexion();
     }
     
     private List<cliente> getClien() {

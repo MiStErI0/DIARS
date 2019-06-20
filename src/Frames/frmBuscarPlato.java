@@ -27,7 +27,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     int filaseleccionada;
     public frmBuscarPlato() {
         initComponents();
-        cargarCabeceraTableMesa();
+        cargarCabeceraTablePlato();
         listarTable();
     }
 
@@ -144,14 +144,14 @@ public class frmBuscarPlato extends javax.swing.JFrame {
             else{
                 //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
                 Object[] columna = new Object[5];
-                int numRegistros = daoPla.listPlato().size();
+                int numRegistros = daoPla.listPlato(null).size();
 
                 for (int i = 0; i < numRegistros; i++){
-                    columna[0] = daoPla.listPlato().get(i).getIdPlato();
-                    columna[1] = daoPla.listPlato().get(i).getPlato();
-                    columna[2] = daoPla.listPlato().get(i).getPrecio();
-                    columna[3] = daoPla.listPlato().get(i).getEstado();
-                    columna[4] = daoPla.listPlato().get(i).getIdCategoriaPlato();
+                    columna[0] = daoPla.listPlato(null).get(i).getIdPlato();
+                    columna[1] = daoPla.listPlato(null).get(i).getPlato();
+                    columna[2] = daoPla.listPlato(null).get(i).getPrecio();
+                    columna[3] = daoPla.listPlato(null).get(i).getEstado();
+                    columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
                     dtmPlato.addRow(columna);
                 }
                 jtPlato.setModel(dtmPlato);
@@ -204,7 +204,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         });
     }
 
-    public void cargarCabeceraTableMesa(){
+    public void cargarCabeceraTablePlato(){
         dtmPlato.addColumn("ID Plato"); 
         dtmPlato.addColumn("Nombre de Plato"); 
         dtmPlato.addColumn("Precio"); 
@@ -215,14 +215,14 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     
     public void listarTable(){
         Object[] columna = new Object[5];
-        int numRegistros = daoPla.listPlato().size();
+        int numRegistros = daoPla.listPlato(null).size();
         
         for (int i = 0; i < numRegistros; i++){
-            columna[0] = daoPla.listPlato().get(i).getIdPlato();
-            columna[1] = daoPla.listPlato().get(i).getPlato();
-            columna[2] = daoPla.listPlato().get(i).getPrecio();
-            columna[3] = daoPla.listPlato().get(i).getEstado();
-            columna[4] = daoPla.listPlato().get(i).getIdCategoriaPlato();
+            columna[0] = daoPla.listPlato(null).get(i).getIdPlato();
+            columna[1] = daoPla.listPlato(null).get(i).getPlato();
+            columna[2] = daoPla.listPlato(null).get(i).getPrecio();
+            columna[3] = daoPla.listPlato(null).get(i).getEstado();
+            columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
             dtmPlato.addRow(columna);
         }
         jtPlato.setModel(dtmPlato);  

@@ -52,18 +52,22 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         cargarCabeceraTablePlato();
         //daoPla.cargar_cabeceraTablaPlato(jtPlato);
         ocultar_Co();
-        ocultar_ColPla();
+        //ocultar_ColPla();
         
         this.setLocationRelativeTo(null);
     }
     
     private void ocultar_Co()
     {
-        TableColumn columna = jtMesa.getColumnModel().getColumn(1);
-        columna.setMaxWidth(0);
-        columna.setMinWidth(0);
-        columna.setPreferredWidth(0);
-        jtMesa.doLayout();
+//        TableColumn columna = jtMesa.getColumnModel().getColumn(1);
+//        columna.setMaxWidth(0);
+//        columna.setMinWidth(0);
+//        columna.setPreferredWidth(0);
+//        jtMesa.doLayout();
+        jtMesa.getColumnModel().getColumn(1).setMaxWidth(0);
+        jtMesa.getColumnModel().getColumn(1).setMinWidth(0);
+        jtMesa.getColumnModel().getColumn(1).setPreferredWidth(0);
+
     }
     private void ocultar_ColPla()
     {
