@@ -11,8 +11,23 @@ package clases;
  */
 public class empleado extends persona{
 
-    public empleado(String Id, String Nombre, String Apellidop, String Apellidom, String Correo, Long Telefono, Long Dni, String FechaNac, Integer Estado) {
-        super(Id, Nombre, Apellidop, Apellidom, Correo, Telefono, Dni, FechaNac, Estado);
+    private String cargo;
+    
+    public empleado() {
     }
+    public empleado(String Id, String Nombre, String Apellidop, String Apellidom, String Correo, Long Telefono, Long Dni, String FechaNac, Integer Estado,String cargo) {
+        super(Id, Nombre, Apellidop, Apellidom, Correo, Telefono, Dni, FechaNac, Estado);
+        this.cargo=cargo;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    
     
 }

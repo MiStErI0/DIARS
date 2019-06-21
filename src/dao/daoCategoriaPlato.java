@@ -22,8 +22,9 @@ public class daoCategoriaPlato {
     
     public String insertCategoriaPlato(String nombreCategoria){
         String respuestaRegistro = null;
+        Connection accesoDB;
         try {
-            Connection accesoDB = conexion.getMysql();
+            accesoDB = conexion.getMysql();
             CallableStatement cs = accesoDB.prepareCall("{call sp_insertCategoriaPlato(fn_idcategoria_plato(),?)}");
             
             cs.setString(1, nombreCategoria);

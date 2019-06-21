@@ -1,6 +1,8 @@
 package Frames;
 
+import clases.empleado;
 import clases.usuario;
+import dao.daoEmpleado;
 import dao.daoLogin;
 import dao.daousuarios;
 import java.awt.Dimension;
@@ -15,6 +17,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class frmLogin extends javax.swing.JFrame {
 
     daousuarios ven = new daousuarios();
+    daoEmpleado empl = new daoEmpleado();
     ImageIcon fondo = new ImageIcon("src\\machis\\fondo.jpg");
     ImageIcon logo = new ImageIcon("src\\machis\\Logo.png");
     ImageIcon ingresar = new ImageIcon("src\\machis\\ingresar.png");
@@ -130,14 +133,27 @@ public class frmLogin extends javax.swing.JFrame {
 
             String pass = getPassword();
             usuario v = ven.buscar(getUser());
+            empleado e;
             if (v != null) {
                 if (pass.equals(v.getContraseña())) {
-                    JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
-                    frmMenuPrincipal r;
-                    r = new frmMenuPrincipal();
-                    r.setVisible(true);
-                    dispose();
+                    e=empl.obtener_cargo(getUser());
+                    if (e.getCargo().equals("Cajero") || e.getCargo().equals("Administrador") ) {
+                        ven.Sesion(v, "Iniciar");
+                        JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
+                        frmAbrirCaja r;
+                        r = new frmAbrirCaja();
+                        r.setVisible(true);
+                        frmAbrirCaja.txtEmpleado.setText(e.getNombre()+" "+e.getApellidop()+" "+e.getApellidom());
 
+                        dispose();
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
+                        frmMenuPrincipal r;
+                        r = new frmMenuPrincipal();
+                        r.setVisible(true);
+                        dispose();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "contraseña invalida");
 

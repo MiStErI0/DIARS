@@ -6,6 +6,7 @@
 package dao;
 
 import ConexionBD.Conexion;
+import clases.empleado;
 import clases.usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,6 @@ import java.util.logging.Logger;
  */
 public class daousuarios {
     private ArrayList<usuario>ven;
-
     public daousuarios() {
         
         ven =(ArrayList)getUsua();
@@ -71,6 +71,42 @@ public class daousuarios {
             }
         }
         return null;
+    } 
+    
+    public void Sesion(usuario e, String activo) {
+        String sql = "UPDATE usuario set sesion=? where idUsuario=? and usuario=?";
+        Connection c = null;
+        try {
+            c = new Conexion().getMysql();
+            PreparedStatement pst = c.prepareCall(sql);
+            if (activo.equals("Iniciar")) {
+                pst.setInt(1, 2);
+                pst.setString(2, e.getIdUsuario());
+                pst.setString(3, e.getUsuario());
+                System.out.println("sesion        inicio             funciona ");
+            } else {
+                pst.setInt(1, 1);
+                pst.setString(2, e.getIdUsuario());
+                pst.setString(3, e.getUsuario());
+                System.out.println("sesion         Cerrar            funciona ");
+            }
+            int rs = pst.executeUpdate();
+            c.close();
+            c = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                c.close();
+                c = null;
+                System.out.println("sesion           no          funciona ");
+            } catch (SQLException ex1) {
+                Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex1);
+                System.out.println("sesion           no          funciona ");
+
+            }
+        }
     }
+
+    
 
 }

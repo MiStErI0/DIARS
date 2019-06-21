@@ -126,11 +126,10 @@ public class daoPlato {
             rs = pst.executeQuery();
             while (rs.next()) {                
                 Plato p = new Plato(rs.getString(1),rs.getString(2),rs.getDouble(3),rs.getInt(4),rs.getString(5));
-                System.out.println("dsadsadasdsadasdd");
                 listaPlato.add(p);
             }
         } catch (Exception e) {
-                            System.out.println("no ingreso gg");
+            System.out.println("no ingreso gg");
 
         }
         return listaPlato;

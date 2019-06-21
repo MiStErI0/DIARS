@@ -6,8 +6,11 @@
 package Frames;
 
 import ConexionBD.Conexion;
+import clases.pedido;
 import dao.daoPlato;
 import dao.daoMesa;
+import dao.daoPedido;
+import dao.daousuarios;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,16 +39,17 @@ public class frmDelibery extends javax.swing.JFrame {
     daoMesa daoMes = new daoMesa();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
-    String cantidad;
+    int cantidad;
     DefaultTableModel dtmPlato = new DefaultTableModel();
     DefaultTableModel dtmPedido = new DefaultTableModel();
+    daoPedido dp= new daoPedido();
     
     public frmDelibery() {
         initComponents();
         cargarCabeceraTablePedido();
         daoPla.cargarCategoriaPlato(cboCategoriaPlato);
         cargarCabeceraTablePlato();
-        
+        Ocultar_plato();
         this.setLocationRelativeTo(null);
     }
     
@@ -87,16 +91,17 @@ public class frmDelibery extends javax.swing.JFrame {
         btnAgregarPedido = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtcantidad = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Delibery");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         jLabel2.setText("Categoria de Plato :");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
 
         cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboCategoriaPlato.addItemListener(new java.awt.event.ItemListener() {
@@ -104,10 +109,8 @@ public class frmDelibery extends javax.swing.JFrame {
                 cboCategoriaPlatoItemStateChanged(evt);
             }
         });
-        getContentPane().add(cboCategoriaPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 140, -1));
 
-        jLabel5.setText("Mesero :");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 41, 170, 40));
+        jLabel5.setText("Cajero: ");
 
         jtPlato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,8 +130,6 @@ public class frmDelibery extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jtPlato);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 320, 380));
-
         jtPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -142,15 +143,11 @@ public class frmDelibery extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(jtPedido);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 56, 360, 388));
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Pedido");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 360, -1));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 11, 10, 501));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
         jButton1.setText("Cancelar");
@@ -159,7 +156,6 @@ public class frmDelibery extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 460, 150, -1));
 
         btnEliminarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/remove.png"))); // NOI18N
         btnEliminarPedido.setText("Remover");
@@ -168,7 +164,6 @@ public class frmDelibery extends javax.swing.JFrame {
                 btnEliminarPedidoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 490, 150, -1));
 
         btnAgregarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
         btnAgregarPedido.setText("Agregar");
@@ -177,11 +172,104 @@ public class frmDelibery extends javax.swing.JFrame {
                 btnAgregarPedidoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAgregarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 150, -1));
 
         jLabel7.setText("Cantidad :");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 60, 20));
-        getContentPane().add(txtcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 100, -1));
+
+        jLabel4.setText("Cliente:");
+
+        jButton4.setText("buscar");
+
+        jButton5.setText("agregar");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(4, 4, 4)
+                        .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jButton4)
+                        .addGap(5, 5, 5)
+                        .addComponent(jButton5))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(btnEliminarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregarPedido)
+                    .addComponent(jButton1))
+                .addGap(5, 5, 5)
+                .addComponent(btnEliminarPedido))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -219,25 +307,26 @@ public class frmDelibery extends javax.swing.JFrame {
         try {
             filaseleccionada = jtPlato.getSelectedRow();
             double importe;
+            String descripcion;
             if(filaseleccionada == -1){
                 JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
             }
             else{
                 //dtmPedido.setRowCount(0);
-                cantidad = txtcantidad.getText();
-                if(cantidad.length()==0){
+                
+                if(txtcantidad.getText().equals("")){
                     JOptionPane.showMessageDialog(this,"No se ha introducido una cantidad","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    importe = (Integer.parseInt(cantidad) * Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 1).toString()));
-                    dtmPedido = (DefaultTableModel) jtPedido.getModel();
-                    String filaelemento[] = {
-                        cantidad,
-                        jtPlato.getValueAt(filaseleccionada, 0).toString(),
-                        jtPlato.getValueAt(filaseleccionada, 1).toString(),
-                        String.valueOf(importe)
-                    };
-                    dtmPedido.addRow(filaelemento);
+                    cantidad = Integer.parseInt(txtcantidad.getText());
+                    descripcion=JOptionPane.showInputDialog(null,"Descripcion", "Descripcion",NORMAL);
+                    importe = (cantidad * Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 3).toString()));
+                    
+                    pedido p=new pedido(jtPlato.getValueAt(filaseleccionada, 1).toString(), cantidad,descripcion, Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 2).toString()), importe);
+                    
+                    dp.adicionar(p);
+                    
+                    dp.cargar_tabla_pedido(dtmPedido, jtPedido);
                     System.out.println(jtPlato.getValueAt(filaseleccionada, 0).toString());
                 }
                 
@@ -341,14 +430,18 @@ public class frmDelibery extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarPedido;
     private javax.swing.JComboBox<String> cboCategoriaPlato;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JTable jtPedido;
     private javax.swing.JTable jtPlato;
     private javax.swing.JTextField txtcantidad;
