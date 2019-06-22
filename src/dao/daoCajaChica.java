@@ -6,6 +6,8 @@
 package dao;
 
 import ConexionBD.Conexion;
+import Frames.frmCerrarCaja;
+import clases.caja_chica;
 import clases.empleado;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -23,7 +25,6 @@ import java.util.logging.Logger;
  */
 public class daoCajaChica {
 
-    daoEmpleado de=new daoEmpleado();
     public daoCajaChica() {
     }
 
@@ -54,7 +55,7 @@ public class daoCajaChica {
         Connection c;
         try {
             c = new Conexion().getMysql();
-            CallableStatement cs = c.prepareCall("{call sp_cerrar_caja(?)}");
+            CallableStatement cs = c.prepareCall("{call sp_cerrar_caja()}");
             int numFAfectadas = cs.executeUpdate();
             if (numFAfectadas > 0) {
                 System.out.println("cerrar caja Exitoso");
@@ -69,8 +70,8 @@ public class daoCajaChica {
         }
     }
 
-    public void getCaja_chica(Double Venta_total,Double Tarjeta,Double Apertura,Double Efectivo,String id) {
-        List<empleado> e = de.getEmpleado();
+    public  caja_chica  getCaja_chica() {
+        caja_chica cc=null;
         String sql = "select c.IDCAJA,c.VENTA_TOTAL,c.APERTURA,c.TARJETAS,c.EFECTIVO,c.FECHA_INICIO,c.FECHA_FIN,c.ESTADO, concat(p.NOMBRE_RS,' ',p.APELLIDOP,' ',p.APELLIDOM) from caja_chica as c\n" +
 "inner join empleado as e on c.idempleado=e.idempleado\n" +
 "inner join persona as p on p.idpersona=e.idpersona where fecha_fin is NULL";
@@ -81,12 +82,7 @@ public class daoCajaChica {
             PreparedStatement pst = c.prepareCall(sql);
             rs = pst.executeQuery();
             if (rs.next()) { 
-                Venta_total=rs.getDouble(2);
-                Apertura=rs.getDouble(3);
-                Tarjeta=rs.getDouble(4);
-                Efectivo=rs.getDouble(5);
-                id=rs.getString(8);
-                System.out.println(rs.getString(9));
+                cc=new caja_chica(rs.getDouble(2),rs.getDouble(3) ,rs.getDouble(4) , rs.getDouble(5),0.00, rs.getString(9));
             }
             rs.close();
 
@@ -102,6 +98,7 @@ public class daoCajaChica {
                 Logger.getLogger(daousuarios.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
+        return cc;
     }
 
 }

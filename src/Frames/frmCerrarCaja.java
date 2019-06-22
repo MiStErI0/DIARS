@@ -17,9 +17,11 @@ public class frmCerrarCaja extends javax.swing.JFrame {
      * Creates new form frmCerrarCaja
      */
     daoCajaChica dcc=new daoCajaChica();
+    
+       
     public frmCerrarCaja() {
         initComponents();
-        cargar();
+        dcc.getCaja_chica();
     }
 
     /**
@@ -180,24 +182,10 @@ public class frmCerrarCaja extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCerrarCajaActionPerformed
 
-    
-    private void cargar()
-    {
-        String cajero = null;
-        Double Venta_total=0.00;
-        Double Tarjeta=0.00;
-        Double apertura=0.00;
-        Double efectivo=0.00;
-        Double Egreso;
+   
         
-        dcc.getCaja_chica(Venta_total, Tarjeta, apertura, efectivo,cajero);
-        txtCajero.setText(cajero);
-        txtAper.setText(apertura.toString());
-        txtVenta.setText(Venta_total.toString());
-        txtTarjetas.setText(Tarjeta.toString());
-        txtEfectivo.setText(efectivo.toString());
         
-    }
+        
     /**
      * @param args the command line arguments
      */
@@ -244,11 +232,11 @@ public class frmCerrarCaja extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField txtAper;
-    private javax.swing.JTextField txtCajero;
-    private javax.swing.JTextField txtEfectivo;
-    private javax.swing.JTextField txtEgreso;
-    private javax.swing.JTextField txtTarjetas;
-    private javax.swing.JTextField txtVenta;
+    public static javax.swing.JTextField txtAper;
+    public static javax.swing.JTextField txtCajero;
+    public static javax.swing.JTextField txtEfectivo;
+    public static javax.swing.JTextField txtEgreso;
+    public static javax.swing.JTextField txtTarjetas;
+    public static javax.swing.JTextField txtVenta;
     // End of variables declaration//GEN-END:variables
 }

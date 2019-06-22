@@ -3,12 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/Frames/frmAbrirCaja.java</file>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/Frames/frmCuenta.java</file>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/dao/daoEmpleado.java</file>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/dao/daoCajaChica.java</file>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/Frames/frmLogin.java</file>
-            <file>file:/C:/Users/johan07/Documents/GitHub/DIARS/src/Frames/frmCerrarCaja.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/dao/daoLogin.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmLogin.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmRegistro.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmRegistrarPedido.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/dao/daoCategoriaPlato.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmBuscarPlato.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmBuscarCliente.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmBuscarCategoriaPlato.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmMesa.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/Frames/frmPlato.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/dao/daoFactura.java</file>
+            <file>file:/C:/Users/johan/Documents/GitHub/DIARS/src/ConexionBD/Conexion.java</file>
         </group>
     </open-files>
 </project-private>
