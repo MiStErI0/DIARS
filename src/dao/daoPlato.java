@@ -27,6 +27,7 @@ public class daoPlato {
     Conexion conexion;
     ArrayList<CategoriaPlato> cap;
     ArrayList<Plato> Plat;
+    daoCategoriaPlato dcp ;
     
     public daoPlato() {
         cap = (ArrayList) getCategoriaPlato();
@@ -65,28 +66,18 @@ public class daoPlato {
         return lista;
     }
     
-    public void cargarCategoriaPlato(JComboBox jm)
-    {
-        DefaultComboBoxModel CatPlaComboCat = new DefaultComboBoxModel();
-        CatPlaComboCat.addElement("Selec. Categoria");
-        for(CategoriaPlato cp:cap)
-        {
-            CatPlaComboCat.addElement(cp.getNombreCategoria());
-        }
-        
-        jm.setModel(CatPlaComboCat);
-    }
     
-    public String insertPlato(String IdPlato, String Plato, double Precio, int Estado, String IdCategoriaPlato){
+    
+    public String insertPlato(String Plato, double Precio, int Estado, String IdCategoriaPlato){
         String respuestaRegistro = null;
+        Connection accesoDB;
         try {
-            Connection accesoDB = conexion.getMysql();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertPlato(?,?,?,?,?)}");
-            cs.setString(1, IdPlato);
-            cs.setString(2, Plato);
-            cs.setDouble(3, Precio);
-            cs.setInt(4, Estado);
-            cs.setString(5, IdCategoriaPlato);
+            accesoDB = new Conexion().getMysql();
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertPlato(fn_idplato(),?,?,?,?)}");
+            cs.setString(1, Plato);
+            cs.setDouble(2, Precio);
+            cs.setInt(3, Estado);
+            cs.setString(4, IdCategoriaPlato);
             
             int numFAfectadas = cs.executeUpdate();
             if(numFAfectadas>0){
@@ -161,12 +152,11 @@ public class daoPlato {
         int numFA = 0;
         try {
             Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_editPlato(?,?,?,?,?)}");
-            cs.setString(1, IdPlato);
-            cs.setString(2, Plato);
-            cs.setDouble(3, Precio);
-            cs.setInt(4, Estado);
-            cs.setString(5, IdCategoriaPlato);
+            CallableStatement cs = acceDB.prepareCall("{call sp_editPlato(fn_idplato(),?,?,?,?)}");
+            cs.setString(1, Plato);
+            cs.setDouble(2, Precio);
+            cs.setInt(3, Estado);
+            cs.setString(4, IdCategoriaPlato);
             
             numFA = cs.executeUpdate();
             

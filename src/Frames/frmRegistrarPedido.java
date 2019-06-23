@@ -6,6 +6,7 @@
 package Frames;
 
 import ConexionBD.Conexion;
+import dao.daoCategoriaPlato;
 import dao.daoPlato;
 import dao.daoMesa;
 import java.awt.HeadlessException;
@@ -33,6 +34,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
      */
     Conexion conexion;
     daoPlato daoPla = new daoPlato();
+    daoCategoriaPlato dcp = new daoCategoriaPlato();
     daoMesa daoMes = new daoMesa();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
@@ -47,7 +49,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         conexion = new Conexion();
         CargarComboMesero();
         llenacomboPersonas();
-        daoPla.cargarCategoriaPlato(cboCategoriaPlato);
+        dcp.cargarCategoriaPlato(cboCategoriaPlato);
         jtMesa.setDefaultRenderer(jtMesa.getColumnClass(1),color_fila );
         cargarCabeceraTablePlato();
         //daoPla.cargar_cabeceraTablaPlato(jtPlato);

@@ -8,24 +8,24 @@ import ConexionBD.Conexion;
 import clases.CategoriaPlato;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 /**
  *
  * @author Luigi
  */
 public class daoCategoriaPlato {
-    Conexion conexion;
     
     public daoCategoriaPlato(){
-        conexion = new Conexion();
     }
     
     
     public String insertCategoriaPlato(String nombreCategoria){
         String respuestaRegistro = null;
-        Connection accesoDB;
+        Connection c;
         try {
-            accesoDB = conexion.getMysql();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertCategoriaPlato(fn_idcategoria_plato(),?)}");
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_insertCategoriaPlato(fn_idcategoria_plato(),?)}");
             
             cs.setString(1, nombreCategoria);
             
@@ -42,9 +42,10 @@ public class daoCategoriaPlato {
     public ArrayList<CategoriaPlato> listCategoriaPlato(){
         ArrayList listaCategoriaPlato = new ArrayList();
         CategoriaPlato categoriaplato;
+        Connection c;
         try {
-            Connection acceDB = conexion.getMysql();
-            PreparedStatement ps = acceDB.prepareStatement("select * from categoria_plato");
+            c=new Conexion().getMysql();
+            PreparedStatement ps = c.prepareStatement("select * from categoria_plato");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {                
                 categoriaplato = new CategoriaPlato();
@@ -59,9 +60,10 @@ public class daoCategoriaPlato {
     
     public int editCategoriaPlato(String idCategoriaPlato,String nombreCategoria){
         int numFA = 0;
+        Connection c;
         try {
-            Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_editCategoriaPlato(?,?)}");
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editCategoriaPlato(?,?)}");
             cs.setString(1, idCategoriaPlato);
             cs.setString(2, nombreCategoria);
             
@@ -74,9 +76,10 @@ public class daoCategoriaPlato {
     
     public int deleteCategoriaPlato(String idCategoriaPlato){
         int numFA = 0;
+        Connection c;
         try {
-            Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_deleteCategoriaPlato(?)}");
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_deleteCategoriaPlato(?)}");
             cs.setString(1, idCategoriaPlato);
             
             numFA = cs.executeUpdate();
@@ -84,6 +87,19 @@ public class daoCategoriaPlato {
         } catch (Exception e) {
         }
         return numFA;
+    }
+    
+    public void cargarCategoriaPlato(JComboBox jm)
+    {
+        DefaultComboBoxModel CatPlaComboCat = new DefaultComboBoxModel();
+        CatPlaComboCat.addElement("Selec. Categoria");
+        for(CategoriaPlato cp:listCategoriaPlato())
+        {
+            CatPlaComboCat.addElement(cp.getNombreCategoria());
+            System.out.println(cp.getIdCategoriaPlato()+"   "+cp.getNombreCategoria());
+        }
+        
+        jm.setModel(CatPlaComboCat);
     }
     
 }

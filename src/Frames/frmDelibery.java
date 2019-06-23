@@ -7,6 +7,7 @@ package Frames;
 
 import ConexionBD.Conexion;
 import clases.pedido;
+import dao.daoCategoriaPlato;
 import dao.daoPlato;
 import dao.daoMesa;
 import dao.daoPedido;
@@ -36,6 +37,7 @@ public class frmDelibery extends javax.swing.JFrame {
      */
     Conexion conexion;
     daoPlato daoPla = new daoPlato();
+    daoCategoriaPlato dcp = new daoCategoriaPlato();
     daoMesa daoMes = new daoMesa();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
@@ -47,7 +49,7 @@ public class frmDelibery extends javax.swing.JFrame {
     public frmDelibery() {
         initComponents();
         cargarCabeceraTablePedido();
-        daoPla.cargarCategoriaPlato(cboCategoriaPlato);
+        dcp.cargarCategoriaPlato(cboCategoriaPlato);
         cargarCabeceraTablePlato();
         Ocultar_plato();
         this.setLocationRelativeTo(null);

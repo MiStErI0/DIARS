@@ -5,6 +5,8 @@
  */
 package Frames;
 import ConexionBD.Conexion;
+import clases.CategoriaPlato;
+import dao.daoCategoriaPlato;
 import dao.daoPlato;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,15 +24,14 @@ public class frmPlato extends javax.swing.JFrame {
      * Creates new form frmPlato
      */
     //Conexion conexion;
-    Conexion conexion;
-    daoPlato daoPla = new daoPlato();
     
+    daoPlato daoPla = new daoPlato();
+    daoCategoriaPlato dcp = new daoCategoriaPlato();
+
     public frmPlato() {
         initComponents();
-        conexion = new Conexion();
-        daoPla.cargarCategoriaPlato(cboCategoriaPlato);
         LlenaComboEstadoPlato();
-        txtIdCategoriaPlato.setVisible(true);
+        dcp.cargarCategoriaPlato(cboCategoriaPlato);
     }
 
     /**
@@ -58,10 +59,8 @@ public class frmPlato extends javax.swing.JFrame {
         btnActualizarPlato = new javax.swing.JButton();
         btnBorrarPlato = new javax.swing.JButton();
         btnCancelarPlato = new javax.swing.JButton();
-        txtIdCategoriaPlato = new javax.swing.JTextField();
-        txtEstadoPlato = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblprod = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,15 +72,6 @@ public class frmPlato extends javax.swing.JFrame {
         jLabel3.setText("Categoria :");
 
         cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboCategoriaPlato.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-                cboCategoriaPlatoPopupMenuWillBecomeInvisible(evt);
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-        });
 
         jLabel4.setText("Nombre de Plato :");
 
@@ -91,6 +81,11 @@ public class frmPlato extends javax.swing.JFrame {
 
         btnNuevoPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
         btnNuevoPlato.setText("Nuevo");
+        btnNuevoPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoPlatoActionPerformed(evt);
+            }
+        });
 
         btnAgregarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
         btnAgregarPlato.setText("Agregar");
@@ -124,7 +119,7 @@ public class frmPlato extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblprod.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -135,7 +130,7 @@ public class frmPlato extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblprod);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,9 +149,7 @@ public class frmPlato extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(42, 42, 42)
-                        .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtIdCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(10, 10, 10)
@@ -168,9 +161,7 @@ public class frmPlato extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(56, 56, 56)
-                        .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(txtEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAgregarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
@@ -206,8 +197,7 @@ public class frmPlato extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jLabel3))
-                            .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIdCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -225,8 +215,7 @@ public class frmPlato extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jLabel6))
-                            .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAgregarPlato)
@@ -234,7 +223,7 @@ public class frmPlato extends javax.swing.JFrame {
                             .addComponent(btnBorrarPlato))
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelarPlato)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -245,29 +234,9 @@ public class frmPlato extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarPlatoActionPerformed
 
-    private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
-        // TODO add your handling code here:
-        String tmp = (String)cboCategoriaPlato.getSelectedItem();
-        try {
-            Connection accesoDB = conexion.getMysql();
-            PreparedStatement ps = accesoDB.prepareStatement("select IDCATEGORIA_PLATO from categoria_plato where CATEGORIA=?");
-            ps.setString(1,tmp);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                String add = rs.getString("IDCATEGORIA_PLATO");
-                txtIdCategoriaPlato.setText(add);
-                //System.out.println(add);
-            }
-            
-        }
-        catch (Exception e) {
-        }
-        
-    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
-
     private void btnAgregarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPlatoActionPerformed
         // TODO add your handling code here:
-        String respuestaRegistro = daoPla.insertPlato(getIdPlato(), getNombrePlato(), getPrecioPlato(),getEstadoPlato(),getIdCategoriaPlato());
+        String respuestaRegistro = daoPla.insertPlato(getNombrePlato(), getPrecioPlato(),getEstadoPlato(),getIdCategoriaPlato());
         if(respuestaRegistro != null){
             JOptionPane.showMessageDialog(null, respuestaRegistro);
         }
@@ -297,6 +266,10 @@ public class frmPlato extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
         } 
     }//GEN-LAST:event_btnBorrarPlatoActionPerformed
+
+    private void btnNuevoPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPlatoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNuevoPlatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,10 +306,10 @@ public class frmPlato extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public void LlenaComboEstadoPlato(){
-        cboEstadoPlato.addItem("Activado");
         cboEstadoPlato.addItem("Desactivado");
+        cboEstadoPlato.addItem("Activado");   
     }
     
     public String getIdPlato(){
@@ -353,11 +326,27 @@ public class frmPlato extends javax.swing.JFrame {
     
     public int getEstadoPlato(){
         //return (int)cboEstadoPlato.getSelectedItem();
-        return Integer.parseInt(txtEstadoPlato.getText());
+        System.out.println(cboEstadoPlato.getSelectedIndex());
+        return cboEstadoPlato.getSelectedIndex();
     }
     
     public String getIdCategoriaPlato(){
-        return txtIdCategoriaPlato.getText();
+        
+        String Buscar = cboCategoriaPlato.getSelectedItem().toString();
+        for(CategoriaPlato cp:dcp.listCategoriaPlato())
+        {
+            if(cp.getNombreCategoria().equals(Buscar))
+            {
+                System.out.println(Buscar);
+                Buscar=cp.getIdCategoriaPlato();
+                System.out.println(Buscar);
+
+                break;
+                
+            }
+        }
+        
+        return Buscar;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -375,9 +364,7 @@ public class frmPlato extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
-    public static javax.swing.JTextField txtEstadoPlato;
-    private javax.swing.JTextField txtIdCategoriaPlato;
+    private javax.swing.JTable tblprod;
     public static javax.swing.JTextField txtIdPlato;
     public static javax.swing.JTextField txtNombrePlato;
     public static javax.swing.JTextField txtPrecioPlato;
