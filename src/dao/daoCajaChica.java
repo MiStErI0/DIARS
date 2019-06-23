@@ -70,8 +70,7 @@ public class daoCajaChica {
         }
     }
 
-    public  caja_chica  getCaja_chica() {
-        caja_chica cc=null;
+    public  caja_chica  getCaja_chica(caja_chica cc) {
         String sql = "select c.IDCAJA,c.VENTA_TOTAL,c.APERTURA,c.TARJETAS,c.EFECTIVO,c.FECHA_INICIO,c.FECHA_FIN,c.ESTADO, concat(p.NOMBRE_RS,' ',p.APELLIDOP,' ',p.APELLIDOM) from caja_chica as c\n" +
 "inner join empleado as e on c.idempleado=e.idempleado\n" +
 "inner join persona as p on p.idpersona=e.idpersona where fecha_fin is NULL";

@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import clases.caja_chica;
 import dao.daoCajaChica;
 
 /**
@@ -17,13 +18,23 @@ public class frmCerrarCaja extends javax.swing.JFrame {
      * Creates new form frmCerrarCaja
      */
     daoCajaChica dcc=new daoCajaChica();
-    
+    caja_chica cc;
        
     public frmCerrarCaja() {
         initComponents();
-        dcc.getCaja_chica();
+        cc=dcc.getCaja_chica(cc);
+        mostrar();
     }
-
+    
+    private void mostrar()
+    {
+        txtCajero.setText(cc.getCajero());
+        txtAper.setText(cc.getApertura().toString());
+        txtVenta.setText(cc.getVenta_total().toString());
+        txtTarjetas.setText(cc.getTarjeta().toString());
+        txtEfectivo.setText(cc.getEfectivo().toString());
+        txtEgreso.setText(cc.getEfectivo().toString());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
