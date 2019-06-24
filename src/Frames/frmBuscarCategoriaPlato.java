@@ -59,7 +59,12 @@ public class frmBuscarCategoriaPlato extends javax.swing.JFrame {
         });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
-        btnBuscar.setText("Buscar");
+        btnBuscar.setText("Mantener Categoria");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jtCategoriaPlato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,13 +99,13 @@ public class frmBuscarCategoriaPlato extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(txtbuscarCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(57, 57, 57)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1))
+                            .addComponent(txtbuscarCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(56, 56, 56)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -150,6 +155,7 @@ public class frmBuscarCategoriaPlato extends javax.swing.JFrame {
                 frmcatpla.show();
                 frmcatpla.btnActualizar.setEnabled(true);
                 frmcatpla.btnBorrar.setEnabled(true);
+                frmcatpla.txtnombreCategoria.setEnabled(true);
                 dispose();
                                             
             }
@@ -157,6 +163,13 @@ public class frmBuscarCategoriaPlato extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jtCategoriaPlatoMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        frmCategoriaPlato frmcatpla = new frmCategoriaPlato();
+        frmcatpla.show();
+        dispose();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments

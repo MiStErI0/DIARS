@@ -28,6 +28,9 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         btnActualizar.setEnabled(false);
         btnBorrar.setEnabled(false);
         btnAgregar.setEnabled(false);
+        txtidCategoriaPlato.setVisible(false);
+        txtnombreCategoria.setEnabled(false);
+        //txtnombreCategoria.setSize(150, 20);
     }
     
     daoCategoriaPlato daoCatPla = new daoCategoriaPlato();
@@ -42,7 +45,6 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtidCategoriaPlato = new javax.swing.JTextField();
         txtnombreCategoria = new javax.swing.JTextField();
@@ -57,8 +59,6 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Categoria de Plato");
-
-        jLabel2.setText("Id_Categoria de Plato :");
 
         jLabel3.setText("Nombre de Categoria :");
 
@@ -118,55 +118,56 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtidCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtnombreCategoria)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarCategoriaPlato, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtidCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscarCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)))
                 .addGap(41, 41, 41))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtidCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtidCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarCategoriaPlato))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarCategoriaPlato)
                     .addComponent(jLabel3)
-                    .addComponent(txtnombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo))
+                    .addComponent(txtnombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnActualizar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnActualizar)
-                    .addComponent(btnBorrar))
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar)
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btnBorrar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,6 +184,8 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         if(respuestaRegistro != null){
             JOptionPane.showMessageDialog(null, respuestaRegistro);
             btnAgregar.setEnabled(false);
+            btnNuevo.setEnabled(true);
+            limpiar();
         }
         else{
             JOptionPane.showMessageDialog(null, "REGISTRO ERRONEO.");
@@ -196,6 +199,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Edicion exitosa.");
             btnActualizar.setEnabled(false);
             btnBorrar.setEnabled(false);
+            txtnombreCategoria.setEnabled(false);
             limpiar();
         }
         else{
@@ -211,6 +215,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Edicion exitosa.");
             btnActualizar.setEnabled(false);
             btnBorrar.setEnabled(false);
+            txtnombreCategoria.setEnabled(false);
             limpiar();
         }
         else{
@@ -225,6 +230,7 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
         btnNuevo.setEnabled(false);
         btnActualizar.setEnabled(false);
         btnBorrar.setEnabled(false);
+        txtnombreCategoria.setEnabled(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarCategoriaPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarCategoriaPlatoActionPerformed
@@ -294,7 +300,6 @@ public class frmCategoriaPlato extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     public static javax.swing.JTextField txtidCategoriaPlato;
     public static javax.swing.JTextField txtnombreCategoria;

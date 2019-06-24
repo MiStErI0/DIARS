@@ -83,6 +83,11 @@ public class daoPlato {
             if(numFAfectadas>0){
                 respuestaRegistro = "Registro Exitoso";
             }
+            cs.close();
+
+            cs = null;
+            accesoDB.close();
+            accesoDB = null;
         } catch (Exception e) {
         }
         
@@ -160,6 +165,12 @@ public class daoPlato {
             
             numFA = cs.executeUpdate();
             
+            cs.close();
+
+            cs = null;
+            acceDB.close();
+            acceDB = null;
+            
         } catch (Exception e) {
         }
         return numFA;
@@ -173,6 +184,11 @@ public class daoPlato {
             cs.setString(1, idPlato);
             
             numFA = cs.executeUpdate();
+            cs.close();
+
+            cs = null;
+            acceDB.close();
+            acceDB = null;
             
         } catch (Exception e) {
         }

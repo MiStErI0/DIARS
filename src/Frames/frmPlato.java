@@ -349,6 +349,8 @@ public class frmPlato extends javax.swing.JFrame {
         return Buscar;
     }
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btnActualizarPlato;
     private javax.swing.JButton btnAgregarPlato;
