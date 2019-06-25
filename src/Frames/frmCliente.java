@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Frames;
+import clases.distrito;
 import dao.daoCliente;
 import dao.daoDePrDis;
 import java.text.SimpleDateFormat;
@@ -303,6 +304,7 @@ public class frmCliente extends javax.swing.JFrame {
     private void cmbprovinItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbprovinItemStateChanged
         // TODO add your handling code here:
         dpd.cargarDistri(cmbdis, cmbprovin.getSelectedItem().toString());
+        
     }//GEN-LAST:event_cmbprovinItemStateChanged
 
     private void btnBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarClienteActionPerformed
@@ -311,7 +313,7 @@ public class frmCliente extends javax.swing.JFrame {
 
     private void btnAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClienteActionPerformed
         // TODO add your handling code here:
-        String respuestaRegistro = daoCli.insertCliente(getNombreCliente(),getApellidoPatCliente(),getApellidoMatCliente(),getcorreoCliente(),getTelefonoCliente(),getDniCliente(),getFechaCliente(),getEstadoCliente());
+        String respuestaRegistro = daoCli.insertCliente(getNombreCliente(),getApellidoPatCliente(),getApellidoMatCliente(),getcorreoCliente(),getTelefonoCliente(),getDniCliente(),getFechaCliente(),getEstadoCliente(),getDireccion(),getIdDistrito());
         if(respuestaRegistro != null){
             JOptionPane.showMessageDialog(null, respuestaRegistro);
         }
@@ -363,8 +365,8 @@ public class frmCliente extends javax.swing.JFrame {
 //        }
 //    }
     public void LlenaComboEstadoCliente(){
-        cboEstadoCliente.addItem("0");
         cboEstadoCliente.addItem("1");
+        cboEstadoCliente.addItem("0");
     }
 
     public String getIdCliente(){
@@ -405,6 +407,29 @@ public class frmCliente extends javax.swing.JFrame {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = formatoFecha.format(jdFechaCliente.getDate());
         return fecha;
+    }
+    
+    public String getIdDistrito(){
+        
+        String Buscar = cmbdis.getSelectedItem().toString();
+        for(distrito dis:dpd.getdistri())
+        {
+            if(dis.getDistrito().equals(Buscar))
+            {
+                System.out.println(Buscar);
+                Buscar=dis.getIddistrito();
+                System.out.println(Buscar);
+
+                break;
+                
+            }
+        }
+        
+        return Buscar;
+    }
+    
+    public String getDireccion(){
+        return txtDireccionCliente.getText()+ " " + txtReferenciaCliente.getText();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

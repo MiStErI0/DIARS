@@ -103,12 +103,12 @@ public class daoCliente {
          return clien.size();
      }
 
-     public String insertCliente(String NombreCliente,String ApellidoPCliente,String ApellidoMCliente,String CorreoCliente,int TelefonoCliente,int DniRucCliente,String FechaNacCliente, int Estado){
+     public String insertCliente(String NombreCliente,String ApellidoPCliente,String ApellidoMCliente,String CorreoCliente,int TelefonoCliente,int DniRucCliente,String FechaNacCliente, int Estado, String Direccion,String IdDistrito){
         String respuestaRegistro = null;
         Connection accesoDB;
         try {
             accesoDB = new Conexion().getMysql();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertCliente(fn_idcliente(),fn_idpersona(),?,?,?,?,?,?,?,?)}");
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertCliente(fn_idcliente(),fn_idpersona(),?,?,?,?,?,?,?,?,fn_idDireccion(),?,?)}");
             cs.setString(1, NombreCliente);
             cs.setString(2, ApellidoPCliente);
             cs.setString(3, ApellidoMCliente);
@@ -117,6 +117,8 @@ public class daoCliente {
             cs.setInt(6, DniRucCliente);
             cs.setString(7, FechaNacCliente);
             cs.setInt(8, Estado);
+            cs.setString(9, Direccion);
+            cs.setString(10, IdDistrito);
             
             int numFAfectadas = cs.executeUpdate();
             if(numFAfectadas>0){

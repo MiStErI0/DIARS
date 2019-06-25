@@ -99,7 +99,7 @@ public class daoDePrDis {
         return lista;
     }
     
-    private List<distrito> getdistri() {
+    public List<distrito> getdistri() {
         List<distrito> lista = new ArrayList();
         String sql = "select * from distrito";
         Connection c = null;

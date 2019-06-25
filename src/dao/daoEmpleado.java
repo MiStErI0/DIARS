@@ -8,6 +8,7 @@ import ConexionBD.Conexion;
 import clases.empleado;
 import clases.TipoCargo;
 import clases.usuario;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,7 @@ public class daoEmpleado {
 
     }
     
-    private List<TipoCargo> getTipoCargo() {
+    public List<TipoCargo> getTipoCargo() {
         List<TipoCargo> lista = new ArrayList();
         String sql = "select * from cargo";
         Connection c = null;
@@ -193,5 +194,36 @@ public class daoEmpleado {
         return z;
     }
     
+     public String insertEmpleado(String IdCargo,String NombreEmpleado,String ApellidoPatEmpleado,String ApellidoMatEmpleado,String CorreoEmpleado,int TelefonoEmpleado,int DniRucEmpleado,String FechaNacEmpleado, int Estado, String Direccion,String IdDistrito){
+        String respuestaRegistro = null;
+        Connection accesoDB;
+        try {
+            accesoDB = new Conexion().getMysql();
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertEmpleado(?,fn_idempleado(),fn_idpersona(),?,?,?,?,?,?,?,?,fn_idDireccion(),?,?)}");
+            cs.setString(1, IdCargo);
+            cs.setString(2, NombreEmpleado);
+            cs.setString(3, ApellidoPatEmpleado);
+            cs.setString(4, ApellidoMatEmpleado);
+            cs.setString(5, CorreoEmpleado);
+            cs.setInt(6, TelefonoEmpleado);
+            cs.setInt(7, DniRucEmpleado);
+            cs.setString(8, FechaNacEmpleado);
+            cs.setInt(9, Estado);
+            cs.setString(10, Direccion);
+            cs.setString(11, IdDistrito);
+            
+            int numFAfectadas = cs.executeUpdate();
+            if(numFAfectadas>0){
+                respuestaRegistro = "Registro Exitoso";
+            }
+            cs.close();
 
+            cs = null;
+            accesoDB.close();
+            accesoDB = null;
+        } catch (Exception e) {
+        }
+        
+        return respuestaRegistro;
+    }
 }
