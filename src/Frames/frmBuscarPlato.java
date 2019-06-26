@@ -23,12 +23,18 @@ public class frmBuscarPlato extends javax.swing.JFrame {
      * Creates new form frmBuscarPlato
        */
     daoPlato daoPla = new daoPlato();
-    DefaultTableModel dtmPlato = new DefaultTableModel();
+    DefaultTableModel dtmPlato = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+
+    };
     int filaseleccionada;
     public frmBuscarPlato() {
         initComponents();
         cargarCabeceraTablePlato();
-        listarTable();
+        daoPla.cargar_tabla_plato(dtmPlato, tblplato, null);
     }
 
     /**
@@ -44,7 +50,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         txtBuscarPlato = new javax.swing.JTextField();
         btnBuscarPlato = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtPlato = new javax.swing.JTable();
+        tblplato = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,15 +59,15 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         jLabel1.setText("Buscar Plato");
 
         txtBuscarPlato.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarPlatoKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarPlatoKeyReleased(evt);
             }
         });
 
         btnBuscarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
         btnBuscarPlato.setText("Buscar");
 
-        jtPlato.setModel(new javax.swing.table.DefaultTableModel(
+        tblplato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,12 +78,12 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtPlato.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblplato.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtPlatoMouseClicked(evt);
+                tblplatoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtPlato);
+        jScrollPane1.setViewportView(tblplato);
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -128,16 +134,11 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtBuscarPlatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPlatoKeyTyped
-        // TODO add your handling code here:
-        filtro("(?i)" + txtBuscarPlato.getText(), jtPlato);
-    }//GEN-LAST:event_txtBuscarPlatoKeyTyped
-
-    private void jtPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPlatoMouseClicked
+    private void tblplatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblplatoMouseClicked
         // TODO add your handling code here:
         frmPlato frmpla = new frmPlato();
         try{
-            filaseleccionada = jtPlato.getSelectedRow();        
+            filaseleccionada = tblplato.getSelectedRow();        
             if(filaseleccionada == -1){
                 JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
             }
@@ -154,7 +155,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                     columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
                     dtmPlato.addRow(columna);
                 }
-                jtPlato.setModel(dtmPlato);
+                tblplato.setModel(dtmPlato);
                 
                 JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
                 frmpla.show();
@@ -166,7 +167,12 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         }catch (HeadlessException ex){
             JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jtPlatoMouseClicked
+    }//GEN-LAST:event_tblplatoMouseClicked
+
+    private void txtBuscarPlatoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPlatoKeyReleased
+        // TODO add your handling code here:
+        filtro(txtBuscarPlato.getText(), tblplato);        
+    }//GEN-LAST:event_txtBuscarPlatoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -204,13 +210,13 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         });
     }
 
-    public void cargarCabeceraTablePlato(){
+    public final void cargarCabeceraTablePlato(){
         dtmPlato.addColumn("ID Plato"); 
         dtmPlato.addColumn("Nombre de Plato"); 
         dtmPlato.addColumn("Precio"); 
         dtmPlato.addColumn("Estado");
         dtmPlato.addColumn("Categoria de Plato"); 
-        jtPlato.setModel(dtmPlato);
+        tblplato.setModel(dtmPlato);
     }
     
     public void listarTable(){
@@ -225,14 +231,15 @@ public class frmBuscarPlato extends javax.swing.JFrame {
             columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
             dtmPlato.addRow(columna);
         }
-        jtPlato.setModel(dtmPlato);  
+        tblplato.setModel(dtmPlato);  
     }
     
-    public void filtro(String filtro, JTable jtableBuscar){
-        dtmPlato= (DefaultTableModel) jtableBuscar.getModel();
+    private void filtro(String consulta, JTable jtableBuscar) {
+        dtmPlato = (DefaultTableModel) jtableBuscar.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmPlato);
         jtableBuscar.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(filtro));
+        tr.setRowFilter(RowFilter.regexFilter(consulta, 1));
+        //txtBuscarPlato.setText(consulta);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -240,7 +247,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtPlato;
+    private javax.swing.JTable tblplato;
     private javax.swing.JTextField txtBuscarPlato;
     // End of variables declaration//GEN-END:variables
 }

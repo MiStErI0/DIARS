@@ -363,7 +363,7 @@ public class frmDelibery extends javax.swing.JFrame {
 
     private void cboCategoriaPlatoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoItemStateChanged
         // TODO add your handling code here:
-        daoPla.cargar_tabla(dtmPlato, jtPlato, cboCategoriaPlato.getSelectedItem().toString());
+        daoPla.cargar_tabla_plato(dtmPlato, jtPlato, cboCategoriaPlato.getSelectedItem().toString());
     }//GEN-LAST:event_cboCategoriaPlatoItemStateChanged
 
     /**

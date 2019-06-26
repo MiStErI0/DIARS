@@ -34,8 +34,6 @@ public class frmBuscarProducto extends javax.swing.JFrame {
         }
 
     };
-    private TableRowSorter trsFiltro;
-    private TableRowSorter trsFiltroDet;
 
     public frmBuscarProducto() {
         initComponents();
@@ -145,7 +143,6 @@ public class frmBuscarProducto extends javax.swing.JFrame {
     private void tblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductoMouseClicked
         // TODO add your handling code here:
         int fil = tblProducto.getSelectedRow();
-        int col;
         if (evt.getClickCount() == 2) {
             if (si == null) {
 
