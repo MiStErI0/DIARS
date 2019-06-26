@@ -44,6 +44,7 @@ CREATE TABLE `caja_chica` (
 
 LOCK TABLES `caja_chica` WRITE;
 /*!40000 ALTER TABLE `caja_chica` DISABLE KEYS */;
+INSERT INTO `caja_chica` VALUES ('CC00001',0.00,500.00,0.00,0.00,'2019-06-21 05:52:06',NULL,1,'EM00001');
 /*!40000 ALTER TABLE `caja_chica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +68,7 @@ CREATE TABLE `cargo` (
 
 LOCK TABLES `cargo` WRITE;
 /*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
-INSERT INTO `cargo` VALUES ('CA00001','Admistrador'),('CA00002','Cajero'),('CA00003','Mozo'),('CA00004','Maitre');
+INSERT INTO `cargo` VALUES ('CA00001','Administrador'),('CA00002','Cajero'),('CA00003','Mozo'),('CA00004','Maitre');
 /*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +92,7 @@ CREATE TABLE `categoria_plato` (
 
 LOCK TABLES `categoria_plato` WRITE;
 /*!40000 ALTER TABLE `categoria_plato` DISABLE KEYS */;
-INSERT INTO `categoria_plato` VALUES ('CP00001','pollos'),('CP00002','licores');
+INSERT INTO `categoria_plato` VALUES ('CP00001','Parrilla'),('CP00002','licores'),('CP00003','carnes');
 /*!40000 ALTER TABLE `categoria_plato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +118,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('CL00001','PE00002'),('CL00002','PE00003');
+INSERT INTO `cliente` VALUES ('CL00001','PE00002'),('CL00002','PE00003'),('CL00003','PE00004'),('CL00004','PE00005');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,13 +179,14 @@ DROP TABLE IF EXISTS `detalle_pedido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `detalle_pedido` (
-  `IDPLATO` varchar(7) NOT NULL,
-  `IDPEDIDO` varchar(7) NOT NULL,
   `IDDETALLE_PEDIDO` varchar(7) NOT NULL,
+  `IDPEDIDO` varchar(7) NOT NULL,
+  `IDPLATO` varchar(7) NOT NULL,
   `IDEMPLEADO` varchar(7) NOT NULL,
   `CANTIDAD` int(11) DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDDETALLE_PEDIDO`,`IDPLATO`,`IDPEDIDO`,`IDEMPLEADO`),
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`IDDETALLE_PEDIDO`,`IDPEDIDO`,`IDPLATO`,`IDEMPLEADO`),
   KEY `EXISTE2` (`IDPLATO`),
   KEY `EXISTE3` (`IDPEDIDO`),
   KEY `GENERA` (`IDEMPLEADO`),
@@ -211,9 +213,9 @@ DROP TABLE IF EXISTS `detalle_plato`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `detalle_plato` (
+  `IDDETALLE_PLATO` varchar(7) NOT NULL,
   `IDPRODUCTOS` varchar(7) NOT NULL,
   `IDPLATO` varchar(7) NOT NULL,
-  `IDDETALLE_PLATO` varchar(7) NOT NULL,
   `CANTIDAD` decimal(10,3) DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDDETALLE_PLATO`,`IDPRODUCTOS`,`IDPLATO`),
@@ -343,7 +345,7 @@ CREATE TABLE `empleado` (
 
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
-INSERT INTO `empleado` VALUES ('EM00001','PE00001','CA00001');
+INSERT INTO `empleado` VALUES ('EM00001','PE00001','CA00002'),('EM00002','PE00005','CA00002'),('EM00003','PE00003','CA00004'),('EM00004','PE00004','CA00003'),('EM00005','PE00003','CA00003');
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +371,7 @@ CREATE TABLE `mesa` (
 
 LOCK TABLES `mesa` WRITE;
 /*!40000 ALTER TABLE `mesa` DISABLE KEYS */;
-INSERT INTO `mesa` VALUES ('ME00001','MESA 1',1,0),('ME00002','MESA 2',1,1),('ME00003','MESA 3',1,2);
+INSERT INTO `mesa` VALUES ('ME00001','MESA 1',1,0),('ME00002','MESA 2',1,0),('ME00003','MESA 3',1,0),('ME00004','DELIVERY',1,0);
 /*!40000 ALTER TABLE `mesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +429,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES ('PE00001','bruce','salas','sullcaray','brucesalas38@gmail.com',953261650,75922766,'1997-07-12',1),('PE00002','brandon','salas','sullcaray','ssasasassasasas',654654650,65465467,'2000-07-09',1),('PE00003','emily','sullcaray','salas','4654654654sas@',454654531,13543543,'2006-07-09',1);
+INSERT INTO `persona` VALUES ('PE00001','bruce','salas','sullcaray','brucesalas38@gmail.com',953261650,75922766,'1997-07-12',1),('PE00002','brandon','salas','sullcaray','ssasasassasasas',654654650,65465467,'2000-07-09',1),('PE00003','emily','sullcaray','salas','4654654654sas@',454654531,13543543,'2006-07-09',1),('PE00004','pastor','pastor','pastor','pastor@pastor.com',123456789,987654321,'2000-08-03',1),('PE00005','pastor2','pastor2','pastor2','pastor2@pastor.com',123456789,963258741,'2002-05-08',1);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -456,7 +458,7 @@ CREATE TABLE `plato` (
 
 LOCK TABLES `plato` WRITE;
 /*!40000 ALTER TABLE `plato` DISABLE KEYS */;
-INSERT INTO `plato` VALUES ('PL00001','pollo 1/2',25.00,1,'CP00001'),('PL00002','pollo entero',45.00,1,'CP00001'),('PL00003','flor de caña',50.00,1,'CP00002');
+INSERT INTO `plato` VALUES ('PL00001','pollo 1/2',25.00,1,'CP00001'),('PL00002','pollo entero',45.00,1,'CP00001'),('PL00003','POLLO3',15.00,1,'CP00002'),('PL00004','POLLO1',45.00,1,'CP00001'),('PL00005','POLLO1',45.00,1,'CP00001'),('PL00006','POLLITO BROASTER',15.00,1,'CP00001'),('PL00007','vino',50.00,1,'CP00002'),('PL00008','bisteck',10.00,1,'CP00003'),('PL00009','CORAZONCITO',25.00,1,'CP00001');
 /*!40000 ALTER TABLE `plato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,6 +485,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+INSERT INTO `producto` VALUES ('PR00001','POLLO',4.000,16.555,1),('PR00002','LECHUGA',6.000,22.000,0),('PR00003','PAPA BLANCA',6.000,50.555,1),('PR00004','LIMON',6.000,50.125,1);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -563,7 +566,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('U000001','johan','123456',1,0,'EM00001');
+INSERT INTO `usuario` VALUES ('US00001','johan','123456',1,2,'EM00001'),('US00002','jsjsjsjs','123456',1,0,'EM00001');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,6 +619,117 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'machis'
 --
+/*!50003 DROP FUNCTION IF EXISTS `fn_idCajachica` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idCajachica`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE cachi VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from caja_chica;
+    
+    if id < 10 then
+    set cachi=concat("CC0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set cachi=concat("CC000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set cachi=concat("CC00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set cachi=concat("CC0",id+1);
+    ELSE
+    set cachi=concat("CC",id+1);
+    end if;
+    
+    
+    return cachi;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_idcargo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idcargo`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE car VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from cargo;
+    
+    if id < 10 then
+    set car=concat("CA0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set car=concat("CA000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set car=concat("CA00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set car=concat("CA0",id+1);
+    ELSE
+    set car=concat("CA",id+1);
+    end if;
+    
+    
+    return car;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_idcategoria_plato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idcategoria_plato`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE pla VARCHAR(7);
+    DECLARE id int;
+    
+    select count(IDCATEGORIA_PLATO) into id from categoria_plato;
+    
+    if id < 10 then
+    set pla=concat("CP0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set pla=concat("CP000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set pla=concat("CP00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set pla=concat("CP0",id+1);
+    ELSE
+    set pla=concat("CP",id+1);
+    end if;
+    
+    
+    return pla;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `fn_idcliente` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -647,6 +761,80 @@ BEGIN
     
     
     return cli;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_iddetaPedi` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_iddetaPedi`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE det VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from detalle_pedido;
+    
+    if id < 10 then
+    set det=concat("DP0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set det=concat("DP000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set det=concat("DP00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set det=concat("DP0",id+1);
+    ELSE
+    set det=concat("DP",id+1);
+    end if;
+    
+    
+    return det;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_iddetaplat` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_iddetaplat`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE det VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from detalle_plato;
+    
+    if id < 10 then
+    set det=concat("DL0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set det=concat("DL000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set det=concat("DL00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set det=concat("DL0",id+1);
+    ELSE
+    set det=concat("DL",id+1);
+    end if;
+    
+    
+    return det;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -727,6 +915,43 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_idplato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idplato`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE det VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from plato;
+    
+    if id < 10 then
+    set det=concat("PL0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set det=concat("PL000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set det=concat("PL00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set det=concat("PL0",id+1);
+    ELSE
+    set det=concat("PL",id+1);
+    end if;
+    
+    
+    return det;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `fn_idproducto` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -737,7 +962,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idproducto`() RETURNS int(11)
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idproducto`() RETURNS varchar(7) CHARSET utf8mb4
 BEGIN
 	DECLARE PRO VARCHAR(7);
     DECLARE id int;
@@ -838,6 +1063,249 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_abrir_caja` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_abrir_caja`(nom varchar(100),aper decimal(10,2))
+BEGIN
+	DECLARE NOMBRE VARCHAR(100);
+    DECLARE ID VARCHAR(7);
+	SELECT IDEMPLEADO INTO ID FROM EMPLEADO AS E
+    INNER JOIN PERSONA AS P ON E.IDPERSONA=P.IDPERSONA WHERE concat(P.NOMBRE_RS,' ',P.APELLIDOP,' ',P.APELLIDOM)=nom;
+    
+    INSERT INTO caja_chica (`IDCAJA`, `VENTA_TOTAL`, `APERTURA`, `TARJETAS`, `EFECTIVO`, `FECHA_INICIO`, `ESTADO`, `IDEMPLEADO`) VALUES (fn_idCajachica(),0,aper,0,0,now(),1,ID);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_cerrar_caja` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cerrar_caja`()
+BEGIN
+    DECLARE ID VARCHAR(7);
+	SELECT IDCAJA INTO ID FROM CAJA_CHICA WHERE FECHA_FIN IS NULL;
+   
+	update caja_chica set fecha_fin = now() where idcaja=ID; 
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_deleteCategoriaPlato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteCategoriaPlato`(
+cp_IDCATEGORIA_PLATO varchar(7)
+)
+BEGIN
+delete from categoria_plato where IDCATEGORIA_PLATO = cp_IDCATEGORIA_PLATO;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_editCategoriaPlato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_editCategoriaPlato`(
+cp_IDCATEGORIA_PLATO varchar(7),
+cp_CATEGORIA varchar(50)
+)
+BEGIN
+ update categoria_plato
+ set CATEGORIA = cp_CATEGORIA where IDCATEGORIA_PLATO = cp_IDCATEGORIA_PLATO;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_editCliente` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_editCliente`(
+
+c_IDPERSONA varchar(7),
+c_NOMBRE_RS varchar(50),
+c_APELLIDOP varchar(50),
+c_APELLIDOM varchar(50),
+c_CORREO varchar(50),
+c_TELEFONO decimal(12,0),
+c_DNI_RUC decimal(12,0),
+c_FECHA_NACI date,
+c_ESTADO int(11)
+)
+BEGIN
+update persona set NOMBRE_RS = c_NOMBRE_RS , APELLIDOP = c_APELLIDOP , APELLIDOM = c_APELLIDOM , CORREO = c_CORREO , TELEFONO = c_TELEFONO , DNI_RUC = c_DNI_RUC , FECHA_NACI = c_FECHA_NACI , ESTADO = c_ESTADO where IDPERSONA = c_IDPERSONA ;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_editPlato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_editPlato`(
+
+c_IDPLATO varchar(7),
+c_PLATO varchar(50),
+c_PRECIO decimal(10,2),
+c_ESTADO int(11),
+c_IDCATEGORIA_PLATO varchar(7)
+)
+BEGIN
+update plato set PLATO = c_PLATO , PRECIO = c_PRECIO , ESTADO = c_ESTADO , IDCATEGORIA_PLATO = c_IDCATEGORIA_PLATO where IDPLATO = c_IDPLATO ;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertCategoriaPlato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertCategoriaPlato`(
+cp_IDCATEGORIA_PLATO varchar(7),
+cp_CATEGORIA varchar(50)
+)
+BEGIN 
+insert into categoria_plato(IDCATEGORIA_PLATO,CATEGORIA)
+values(cp_IDCATEGORIA_PLATO,cp_CATEGORIA);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertCliente` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertCliente`(
+
+c_IDCLIENTE varchar(7),
+c_IDPERSONA varchar(7),
+c_NOMBRE_RS varchar(50),
+c_APELLIDOP varchar(50),
+c_APELLIDOM varchar(50),
+c_CORREO varchar(50),
+c_TELEFONO decimal(12,0),
+c_DNI_RUC decimal(12,0),
+c_FECHA_NACI date,
+c_ESTADO int(11)
+)
+BEGIN
+insert into persona(IDPERSONA,NOMBRE_RS,APELLIDOP,APELLIDOM,CORREO,TELEFONO,DNI_RUC,FECHA_NACI,ESTADO)
+
+values(c_IDPERSONA,c_NOMBRE_RS,c_APELLIDOP,c_APELLIDOM,c_CORREO,c_TELEFONO,c_DNI_RUC,c_FECHA_NACI,c_ESTADO);
+insert into cliente
+(IDCLIENTE,IDPERSONA)
+values
+(c_IDCLIENTE,c_IDPERSONA);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertPlato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertPlato`(
+c_IDPLATO varchar(7),
+c_PLATO varchar(50),
+c_PRECIO decimal(10,2),
+c_ESTADO int(11),
+c_IDCATEGORIA_PLATO varchar(7)
+)
+BEGIN
+insert into plato(IDPLATO,
+PLATO,
+PRECIO,
+ESTADO,
+IDCATEGORIA_PLATO)
+
+values(c_IDPLATO,
+c_PLATO,
+c_PRECIO,
+c_ESTADO,
+c_IDCATEGORIA_PLATO);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -848,4 +1316,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-14  3:04:10
+-- Dump completed on 2019-06-26  5:08:44
