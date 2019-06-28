@@ -21,7 +21,7 @@ public class frmProducto extends javax.swing.JFrame {
     daoProducto dp = new daoProducto();
     frmBuscarProducto frBp;
     String estado;
-
+    public static producto p;
     public frmProducto() {
         initComponents();
         LlenaComboEstadoProducto();
@@ -197,7 +197,7 @@ public class frmProducto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "ya esta abierto la venta", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
         } else {
             frBp.setVisible(true);
-            frBp.si = "s";
+            frBp.si = "frmPro";
         }
 
     }//GEN-LAST:event_btnBuscaActionPerformed
@@ -207,10 +207,10 @@ public class frmProducto extends javax.swing.JFrame {
         crud_producto("modi");
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    void crud_producto(String cd) {
+    public void crud_producto(String cd) {
         int est;
-        int rs;
-        if (cboEstado.getSelectedItem().toString() == "Activo") {
+        int rs=-1;
+        if ("Activo".equals(cboEstado.getSelectedItem().toString())) {
             est = 1;
         } else {
             est = 0;
@@ -218,17 +218,14 @@ public class frmProducto extends javax.swing.JFrame {
         producto p = new producto(txtCodigo.getText(), txtProducto.getText(), Float.parseFloat(txtStockmin.getText()), Float.parseFloat(txtStockA.getText()), est);
         if (cd.equals("inse")) {
             rs = dp.insertar_producto(p);
-        }else{
+        }if(cd.equals("modi")){
             rs = dp.modificar_producto(p);
         }
         if (rs == 1 && cd.equals("inse")) {
             JOptionPane.showMessageDialog(null, "NUEVO PRODUCTO AGREGADO", "CONFIRMACION", EXIT_ON_CLOSE);
         }if (rs == 1 && cd.equals("modi")) {
             JOptionPane.showMessageDialog(null, "PRODUCTO ACTUALIZADO", "CONFIRMACION", EXIT_ON_CLOSE);
-        } else {
-            JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR", "CONFIRMACION", EXIT_ON_CLOSE);
         }
-
         limpiar();
     }
 

@@ -11,7 +11,6 @@ package clases;
  */
 public class detalle_plato {
     
-    private String iddetaplato;
     private String idproducto;
     private String producto;
     private String idplato;
@@ -22,22 +21,13 @@ public class detalle_plato {
     public detalle_plato() {
     }
 
-    public detalle_plato(String iddetaplato, String idproducto, String producto, String idplato, String plato, Double cantidad, Integer estado) {
-        this.iddetaplato = iddetaplato;
+    public detalle_plato( String idproducto, String producto, String idplato, String plato, Double cantidad, Integer estado) {
         this.idproducto = idproducto;
         this.producto = producto;
         this.idplato = idplato;
         this.plato = plato;
         this.cantidad = cantidad;
         this.estado = estado;
-    }
-
-    public String getIddetaplato() {
-        return iddetaplato;
-    }
-
-    public void setIddetaplato(String iddetaplato) {
-        this.iddetaplato = iddetaplato;
     }
 
     public String getIdproducto() {

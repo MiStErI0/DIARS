@@ -105,7 +105,11 @@ public class daoPlato {
             vec[0] = p.getIdPlato();
             vec[1] = p.getPlato();
             vec[2] = p.getPrecio();
-            vec[3] = p.getEstado();
+            if (p.getEstado()==1) {
+                vec[3] = "ACTIVO";
+            } else {
+                vec[3] = "DESACTIVO";
+            }
             vec[4] = p.getIdCategoriaPlato();
             return vec;
         }).forEachOrdered((vec) -> {

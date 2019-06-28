@@ -144,10 +144,13 @@ public class frmBuscarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fil = tblProducto.getSelectedRow();
         if (evt.getClickCount() == 2) {
-            if (si == null) {
+            if (si.equals("frmPla")) {
 
+                //frmPlato.p.setIdproducto(tblProducto.getValueAt(fil, 0).toString());
+                //frmPlato.p.setProducto(tblProducto.getValueAt(fil, 1).toString());
+                System.out.println("hollaaaaaaa");
             }
-            if (si.equals("s")) {
+            if (si.equals("frmPro")) {
 
                 frmProducto.txtCodigo.setText(tblProducto.getValueAt(fil, 0).toString());
                 frmProducto.txtProducto.setText(tblProducto.getValueAt(fil, 1).toString());
@@ -162,7 +165,10 @@ public class frmBuscarProducto extends javax.swing.JFrame {
                 }
                 dispose();
 
+            }if (si==null) {
+                
             }
+                
         }
 
 
