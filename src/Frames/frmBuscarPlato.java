@@ -5,7 +5,6 @@
  */
 package Frames;
 
-
 import dao.daoPlato;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -13,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author Estudiante
@@ -21,9 +21,9 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
     /**
      * Creates new form frmBuscarPlato
-       */
+     */
     daoPlato daoPla = new daoPlato();
-    DefaultTableModel dtmPlato = new DefaultTableModel(){
+    DefaultTableModel dtmPlato = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false; //To change body of generated methods, choose Tools | Templates.
@@ -31,6 +31,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
     };
     int filaseleccionada;
+
     public frmBuscarPlato() {
         initComponents();
         cargarCabeceraTablePlato();
@@ -136,42 +137,41 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
     private void tblplatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblplatoMouseClicked
         // TODO add your handling code here:
-        frmPlato frmpla = new frmPlato();
-        try{
-            filaseleccionada = tblplato.getSelectedRow();        
-            if(filaseleccionada == -1){
-                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
+        String cod1;
+        try {
+            filaseleccionada = tblplato.getSelectedRow();
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+            } else {
                 //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
-                Object[] columna = new Object[5];
-                int numRegistros = daoPla.listPlato(null).size();
+                frmPlato.txtIdPlato.setText(tblplato.getValueAt(filaseleccionada, 0).toString());
+                frmPlato.txtNombrePlato.setText(tblplato.getValueAt(filaseleccionada, 1).toString());
+                frmPlato.txtPrecioPlato.setText(tblplato.getValueAt(filaseleccionada, 2).toString());
+                if (tblplato.getValueAt(filaseleccionada, 3).toString().equals("ACTIVO")) {
+                    System.out.println("ezzzz");
 
-                for (int i = 0; i < numRegistros; i++){
-                    columna[0] = daoPla.listPlato(null).get(i).getIdPlato();
-                    columna[1] = daoPla.listPlato(null).get(i).getPlato();
-                    columna[2] = daoPla.listPlato(null).get(i).getPrecio();
-                    columna[3] = daoPla.listPlato(null).get(i).getEstado();
-                    columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
-                    dtmPlato.addRow(columna);
+                    frmPlato.cboEstadoPlato.setSelectedIndex(1);
+
+                } else {
+                                    System.out.println("gaaaa");
+
+                    frmPlato.cboEstadoPlato.setSelectedIndex(0);
                 }
-                tblplato.setModel(dtmPlato);
-                
-                JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
-                frmpla.show();
-                frmpla.btnActualizarPlato.setEnabled(true);
-                frmpla.btnBorrarPlato.setEnabled(true);
+
+                cod1 = tblplato.getValueAt(filaseleccionada, 4).toString();
+                frmPlato.cboCategoriaPlato.setSelectedIndex(Integer.parseInt(categoria(cod1)));
+
                 dispose();
-                                            
+
             }
-        }catch (HeadlessException ex){
-            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Error" + ex + "\nPor favor inténtelo nuevamente", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_tblplatoMouseClicked
 
     private void txtBuscarPlatoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPlatoKeyReleased
         // TODO add your handling code here:
-        filtro(txtBuscarPlato.getText(), tblplato);        
+        filtro(txtBuscarPlato.getText(), tblplato);
     }//GEN-LAST:event_txtBuscarPlatoKeyReleased
 
     /**
@@ -210,20 +210,31 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         });
     }
 
-    public final void cargarCabeceraTablePlato(){
-        dtmPlato.addColumn("ID Plato"); 
-        dtmPlato.addColumn("Nombre de Plato"); 
-        dtmPlato.addColumn("Precio"); 
+    public String categoria(String cod1) {
+        String cod2 = "";
+        for (int i = 0; i < cod1.length(); i++) {
+
+            if (i >= 2) {
+                cod2 = cod2 + cod1.charAt(i);
+            }
+        }
+        return cod2;
+    }
+
+    public final void cargarCabeceraTablePlato() {
+        dtmPlato.addColumn("ID Plato");
+        dtmPlato.addColumn("Nombre de Plato");
+        dtmPlato.addColumn("Precio");
         dtmPlato.addColumn("Estado");
-        dtmPlato.addColumn("Categoria de Plato"); 
+        dtmPlato.addColumn("Categoria de Plato");
         tblplato.setModel(dtmPlato);
     }
-    
-    public void listarTable(){
+
+    public void listarTable() {
         Object[] columna = new Object[5];
         int numRegistros = daoPla.listPlato(null).size();
-        
-        for (int i = 0; i < numRegistros; i++){
+
+        for (int i = 0; i < numRegistros; i++) {
             columna[0] = daoPla.listPlato(null).get(i).getIdPlato();
             columna[1] = daoPla.listPlato(null).get(i).getPlato();
             columna[2] = daoPla.listPlato(null).get(i).getPrecio();
@@ -231,9 +242,9 @@ public class frmBuscarPlato extends javax.swing.JFrame {
             columna[4] = daoPla.listPlato(null).get(i).getIdCategoriaPlato();
             dtmPlato.addRow(columna);
         }
-        tblplato.setModel(dtmPlato);  
+        tblplato.setModel(dtmPlato);
     }
-    
+
     private void filtro(String consulta, JTable jtableBuscar) {
         dtmPlato = (DefaultTableModel) jtableBuscar.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmPlato);
@@ -241,7 +252,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(consulta, 1));
         //txtBuscarPlato.setText(consulta);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarPlato;
     private javax.swing.JButton btnCancelar;

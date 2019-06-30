@@ -108,7 +108,7 @@ public class daoPlato {
             if (p.getEstado()==1) {
                 vec[3] = "ACTIVO";
             } else {
-                vec[3] = "DESACTIVO";
+                vec[3] = "DESACTIVADO";
             }
             vec[4] = p.getIdCategoriaPlato();
             return vec;

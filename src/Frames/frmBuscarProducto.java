@@ -146,9 +146,9 @@ public class frmBuscarProducto extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             if (si.equals("frmPla")) {
 
-                //frmPlato.p.setIdproducto(tblProducto.getValueAt(fil, 0).toString());
-                //frmPlato.p.setProducto(tblProducto.getValueAt(fil, 1).toString());
-                System.out.println("hollaaaaaaa");
+                frmPlato.txtidprod.setText(tblProducto.getValueAt(fil, 0).toString());
+                frmPlato.txtproducto.setText(tblProducto.getValueAt(fil, 1).toString());
+                dispose();
             }
             if (si.equals("frmPro")) {
 

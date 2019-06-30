@@ -6,6 +6,7 @@
 package Frames;
 import ConexionBD.Conexion;
 import clases.CategoriaPlato;
+import clases.detalle_plato;
 import clases.producto;
 import dao.daoCategoriaPlato;
 import dao.daoDetalle_plato;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +41,10 @@ public final class frmPlato extends javax.swing.JFrame {
         }
 
     };
-    frmBuscarProducto frBp;
+    frmBuscarProducto frBpro;
+    frmBuscarPlato frBpla;
+    ArrayList<detalle_plato> dtlp;
+    detalle_plato dp;
     public static producto p;
 
     public frmPlato() {
@@ -56,13 +61,13 @@ public final class frmPlato extends javax.swing.JFrame {
         tblprod.getColumnModel().getColumn(0).setMaxWidth(0);
         tblprod.getColumnModel().getColumn(0).setMinWidth(0);
         tblprod.getColumnModel().getColumn(0).setPreferredWidth(0);
-        tblprod.getColumnModel().getColumn(1).setPreferredWidth(120);
+//        tblprod.getColumnModel().getColumn(1).setPreferredWidth(120);
         tblprod.getColumnModel().getColumn(2).setMaxWidth(0);
         tblprod.getColumnModel().getColumn(2).setMinWidth(0);
         tblprod.getColumnModel().getColumn(2).setPreferredWidth(0);
-        tblprod.getColumnModel().getColumn(3).setPreferredWidth(120);
-        tblprod.getColumnModel().getColumn(4).setPreferredWidth(120);
-        tblprod.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        tblprod.getColumnModel().getColumn(3).setPreferredWidth(120);
+//        tblprod.getColumnModel().getColumn(4).setPreferredWidth(120);
+        //tblprod.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //tblprod.doLayout();
     }
 
@@ -103,6 +108,7 @@ public final class frmPlato extends javax.swing.JFrame {
         btnBusPro = new javax.swing.JButton();
         btnAgregarPlato = new javax.swing.JButton();
         btnBorrarPlato = new javax.swing.JButton();
+        btnBusPro1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -176,7 +182,7 @@ public final class frmPlato extends javax.swing.JFrame {
 
         jLabel8.setText("Producto :");
 
-        txtproducto.setEnabled(false);
+        txtproducto.setEditable(false);
 
         jLabel9.setText("cantidad:");
 
@@ -207,6 +213,14 @@ public final class frmPlato extends javax.swing.JFrame {
             }
         });
 
+        btnBusPro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/nuevo.png"))); // NOI18N
+        btnBusPro1.setText("Registrar produto");
+        btnBusPro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusPro1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -232,12 +246,16 @@ public final class frmPlato extends javax.swing.JFrame {
                         .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(btnBusPro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAgregarPlato))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(btnBorrarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnBusPro1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBorrarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnBusPro)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregarPlato)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -263,9 +281,11 @@ public final class frmPlato extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBusPro)
                     .addComponent(btnAgregarPlato))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnBorrarPlato)
-                .addGap(26, 26, 26))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBorrarPlato)
+                    .addComponent(btnBusPro1))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -378,6 +398,11 @@ public final class frmPlato extends javax.swing.JFrame {
 
     private void btnAgregarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPlatoActionPerformed
         // TODO add your handling code here:
+        dp= new detalle_plato(txtidprod.getText(),txtproducto.getText(),txtIdPlato.getText(), txtNombrePlato.getText(),Double.parseDouble(txtCant.getText()),1);
+ 
+        System.out.println(dp.getIdproducto()+dp.getProducto());
+        
+        ddp.cargar_tabla_detalle_plato(dtmplato, tblprod, null, dp);
     }//GEN-LAST:event_btnAgregarPlatoActionPerformed
 
     private void btnActualizarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPlatoActionPerformed
@@ -415,23 +440,34 @@ public final class frmPlato extends javax.swing.JFrame {
 
     private void btnBusPlaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusPlaActionPerformed
         // TODO add your handling code here:
-        
+        frBpla = new frmBuscarPlato();
+        if (frBpla.isShowing()) {
+            JOptionPane.showMessageDialog(this, "ya esta abierto la venta", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            frBpla.setVisible(true);
+        }
     }//GEN-LAST:event_btnBusPlaActionPerformed
 
     private void btnBusProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusProActionPerformed
         // TODO add your handling code here:
-        frBp = new frmBuscarProducto();
-        if (frBp.isShowing()) {
+        frBpro = new frmBuscarProducto();
+        if (frBpro.isShowing()) {
             JOptionPane.showMessageDialog(this, "ya esta abierto la venta", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            frBp.setVisible(true);
-            frBp.si = "frmPla";
+            frBpro.setVisible(true);
+            frBpro.si = "frmPla";
         }
     }//GEN-LAST:event_btnBusProActionPerformed
 
     private void txtPrecioPlato1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioPlato1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioPlato1ActionPerformed
+
+    private void btnBusPro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusPro1ActionPerformed
+        // TODO add your handling code here:
+        
+        int i=ddp.insertar_detalleplato(dtlp);
+    }//GEN-LAST:event_btnBusPro1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -470,8 +506,8 @@ public final class frmPlato extends javax.swing.JFrame {
     }
 
     public void LlenaComboEstadoPlato(){
-        cboEstadoPlato.addItem("Desactivado");
-        cboEstadoPlato.addItem("Activado");   
+        cboEstadoPlato.addItem("DESACTIVADO");
+        cboEstadoPlato.addItem("ACTIVADO");   
     }
     
     public String getIdPlato(){
@@ -521,10 +557,11 @@ public final class frmPlato extends javax.swing.JFrame {
     public static javax.swing.JButton btnBorrarPlato;
     private javax.swing.JButton btnBusPla;
     private javax.swing.JButton btnBusPro;
+    private javax.swing.JButton btnBusPro1;
     private javax.swing.JButton btnCancelarPlato;
     private javax.swing.JButton btnNuevoPlato;
-    private javax.swing.JComboBox<String> cboCategoriaPlato;
-    private javax.swing.JComboBox<String> cboEstadoPlato;
+    public static javax.swing.JComboBox<String> cboCategoriaPlato;
+    public static javax.swing.JComboBox<String> cboEstadoPlato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

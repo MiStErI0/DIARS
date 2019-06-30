@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +28,10 @@ public class daoDetalle_plato {
     
     ArrayList<detalle_plato> dtlp;
 
+
     public daoDetalle_plato() {
+        
+        dtlp= new ArrayList<>();
         
     }
     
@@ -65,17 +69,25 @@ public class daoDetalle_plato {
         return lista;
     }
     
-    public void cargar_tabla_detalle_plato(DefaultTableModel dtmtable,JTable jm,String Plato) {
-        
-            dtlp=(ArrayList)getdeta_plato(Plato);
+    public void cargar_tabla_detalle_plato(DefaultTableModel dtmtable,JTable jm,String Plato,detalle_plato deta) {    
+            if(Plato!=null){
+                System.out.println("ezzzz");
+
+                dtlp=(ArrayList)getdeta_plato(Plato);
+            }else{
+                System.out.println("gaaaaaa");
+
+                dtlp.add(deta);
+            }
             dtmtable.setRowCount(0);//Limpia las filas del JTable
             dtlp.stream().map((p) -> {
-                Object vec[] = new Object[5];
+                Object vec[] = new Object[6];
                 vec[0] = p.getIdproducto();
                 vec[1] = p.getProducto();
                 vec[2] = p.getIdplato();
                 vec[3] = p.getPlato();
                 vec[4] = p.getCantidad();
+                System.out.println(p.getEstado());
                 if(p.getEstado()==1)
                 {
                     vec[5]="ACTIVO";
@@ -100,5 +112,37 @@ public class daoDetalle_plato {
         dtmtable.addColumn("ESTADO");
         tabla.setModel(dtmtable);
         
+    }
+    
+    public int insertar_detalleplato(ArrayList<detalle_plato> dtp)
+    {
+        int i;
+        Connection c = null;
+        String sql="INSERT INTO detalle_plato VALUES (fn_detalle_plato(), ?, ?, ?, 1);";
+
+        try {
+            c= new Conexion().getMysql();
+            PreparedStatement ps;
+            for (Iterator<detalle_plato> it = dtp.iterator(); it.hasNext();) {
+                detalle_plato detalle = it.next();
+                ps = c.prepareStatement(sql);
+                ps.setString(1,detalle.getIdproducto().toUpperCase());
+                ps.setString(2,detalle.getIdplato().toUpperCase());
+                ps.setDouble(3,detalle.getCantidad());
+                int rs = ps.executeUpdate();
+                c.close();
+                c=null;
+                ps.close();
+                ps= null;
+                System.out.println("registro exitoso");
+            }
+            
+            i=1;
+        } catch (SQLException ex) {
+            Logger.getLogger(daoDetalle_plato.class.getName()).log(Level.SEVERE, null, ex);
+             System.out.println("registro errorneo ");
+            i=0;
+        }
+        return i;
     }
 }
