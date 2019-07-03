@@ -6,6 +6,13 @@
 package Frames;
 
 import dao.daoCliente;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,11 +24,23 @@ public class frmBuscarCliente extends javax.swing.JFrame {
      * Creates new form frmBuscarCliente
      */
     daoCliente cl=new daoCliente();
+    DefaultTableModel dtmCliente = new DefaultTableModel();
+    int filaseleccionada;
     public frmBuscarCliente() {
         initComponents();
-        cl.cargar_cabecera(tblCliente);
+        cl.cargar_cabecera(jtCliente);
+        ocultar_ColumnaIdPersona();
     }
 
+    private void ocultar_ColumnaIdPersona()
+    {
+        TableColumn columna = jtCliente.getColumnModel().getColumn(8);
+        columna.setMaxWidth(0);
+        columna.setMinWidth(0);
+        columna.setPreferredWidth(0);
+        jtCliente.doLayout();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,21 +51,27 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscarCliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCliente = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jtCliente = new javax.swing.JTable();
+        btnBuscarCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Cliente");
 
+        txtBuscarCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarClienteKeyTyped(evt);
+            }
+        });
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
         jButton1.setText("Buscar");
 
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+        jtCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,13 +82,18 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblCliente);
+        jtCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtCliente);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        btnBuscarCliente.setText("Cancelar");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBuscarClienteActionPerformed(evt);
             }
         });
 
@@ -77,11 +107,11 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(35, 35, 35)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,22 +121,59 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(btnBuscarCliente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void jtClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtClienteMouseClicked
+        // TODO add your handling code here:
+        frmCliente frmCli = new frmCliente();
+        try{
+            filaseleccionada = jtCliente.getSelectedRow();        
+            if(filaseleccionada == -1){
+                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                //DefaultTableModel modelotabla = (DefaultTableModel) jtCategoria.getModel();
+                frmCli.txtNombreCliente.setText(jtCliente.getValueAt(filaseleccionada,1).toString());              
+                frmCli.txtApellidoPatCliente.setText(jtCliente.getValueAt(filaseleccionada,2).toString());
+                frmCli.txtApellidoMatCliente.setText(jtCliente.getValueAt(filaseleccionada,3).toString());
+                frmCli.txtCorreoCliente.setText(jtCliente.getValueAt(filaseleccionada,4).toString());
+                frmCli.txtTelefonoCliente.setText(jtCliente.getValueAt(filaseleccionada,5).toString());
+                frmCli.txtDniCliente.setText(jtCliente.getValueAt(filaseleccionada,6).toString());
+                //frmCli.jdFechaCliente.setText(jtCliente.getValueAt(filaseleccionada,7).toString());
+                frmCli.cboEstadoCliente.setSelectedItem(jtCliente.getValueAt(filaseleccionada,8).toString());
+                frmCli.txtDireccionCliente.setText(jtCliente.getValueAt(filaseleccionada,9).toString());
+                frmCli.txtIdPersonaCliente.setText(jtCliente.getValueAt(filaseleccionada,10).toString());
+                
+                JOptionPane.showMessageDialog(this,"¡Categoría encontrada!","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE); 
+                frmCli.show();
+                
+                dispose();
+                                            
+            }
+        }catch (HeadlessException ex){
+            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jtClienteMouseClicked
+
+    private void txtBuscarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarClienteKeyTyped
+        // TODO add your handling code here:
+        filtro("(?i)" + txtBuscarCliente.getText(), jtCliente);
+    }//GEN-LAST:event_txtBuscarClienteKeyTyped
 
     /**
      * @param args the command line arguments
@@ -144,12 +211,19 @@ public class frmBuscarCliente extends javax.swing.JFrame {
         });
     }
 
+    public void filtro(String filtro, JTable jtableBuscar){
+        dtmCliente = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmCliente);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filtro));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tblCliente;
+    private javax.swing.JTable jtCliente;
+    private javax.swing.JTextField txtBuscarCliente;
     // End of variables declaration//GEN-END:variables
 }
