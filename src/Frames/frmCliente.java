@@ -365,8 +365,9 @@ public class frmCliente extends javax.swing.JFrame {
 //        }
 //    }
     public void LlenaComboEstadoCliente(){
-        cboEstadoCliente.addItem("1");
-        cboEstadoCliente.addItem("0");
+        cboEstadoCliente.addItem("Desactivo");
+        cboEstadoCliente.addItem("Activo");
+        
     }
 
     public String getIdCliente(){

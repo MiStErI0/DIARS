@@ -17,6 +17,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
      * Creates new form frmBuscarCliente
      */
     daoCliente cl=new daoCliente();
+    public static String estados;
     public frmBuscarCliente() {
         initComponents();
         cl.cargar_cabecera(tblCliente);
@@ -57,6 +58,11 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCliente);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
@@ -107,6 +113,30 @@ public class frmBuscarCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        // TODO add your handling code here:
+        int fila=tblCliente.getSelectedRow();
+        if(evt.getClickCount()==2)
+        {
+            if(estados.equals("frmDeli")){
+            frmDelibery.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+            frmDelibery.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+            frmDelibery.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+            frmDelibery.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+            frmDelibery.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+            frmDelibery.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+            if(tblCliente.getValueAt(fila, 6).toString().equals("Activo")){
+                frmDelibery.cl.setEstado(1);
+            }else{
+                frmDelibery.cl.setEstado(0);
+            }
+            frmDelibery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());    
+                dispose();
+            }
+        }else{
+        }
+    }//GEN-LAST:event_tblClienteMouseClicked
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,7 @@
  */
 package Frames;
 
+import dao.daoDetalle_plato;
 import dao.daoPlato;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -138,6 +139,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
     private void tblplatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblplatoMouseClicked
         // TODO add your handling code here:
         String cod1;
+        daoDetalle_plato d= new daoDetalle_plato();
         try {
             filaseleccionada = tblplato.getSelectedRow();
             if (filaseleccionada == -1) {
@@ -147,6 +149,7 @@ public class frmBuscarPlato extends javax.swing.JFrame {
                 frmPlato.txtIdPlato.setText(tblplato.getValueAt(filaseleccionada, 0).toString());
                 frmPlato.txtNombrePlato.setText(tblplato.getValueAt(filaseleccionada, 1).toString());
                 frmPlato.txtPrecioPlato.setText(tblplato.getValueAt(filaseleccionada, 2).toString());
+                
                 if (tblplato.getValueAt(filaseleccionada, 3).toString().equals("ACTIVO")) {
                     System.out.println("ezzzz");
 
@@ -160,7 +163,8 @@ public class frmBuscarPlato extends javax.swing.JFrame {
 
                 cod1 = tblplato.getValueAt(filaseleccionada, 4).toString();
                 frmPlato.cboCategoriaPlato.setSelectedIndex(Integer.parseInt(categoria(cod1)));
-
+                d.cargar_tabla_detalle_plato(frmPlato.dtmplato, frmPlato.tblprod, tblplato.getValueAt(filaseleccionada, 1).toString());
+                frmPlato.activador(frmPlato.pnlPro, true);
                 dispose();
 
             }

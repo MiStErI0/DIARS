@@ -76,7 +76,10 @@ public class daoCliente {
                 vec[3] = cl.getTelefono();
                 vec[4] = cl.getDni();
                 vec[5] = cl.getFechaNac();
-                vec[6] = cl.getEstado();
+                if(cl.getEstado()==1)
+                    vec[6] = "Activo";
+                else
+                    vec[6] = "Desactivo";
                 //agregar al JTable
                 dtmtable.addRow(vec);
             }
@@ -86,7 +89,12 @@ public class daoCliente {
     }
     
      public void cargar_cabecera(JTable tbl) {
-        DefaultTableModel dtmCabecera = new DefaultTableModel();        
+        DefaultTableModel dtmCabecera = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false; //To change body of generated methods, choose Tools | Templates.
+            }
+        };        
         dtmCabecera.addColumn("IDCLIENTE");
         dtmCabecera.addColumn("NOMBRE Y APELLIDOS/RAZON SOCIAL");
         dtmCabecera.addColumn("CORREO");

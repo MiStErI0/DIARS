@@ -5,9 +5,15 @@
  */
 package dao;
 
+import ConexionBD.Conexion;
 import clases.empleado;
 import clases.pedido;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -59,6 +65,28 @@ public class daoPedido {
             jm.setModel(dtmtable);
         }
 
+    }
+    
+    public void prueba(){
+    String respuestaRegistro = null;
+        Connection c;
+        
+            
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs;
+            cs = c.prepareCall("{call sp_prueba(?,?)}");
+            cs.setString(1,"ddsdsad");
+            cs.registerOutParameter(2,java.sql.Types.VARCHAR);
+            cs.executeUpdate();
+            respuestaRegistro=cs.getString(2);
+            System.out.println(respuestaRegistro);
+        } catch (SQLException ex) {
+            Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+    
     }
     
        

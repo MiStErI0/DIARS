@@ -6,6 +6,8 @@
 package Frames;
 
 import ConexionBD.Conexion;
+import clases.cliente;
+import clases.empleado;
 import clases.pedido;
 import dao.daoCategoriaPlato;
 import dao.daoPlato;
@@ -42,10 +44,22 @@ public class frmDelibery extends javax.swing.JFrame {
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
     int cantidad;
-    DefaultTableModel dtmPlato = new DefaultTableModel();
-    DefaultTableModel dtmPedido = new DefaultTableModel();
-    daoPedido dp= new daoPedido();
-    
+    DefaultTableModel dtmPlato = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+    DefaultTableModel dtmPedido = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+    daoPedido dp = new daoPedido();
+    public static cliente cl =new cliente();
+    public static empleado em ;
+
     public frmDelibery() {
         initComponents();
         cargarCabeceraTablePedido();
@@ -54,9 +68,8 @@ public class frmDelibery extends javax.swing.JFrame {
         Ocultar_plato();
         this.setLocationRelativeTo(null);
     }
-    
-    public void Ocultar_plato()
-    {
+
+    public void Ocultar_plato() {
         jtPlato.getColumnModel().getColumn(0).setMaxWidth(0);
         jtPlato.getColumnModel().getColumn(0).setMinWidth(0);
         jtPlato.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -67,8 +80,8 @@ public class frmDelibery extends javax.swing.JFrame {
         jtPlato.getColumnModel().getColumn(4).setMinWidth(0);
         jtPlato.getColumnModel().getColumn(4).setPreferredWidth(0);
 
-        
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,10 +106,12 @@ public class frmDelibery extends javax.swing.JFrame {
         btnAgregarPedido = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtcantidad = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnBus = new javax.swing.JButton();
+        btnAgre = new javax.swing.JButton();
+        btnEnvi = new javax.swing.JButton();
+        lblnombre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,9 +194,22 @@ public class frmDelibery extends javax.swing.JFrame {
 
         jLabel4.setText("Cliente:");
 
-        jButton4.setText("buscar");
+        btnBus.setText("buscar");
+        btnBus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("agregar");
+        btnAgre.setText("agregar");
+
+        btnEnvi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/enviar.png"))); // NOI18N
+        btnEnvi.setText("Enviar pedido");
+        btnEnvi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,7 +221,9 @@ public class frmDelibery extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(27, 27, 27)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(4, 4, 4)
@@ -212,22 +242,23 @@ public class frmDelibery extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addComponent(jButton4)
+                        .addComponent(btnBus)
                         .addGap(5, 5, 5)
-                        .addComponent(jButton5))
+                        .addComponent(btnAgre))
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(btnEliminarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(btnEnvi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -235,32 +266,37 @@ public class frmDelibery extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel1))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(btnBus)
+                    .addComponent(btnAgre))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
@@ -269,8 +305,15 @@ public class frmDelibery extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregarPedido)
                     .addComponent(jButton1))
-                .addGap(5, 5, 5)
-                .addComponent(btnEliminarPedido))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminarPedido)
+                        .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEnvi)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -283,7 +326,7 @@ public class frmDelibery extends javax.swing.JFrame {
 
     private void jtPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPlatoMouseClicked
         // TODO add your handling code here:
-        
+
 //        try {
 //            filaseleccionada = jtPlato.getSelectedRow();
 //            if(filaseleccionada == -1){
@@ -310,28 +353,26 @@ public class frmDelibery extends javax.swing.JFrame {
             filaseleccionada = jtPlato.getSelectedRow();
             double importe;
             String descripcion;
-            if(filaseleccionada == -1){
-                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
             }
-            else{
+            else {
                 //dtmPedido.setRowCount(0);
-                
-                if(txtcantidad.getText().equals("")){
-                    JOptionPane.showMessageDialog(this,"No se ha introducido una cantidad","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                if (txtcantidad.getText().equals("")) {
+                    JOptionPane.showMessageDialog(this, "No se ha introducido una cantidad", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
                 }
-                else{
-                    cantidad = Integer.parseInt(txtcantidad.getText());
-                    descripcion=JOptionPane.showInputDialog(null,"Descripcion", "Descripcion",NORMAL);
-                    importe = (cantidad * Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 3).toString()));
-                    
-                    pedido p=new pedido(jtPlato.getValueAt(filaseleccionada, 1).toString(), cantidad,descripcion, Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 2).toString()), importe);
-                    
+                else {
+                    descripcion = JOptionPane.showInputDialog(null, "Descripcion", "Descripcion", NORMAL);
+                    cantidad = Integer.parseInt(txtcantidad.getText());            
+                    importe = (cantidad * Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 2).toString()));
+                    pedido p = new pedido(jtPlato.getValueAt(filaseleccionada, 1).toString(), cantidad, descripcion, Double.parseDouble(jtPlato.getValueAt(filaseleccionada, 2).toString()), importe);
+
                     dp.adicionar(p);
-                    
+
                     dp.cargar_tabla_pedido(dtmPedido, jtPedido);
                     System.out.println(jtPlato.getValueAt(filaseleccionada, 0).toString());
                 }
-                
+
             }
         } catch (Exception e) {
         }
@@ -339,25 +380,24 @@ public class frmDelibery extends javax.swing.JFrame {
 
     private void btnEliminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPedidoActionPerformed
         // TODO add your handling code here:
-        int respuesta ;
+        int respuesta;
         int fila;
         try {
             filaseleccionada = jtPlato.getSelectedRow();
             double importe;
-            if(filaseleccionada == -1){
-                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila a eliminar","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila a eliminar", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+            } else {
                 //dtmPedido.setRowCount(0);
-                respuesta = JOptionPane.showConfirmDialog(null, "¿ Estas seguro de eliminar este plato del pedido ?","Eliminar",JOptionPane.YES_NO_OPTION); 
-                if (respuesta==JOptionPane.YES_OPTION) {
+                respuesta = JOptionPane.showConfirmDialog(null, "¿ Estas seguro de eliminar este plato del pedido ?", "Eliminar", JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
                     dtmPedido = (DefaultTableModel) jtPedido.getModel();
                     dtmPedido.removeRow(filaseleccionada);
                 }
-                
+
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se realizo la eliminacion del plato, verifique.","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se realizo la eliminacion del plato, verifique.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarPedidoActionPerformed
 
@@ -365,6 +405,18 @@ public class frmDelibery extends javax.swing.JFrame {
         // TODO add your handling code here:
         daoPla.cargar_tabla_plato(dtmPlato, jtPlato, cboCategoriaPlato.getSelectedItem().toString());
     }//GEN-LAST:event_cboCategoriaPlatoItemStateChanged
+
+    private void btnBusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusActionPerformed
+        // TODO add your handling code here:
+        frmBuscarCliente bc = new frmBuscarCliente();
+        bc.setVisible(true);
+        frmBuscarCliente.estados="frmDeli";
+    }//GEN-LAST:event_btnBusActionPerformed
+
+    private void btnEnviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviActionPerformed
+        // TODO add your handling code here:
+        dp.prueba();
+    }//GEN-LAST:event_btnEnviActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,37 +455,35 @@ public class frmDelibery extends javax.swing.JFrame {
             }
         });
     }
-   
-    public void cargarCabeceraTablePedido(){ 
-        dtmPedido.addColumn("Plato"); 
-        dtmPedido.addColumn("Cantidad"); 
-        dtmPedido.addColumn("Descripcion"); 
+
+    public void cargarCabeceraTablePedido() {
+        dtmPedido.addColumn("Plato");
+        dtmPedido.addColumn("Cantidad");
+        dtmPedido.addColumn("Descripcion");
         dtmPedido.addColumn("Precio");
         dtmPedido.addColumn("Importe");
-        
-        
+
         jtPedido.setModel(dtmPedido);
     }
-    
-    
-    public void cargarCabeceraTablePlato(){
-        dtmPlato.addColumn("ID Plato"); 
-        dtmPlato.addColumn("Nombre de Plato"); 
-        dtmPlato.addColumn("Precio"); 
+
+    public void cargarCabeceraTablePlato() {
+        dtmPlato.addColumn("ID Plato");
+        dtmPlato.addColumn("Nombre de Plato");
+        dtmPlato.addColumn("Precio");
         dtmPlato.addColumn("Estado");
-        dtmPlato.addColumn("Categoria de Plato"); 
+        dtmPlato.addColumn("Categoria de Plato");
         jtPlato.setModel(dtmPlato);
     }
-   
-       
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgre;
     private javax.swing.JButton btnAgregarPedido;
+    private javax.swing.JButton btnBus;
     private javax.swing.JButton btnEliminarPedido;
+    private javax.swing.JButton btnEnvi;
     private javax.swing.JComboBox<String> cboCategoriaPlato;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -443,9 +493,10 @@ public class frmDelibery extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTable jtPedido;
     private javax.swing.JTable jtPlato;
+    public static javax.swing.JLabel lblnombre;
+    public static javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtcantidad;
     // End of variables declaration//GEN-END:variables
 }

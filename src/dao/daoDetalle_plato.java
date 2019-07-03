@@ -25,30 +25,33 @@ import javax.swing.table.DefaultTableModel;
  * @author johan
  */
 public class daoDetalle_plato {
-    
-    ArrayList<detalle_plato> dtlp;
 
+    public ArrayList<detalle_plato> dtlp;
 
     public daoDetalle_plato() {
-        
-        dtlp= new ArrayList<>();
-        
+
+        dtlp = new ArrayList<detalle_plato>();
+
     }
     
+    public void adicionar(detalle_plato a){
+       dtlp.add(a);
+    }
+
     private List<detalle_plato> getdeta_plato(String plato) {
         List<detalle_plato> lista = new ArrayList();
         String sql = "SELECT d.IDPRODUCTOS,p.producto,d.IDPLATO,a.plato,d.cantidad, d.estado from detalle_plato as d\n"
                 + "inner join  producto as p on p.idproductos=d.idproductos\n"
-                + "inner join plato as a on a.idplato= d.idplato where a.plato=?";
+                + "inner join plato as a on a.idplato= d.idplato where a.plato=? and d.estado=1";
         Connection c = null;
         try {
             c = new Conexion().getMysql();
             ResultSet rs = null;
             PreparedStatement pst = c.prepareCall(sql);
-            pst.setString(1,plato);
+            pst.setString(1, plato);
             rs = pst.executeQuery();
             while (rs.next()) {
-                detalle_plato e = new detalle_plato(rs.getString(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getDouble(5),rs.getInt(6));
+                detalle_plato e = new detalle_plato(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6));
                 lista.add(e);
             }
             rs.close();
@@ -68,42 +71,41 @@ public class daoDetalle_plato {
 
         return lista;
     }
-    
-    public void cargar_tabla_detalle_plato(DefaultTableModel dtmtable,JTable jm,String Plato,detalle_plato deta) {    
-            if(Plato!=null){
-                System.out.println("ezzzz");
 
-                dtlp=(ArrayList)getdeta_plato(Plato);
-            }else{
-                System.out.println("gaaaaaa");
+    public void cargar_tabla_detalle_plato(DefaultTableModel dtmtable, JTable jm, String Plato/*, detalle_plato deta*/) {
+        if (Plato != null) {
+            //System.out.println("ezzzz");
 
-                dtlp.add(deta);
+            dtlp = (ArrayList) getdeta_plato(Plato);
+        } else {
+            //System.out.println("gaaaaaa");
+
+            //dtlp.add(deta);
+        }
+        dtmtable.setRowCount(0);//Limpia las filas del JTable
+        dtlp.stream().map((p) -> {
+            Object vec[] = new Object[6];
+            vec[0] = p.getIdproducto();
+            vec[1] = p.getProducto();
+            vec[2] = p.getIdplato();
+            vec[3] = p.getPlato();
+            vec[4] = p.getCantidad();
+            System.out.println(p.getEstado());
+            if (p.getEstado() == 1) {
+                vec[5] = "ACTIVO";
+            } else {
+                vec[5] = "DESACTIVADO";
             }
-            dtmtable.setRowCount(0);//Limpia las filas del JTable
-            dtlp.stream().map((p) -> {
-                Object vec[] = new Object[6];
-                vec[0] = p.getIdproducto();
-                vec[1] = p.getProducto();
-                vec[2] = p.getIdplato();
-                vec[3] = p.getPlato();
-                vec[4] = p.getCantidad();
-                System.out.println(p.getEstado());
-                if(p.getEstado()==1)
-                {
-                    vec[5]="ACTIVO";
-                }else
-                    vec[5]="DESACTIVADO";
-             
+
             return vec;
         }).forEachOrdered((vec) -> {
             //agregar al JTable
             dtmtable.addRow(vec);
         });
-            jm.setModel(dtmtable);
+        jm.setModel(dtmtable);
     }
-    
-    public void cargar_cabecera(DefaultTableModel dtmtable, JTable tabla)
-    {
+
+    public void cargar_cabecera(DefaultTableModel dtmtable, JTable tabla) {
         dtmtable.addColumn("IDPRODUCTO");
         dtmtable.addColumn("PRODUCTO");
         dtmtable.addColumn("IDPLATO");
@@ -111,38 +113,33 @@ public class daoDetalle_plato {
         dtmtable.addColumn("CANTIDAD");
         dtmtable.addColumn("ESTADO");
         tabla.setModel(dtmtable);
-        
+
     }
-    
-    public int insertar_detalleplato(ArrayList<detalle_plato> dtp)
-    {
-        int i;
+
+    public void insertar_detalle_plato(detalle_plato detalle) {
         Connection c = null;
-        String sql="INSERT INTO detalle_plato VALUES (fn_detalle_plato(), ?, ?, ?, 1);";
+        String sql = "INSERT INTO detalle_plato VALUES (fn_detalle_plato(), ?, ?, ?, 1);";
 
         try {
-            c= new Conexion().getMysql();
+            c = new Conexion().getMysql();
             PreparedStatement ps;
-            for (Iterator<detalle_plato> it = dtp.iterator(); it.hasNext();) {
-                detalle_plato detalle = it.next();
-                ps = c.prepareStatement(sql);
-                ps.setString(1,detalle.getIdproducto().toUpperCase());
-                ps.setString(2,detalle.getIdplato().toUpperCase());
-                ps.setDouble(3,detalle.getCantidad());
-                int rs = ps.executeUpdate();
-                c.close();
-                c=null;
-                ps.close();
-                ps= null;
-                System.out.println("registro exitoso");
-            }
-            
-            i=1;
+            ps = c.prepareStatement(sql);
+            ps.setString(1, detalle.getIdproducto().toUpperCase());
+            ps.setString(2, detalle.getIdplato().toUpperCase());
+            ps.setDouble(3, detalle.getCantidad());
+            int rs = ps.executeUpdate();
+            c.close();
+            c = null;
+            ps.close();
+            ps = null;
+            System.out.println("registro exitoso");
+
         } catch (SQLException ex) {
             Logger.getLogger(daoDetalle_plato.class.getName()).log(Level.SEVERE, null, ex);
-             System.out.println("registro errorneo ");
-            i=0;
+            System.out.println("registro errorneo ");
         }
-        return i;
     }
+
+
+
 }

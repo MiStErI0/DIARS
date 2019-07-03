@@ -11,12 +11,14 @@ import clases.producto;
 import dao.daoCategoriaPlato;
 import dao.daoDetalle_plato;
 import dao.daoPlato;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,7 +36,7 @@ public final class frmPlato extends javax.swing.JFrame {
     daoPlato daoPla = new daoPlato();
     daoDetalle_plato ddp = new daoDetalle_plato();
     daoCategoriaPlato dcp = new daoCategoriaPlato();
-    DefaultTableModel dtmplato = new DefaultTableModel(){
+    public static DefaultTableModel dtmplato = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int row, int column) {
             return false; //To change body of generated methods, choose Tools | Templates.
@@ -43,9 +45,10 @@ public final class frmPlato extends javax.swing.JFrame {
     };
     frmBuscarProducto frBpro;
     frmBuscarPlato frBpla;
-    ArrayList<detalle_plato> dtlp;
+    //ArrayList<detalle_plato> dtlp;
     detalle_plato dp;
     public static producto p;
+    
 
     public frmPlato() {
         initComponents();
@@ -53,9 +56,24 @@ public final class frmPlato extends javax.swing.JFrame {
         dcp.cargarCategoriaPlato(cboCategoriaPlato);
         ddp.cargar_cabecera(dtmplato, tblprod);
         Ocultar_plato();
+        activador(pnlPro, false);
         
         
     }
+    
+    public static void activador(JPanel panel, Boolean isEnabled) {
+    panel.setEnabled(isEnabled);
+
+    Component[] components = panel.getComponents();
+
+    for(int i = 0; i < components.length; i++) {
+        if(components[i].getClass().getName() == "javax.swing.JPanel") {
+            activador((JPanel) components[i], isEnabled);
+        }
+
+        components[i].setEnabled(isEnabled);
+    }
+}
     public void Ocultar_plato()
     {
         tblprod.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -80,78 +98,38 @@ public final class frmPlato extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtIdPlato = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        cboCategoriaPlato = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        txtNombrePlato = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtPrecioPlato = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        cboEstadoPlato = new javax.swing.JComboBox<>();
-        btnNuevoPlato = new javax.swing.JButton();
-        btnActualizarPlato = new javax.swing.JButton();
-        btnCancelarPlato = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblprod = new javax.swing.JTable();
-        btnBusPla = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        pnlPro = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtidprod = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtproducto = new javax.swing.JTextField();
         txtCant = new javax.swing.JTextField();
+        txtproducto = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btnBusPro = new javax.swing.JButton();
         btnAgregarPlato = new javax.swing.JButton();
         btnBorrarPlato = new javax.swing.JButton();
-        btnBusPro1 = new javax.swing.JButton();
+        btnRegPro = new javax.swing.JButton();
+        pnlPlato = new javax.swing.JPanel();
+        btnActualizarPlato = new javax.swing.JButton();
+        btnNuevoPlato = new javax.swing.JButton();
+        cboEstadoPlato = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txtPrecioPlato = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNombrePlato = new javax.swing.JTextField();
+        cboCategoriaPlato = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtIdPlato = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnBusPla = new javax.swing.JButton();
+        btnCancelarPlato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Plato");
-
-        jLabel2.setText("Id_Plato :");
-
-        txtIdPlato.setEditable(false);
-
-        jLabel3.setText("Categoria :");
-
-        cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setText("Nombre de Plato :");
-
-        jLabel5.setText("Precio :");
-
-        jLabel6.setText("Estado :");
-
-        btnNuevoPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
-        btnNuevoPlato.setText("Nuevo");
-        btnNuevoPlato.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoPlatoActionPerformed(evt);
-            }
-        });
-
-        btnActualizarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
-        btnActualizarPlato.setText("Actualizar");
-        btnActualizarPlato.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarPlatoActionPerformed(evt);
-            }
-        });
-
-        btnCancelarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
-        btnCancelarPlato.setText("Cancelar");
-        btnCancelarPlato.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarPlatoActionPerformed(evt);
-            }
-        });
 
         tblprod.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,15 +144,7 @@ public final class frmPlato extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblprod);
 
-        btnBusPla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
-        btnBusPla.setText("Buscar Plato");
-        btnBusPla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBusPlaActionPerformed(evt);
-            }
-        });
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnlPro.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel7.setText("Id_producto :");
 
@@ -213,179 +183,255 @@ public final class frmPlato extends javax.swing.JFrame {
             }
         });
 
-        btnBusPro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/nuevo.png"))); // NOI18N
-        btnBusPro1.setText("Registrar produto");
-        btnBusPro1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/nuevo.png"))); // NOI18N
+        btnRegPro.setText("Registrar produto");
+        btnRegPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBusPro1ActionPerformed(evt);
+                btnRegProActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlProLayout = new javax.swing.GroupLayout(pnlPro);
+        pnlPro.setLayout(pnlProLayout);
+        pnlProLayout.setHorizontalGroup(
+            pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProLayout.createSequentialGroup()
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlProLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(pnlProLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(34, 34, 34)
                                 .addComponent(txtidprod, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGroup(pnlProLayout.createSequentialGroup()
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(txtproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(pnlProLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(pnlProLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnBusPro1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBorrarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnBusPro)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAgregarPlato)))))
+                        .addComponent(btnBusPro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarPlato))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegPro)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBorrarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        pnlProLayout.setVerticalGroup(
+            pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlProLayout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jLabel10)
                 .addGap(23, 23, 23)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(pnlProLayout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(txtidprod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBusPro)
                     .addComponent(btnAgregarPlato))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBorrarPlato)
-                    .addComponent(btnBusPro1))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(btnRegPro))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
+
+        btnActualizarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
+        btnActualizarPlato.setText("Actualizar");
+        btnActualizarPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarPlatoActionPerformed(evt);
+            }
+        });
+
+        btnNuevoPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/new.png"))); // NOI18N
+        btnNuevoPlato.setText("Nuevo");
+        btnNuevoPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoPlatoActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Estado :");
+
+        jLabel5.setText("Precio :");
+
+        jLabel4.setText("Nombre de Plato :");
+
+        cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel3.setText("Categoria :");
+
+        jLabel2.setText("Id_Plato :");
+
+        txtIdPlato.setEditable(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Plato");
+
+        btnBusPla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
+        btnBusPla.setText("Buscar Plato");
+        btnBusPla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusPlaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlPlatoLayout = new javax.swing.GroupLayout(pnlPlato);
+        pnlPlato.setLayout(pnlPlatoLayout);
+        pnlPlatoLayout.setHorizontalGroup(
+            pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(49, 49, 49)
+                                .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(btnBusPla, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(56, 56, 56)
+                                .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(12, Short.MAX_VALUE))
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(42, 42, 42)
+                        .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNuevoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtNombrePlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnActualizarPlato))
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(60, 60, 60)
+                                .addComponent(txtPrecioPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30))))
+        );
+        pnlPlatoLayout.setVerticalGroup(
+            pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
+                .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel2))
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBusPla))
+                .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel3))
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevoPlato))))
+                .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel4))
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNombrePlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel5))
+                            .addComponent(txtPrecioPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPlatoLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel6))
+                            .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlPlatoLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizarPlato)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        btnCancelarPlato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
+        btnCancelarPlato.setText("Cancelar");
+        btnCancelarPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarPlatoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(49, 49, 49)
-                        .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(btnBusPla, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(42, 42, 42)
-                        .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(10, 10, 10)
-                        .addComponent(txtNombrePlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(60, 60, 60)
-                        .addComponent(txtPrecioPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(56, 56, 56)
-                        .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnNuevoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnActualizarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(227, 227, 227)
-                        .addComponent(btnCancelarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(4, 4, 4)
+                        .addComponent(pnlPlato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarPlato)
+                        .addGap(36, 36, 36)))
+                .addComponent(pnlPro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnBusPla))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(cboCategoriaPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNombrePlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel5))
-                            .addComponent(txtPrecioPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel6))
-                            .addComponent(cboEstadoPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoPlato)
-                            .addComponent(btnActualizarPlato))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelarPlato))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(btnCancelarPlato)))
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -401,8 +447,10 @@ public final class frmPlato extends javax.swing.JFrame {
         dp= new detalle_plato(txtidprod.getText(),txtproducto.getText(),txtIdPlato.getText(), txtNombrePlato.getText(),Double.parseDouble(txtCant.getText()),1);
  
         System.out.println(dp.getIdproducto()+dp.getProducto());
+
+        ddp.adicionar(dp);
         
-        ddp.cargar_tabla_detalle_plato(dtmplato, tblprod, null, dp);
+        ddp.cargar_tabla_detalle_plato(dtmplato, tblprod, null);
     }//GEN-LAST:event_btnAgregarPlatoActionPerformed
 
     private void btnActualizarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPlatoActionPerformed
@@ -446,6 +494,7 @@ public final class frmPlato extends javax.swing.JFrame {
         } else {
             frBpla.setVisible(true);
         }
+        activador(pnlPlato, false);
     }//GEN-LAST:event_btnBusPlaActionPerformed
 
     private void btnBusProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusProActionPerformed
@@ -457,18 +506,32 @@ public final class frmPlato extends javax.swing.JFrame {
             frBpro.setVisible(true);
             frBpro.si = "frmPla";
         }
+        
     }//GEN-LAST:event_btnBusProActionPerformed
 
     private void txtPrecioPlato1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioPlato1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioPlato1ActionPerformed
 
-    private void btnBusPro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusPro1ActionPerformed
+    private void btnRegProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegProActionPerformed
         // TODO add your handling code here:
-        
-        int i=ddp.insertar_detalleplato(dtlp);
-    }//GEN-LAST:event_btnBusPro1ActionPerformed
+        ddp.dtlp.forEach((detalle_plato dpd) -> {
+            ddp.insertar_detalle_plato(dpd);
+        });
+        limpiar();
+    }//GEN-LAST:event_btnRegProActionPerformed
 
+    
+    void limpiar()
+    {
+        txtCant.setText("");
+        txtIdPlato.setText("");
+        txtNombrePlato.setText("");
+        txtidprod.setText("");
+        txtproducto.setText("");
+        cboCategoriaPlato.setSelectedIndex(0);
+        cboEstadoPlato.setSelectedIndex(1);
+    }
     /**
      * @param args the command line arguments
      */
@@ -557,9 +620,9 @@ public final class frmPlato extends javax.swing.JFrame {
     public static javax.swing.JButton btnBorrarPlato;
     private javax.swing.JButton btnBusPla;
     private javax.swing.JButton btnBusPro;
-    private javax.swing.JButton btnBusPro1;
     private javax.swing.JButton btnCancelarPlato;
     private javax.swing.JButton btnNuevoPlato;
+    private javax.swing.JButton btnRegPro;
     public static javax.swing.JComboBox<String> cboCategoriaPlato;
     public static javax.swing.JComboBox<String> cboEstadoPlato;
     private javax.swing.JLabel jLabel1;
@@ -572,9 +635,10 @@ public final class frmPlato extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblprod;
+    private javax.swing.JPanel pnlPlato;
+    public static javax.swing.JPanel pnlPro;
+    public static javax.swing.JTable tblprod;
     public static javax.swing.JTextField txtCant;
     public static javax.swing.JTextField txtIdPlato;
     public static javax.swing.JTextField txtNombrePlato;
