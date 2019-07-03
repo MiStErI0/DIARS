@@ -9,6 +9,7 @@ import dao.daoCliente;
 import dao.daoDePrDis;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import clases.Validar;
 /**
  *
  * @author Estudiante
@@ -20,10 +21,12 @@ public class frmCliente extends javax.swing.JFrame {
      */
     dao.daoDePrDis dpd=new daoDePrDis();
     daoCliente daoCli = new daoCliente();
+    Validar vali = new Validar();
     public frmCliente() {
         initComponents();
         dpd.cargarDepartame(cmbdepar);
         LlenaComboEstadoCliente();
+        
     }
 
     /**
@@ -69,8 +72,10 @@ public class frmCliente extends javax.swing.JFrame {
         btnActualizarCliente = new javax.swing.JButton();
         btnBorrarCliente = new javax.swing.JButton();
         btnCancelarCliente = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 0, 51));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Cliente");
@@ -115,6 +120,12 @@ public class frmCliente extends javax.swing.JFrame {
 
         jLabel13.setText("Dni :");
 
+        txtDniCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniClienteKeyTyped(evt);
+            }
+        });
+
         jLabel14.setText("Direccion :");
 
         jLabel15.setText("Referencia :");
@@ -149,6 +160,14 @@ public class frmCliente extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +176,10 @@ public class frmCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
@@ -227,7 +249,9 @@ public class frmCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -283,7 +307,7 @@ public class frmCliente extends javax.swing.JFrame {
                     .addComponent(btnBorrarCliente))
                 .addGap(18, 18, 18)
                 .addComponent(btnCancelarCliente)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -321,6 +345,21 @@ public class frmCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "REGISTRO ERRONEO.");
         }
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
+
+    private void txtDniClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniClienteKeyTyped
+        // TODO add your handling code here:
+        if (txtDniCliente.getText().length()== 11) {
+         evt.consume();
+        JOptionPane.showMessageDialog(null, "El DNI/RUC puede tener maximo 11 numeros");
+        }
+    }//GEN-LAST:event_txtDniClienteKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        frmBuscarCliente frmBusCli = new frmBuscarCliente();
+        frmBusCli.show();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,8 +404,8 @@ public class frmCliente extends javax.swing.JFrame {
 //        }
 //    }
     public void LlenaComboEstadoCliente(){
-        cboEstadoCliente.addItem("1");
         cboEstadoCliente.addItem("0");
+        cboEstadoCliente.addItem("1");
     }
 
     public String getIdCliente(){
@@ -442,6 +481,7 @@ public class frmCliente extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbdepar;
     private javax.swing.JComboBox<String> cmbdis;
     private javax.swing.JComboBox<String> cmbprovin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

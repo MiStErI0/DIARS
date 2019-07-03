@@ -31,8 +31,8 @@ public class daoCliente {
     
     private List<cliente> getClien() {
         List<cliente> lista = new ArrayList();
-        String sql = "SELECT c.idcliente,p.NOMBRE_RS,p.APELLIDOP,p.APELLIDOM,p.CORREO,p.TELEFONO,p.DNI_RUC,p.FECHA_NACI,p.ESTADO FROM persona as p\n" +
-"			inner join cliente as c on c.idpersona=p.idpersona";
+        String sql = "SELECT c.idcliente,p.IDPERSONA,p.NOMBRE_RS,p.APELLIDOP,p.APELLIDOM,p.CORREO,p.TELEFONO,p.DNI_RUC,p.FECHA_NACI,p.ESTADO, d.IDDIRECCION,d.DESCRIPCION,d.IDDISTRITO FROM persona as p\n" +
+"			inner join cliente as c inner join direccion as d on c.idpersona=p.idpersona AND p.IDPERSONA = d.IDPERSONA";
         Connection c = null;
         try {
             c = new Conexion().getMysql();
@@ -40,7 +40,7 @@ public class daoCliente {
             PreparedStatement pst = c.prepareCall(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                cliente e = new cliente(rs.getString("IDCLIENTE"), rs.getString("NOMBRE_RS"),rs.getString("APELLIDOP"),rs.getString("APELLIDOM"),rs.getString("CORREO"),rs.getLong("TELEFONO"),rs.getLong("DNI_RUC"),rs.getString("FECHA_NACI"),rs.getInt("ESTADO"));
+                cliente e = new cliente(rs.getString("IDCLIENTE"),rs.getString("IDPERSONA"), rs.getString("NOMBRE_RS"),rs.getString("APELLIDOP"),rs.getString("APELLIDOM"),rs.getString("CORREO"),rs.getLong("TELEFONO"),rs.getLong("DNI_RUC"),rs.getString("FECHA_NACI"),rs.getInt("ESTADO"),rs.getString("IDDIRECCION"),rs.getString("DESCRIPCION"),rs.getString("IDDISTRITO"));
                 System.out.println(rs.getString("IDCLIENTE")+"  "+rs.getString("NOMBRE_RS")+" "+rs.getString("APELLIDOP"));
                 lista.add(e);
             }
@@ -69,7 +69,7 @@ public class daoCliente {
         } else {
             dtmtable.setRowCount(0);//Limpia las filas del JTable
             for (cliente cl:clien) {
-                Object vec[] = new Object[7];
+                Object vec[] = new Object[8];
                 vec[0] = cl.getId();
                 vec[1] = cl.getNombre()+" "+cl.getApellidop()+" "+cl.getApellidom();
                 vec[2] = cl.getCorreo();
@@ -77,6 +77,7 @@ public class daoCliente {
                 vec[4] = cl.getDni();
                 vec[5] = cl.getFechaNac();
                 vec[6] = cl.getEstado();
+                vec[7] = cl.getDescripcion();
                 //agregar al JTable
                 dtmtable.addRow(vec);
             }
@@ -93,6 +94,7 @@ public class daoCliente {
         dtmCabecera.addColumn("TELEFONO");
         dtmCabecera.addColumn("DNI/RUC");
         dtmCabecera.addColumn("FECHA NACI.");
+        dtmCabecera.addColumn("ESTADO");
         dtmCabecera.addColumn("ESTADO");
         tbl.setModel(dtmCabecera);
         
@@ -135,8 +137,46 @@ public class daoCliente {
         return respuestaRegistro;
     }
     
-    
+    public int editCliente(String IdPersona, String Nombre, String Apellidop, String Apellidom, String Correo, Long Telefono, Long Dni, String FechaNac, Integer Estado,String IdDireccion, String Descripcion, String IdDistrito){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editCliente(?,?)}");
+            cs.setString(1, IdPersona);
+            cs.setString(2, Nombre);
+            cs.setString(3, Apellidop);
+            cs.setString(4, Apellidom);
+            cs.setString(5, Correo);
+            cs.setLong(6, Telefono);
+            cs.setLong(7, Dni);
+            cs.setString(8, FechaNac);
+            cs.setInt(9, Estado);
+            cs.setString(10, IdDireccion);
+            cs.setString(11, Descripcion);
+            cs.setString(12, IdDistrito);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
    
+    public int deleteCliente(String idPersona){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_deleteCliente(?)}");
+            cs.setString(1, idPersona);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
     
     
 }

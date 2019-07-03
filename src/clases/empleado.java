@@ -12,6 +12,7 @@ package clases;
 public class empleado extends persona{
 
     private String cargo;
+    String Direccion;
     
     public empleado() {
     }
