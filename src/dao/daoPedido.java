@@ -67,14 +67,15 @@ public class daoPedido {
 
     }
     
-    public void prueba(){
+    public void pedido(){
     String respuestaRegistro = null;
         Connection c;
         
             
         try {
             c = new Conexion().getMysql();
-            CallableStatement cs;
+            c.setAutoCommit(false);
+            Sta cs;
             cs = c.prepareCall("{call sp_prueba(?,?)}");
             cs.setString(1,"ddsdsad");
             cs.registerOutParameter(2,java.sql.Types.VARCHAR);

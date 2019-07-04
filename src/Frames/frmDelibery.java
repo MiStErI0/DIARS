@@ -13,19 +13,8 @@ import dao.daoCategoriaPlato;
 import dao.daoPlato;
 import dao.daoMesa;
 import dao.daoPedido;
-import dao.daousuarios;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import modelo.Colorear_filas;
 
 /**
@@ -415,7 +404,7 @@ public class frmDelibery extends javax.swing.JFrame {
 
     private void btnEnviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviActionPerformed
         // TODO add your handling code here:
-        dp.prueba();
+        dp.pedido();
     }//GEN-LAST:event_btnEnviActionPerformed
 
     /**
