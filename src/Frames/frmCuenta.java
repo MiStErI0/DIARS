@@ -7,14 +7,13 @@ package Frames;
 
 import modelo.Colorear_filas;
 import ConexionBD.Conexion;
+import clases.cliente;
+import clases.empleado;
 import dao.daoMesa;
 import dao.daoComTip;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -34,6 +33,9 @@ public class frmCuenta extends javax.swing.JFrame {
     daoComTip cmt=new daoComTip();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
+    public static cliente cl = new cliente();
+    public static empleado em ;
+    
     
     public frmCuenta() {
         initComponents();
@@ -91,9 +93,9 @@ public class frmCuenta extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        txtCliente = new javax.swing.JTextField();
+        btnBusCli = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,9 +175,14 @@ public class frmCuenta extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("buscar");
+        btnBusCli.setText("buscar");
+        btnBusCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBusCliActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("agregar");
+        btnAgregar.setText("agregar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,11 +197,11 @@ public class frmCuenta extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jButton4)
+                .addComponent(btnBusCli)
                 .addGap(5, 5, 5)
-                .addComponent(jButton5)
+                .addComponent(btnAgregar)
                 .addGap(34, 34, 34)
                 .addComponent(jLabel7)
                 .addGap(47, 47, 47)
@@ -249,9 +256,9 @@ public class frmCuenta extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBusCli)
+                    .addComponent(btnAgregar)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel7))
@@ -343,6 +350,13 @@ public class frmCuenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMesaMouseClicked
 
+    private void btnBusCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusCliActionPerformed
+        // TODO add your handling code here:
+        frmBuscarCliente bc = new frmBuscarCliente();
+        bc.setVisible(true);
+        frmBuscarCliente.estados="frmCuen";
+    }//GEN-LAST:event_btnBusCliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -412,13 +426,13 @@ public class frmCuenta extends javax.swing.JFrame {
    }*/
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBusCli;
     private javax.swing.JComboBox<String> cboComprobanteDePago;
     private javax.swing.JComboBox<String> cboMetodoDePago;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -436,8 +450,8 @@ public class frmCuenta extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lblfecha;
     private javax.swing.JTable tblprod;
+    public static javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 }

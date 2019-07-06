@@ -16,8 +16,9 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarCliente
      */
-    daoCliente cl=new daoCliente();
+    daoCliente cl = new daoCliente();
     public static String estados;
+
     public frmBuscarCliente() {
         initComponents();
         cl.cargar_cabecera(tblCliente);
@@ -116,25 +117,38 @@ public class frmBuscarCliente extends javax.swing.JFrame {
 
     private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
         // TODO add your handling code here:
-        int fila=tblCliente.getSelectedRow();
-        if(evt.getClickCount()==2)
-        {
-            if(estados.equals("frmDeli")){
-            frmDelibery.cl.setId(tblCliente.getValueAt(fila, 0).toString());
-            frmDelibery.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
-            frmDelibery.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
-            frmDelibery.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
-            frmDelibery.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
-            frmDelibery.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
-            if(tblCliente.getValueAt(fila, 6).toString().equals("Activo")){
-                frmDelibery.cl.setEstado(1);
-            }else{
-                frmDelibery.cl.setEstado(0);
-            }
-            frmDelibery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());    
+        int fila = tblCliente.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            if (estados.equals("frmDeli")) {
+                frmDelibery.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+                frmDelibery.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+                frmDelibery.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+                frmDelibery.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+                frmDelibery.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+                frmDelibery.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+                if (tblCliente.getValueAt(fila, 6).toString().equals("Activo")) {
+                    frmDelibery.cl.setEstado(1);
+                } else {
+                    frmDelibery.cl.setEstado(0);
+                }
+                frmDelibery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
+                dispose();
+            }if (estados.equals("frmCuen")){
+                frmCuenta.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+                frmCuenta.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+                frmCuenta.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+                frmCuenta.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+                frmCuenta.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+                frmCuenta.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+                if (tblCliente.getValueAt(fila, 6).toString().equals("Activo")) {
+                    frmCuenta.cl.setEstado(1);
+                }else {
+                    frmCuenta.cl.setEstado(0);
+                }
+                frmCuenta.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
                 dispose();
             }
-        }else{
+        } else {
         }
     }//GEN-LAST:event_tblClienteMouseClicked
 

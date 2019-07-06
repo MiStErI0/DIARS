@@ -140,11 +140,15 @@ public class frmLogin extends javax.swing.JFrame {
                     if (e.getCargo().equals("Cajero") || e.getCargo().equals("Administrador") ) {
                         ven.Sesion(v, "Iniciar");
                         JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
-                        frmDelibery r;
-                        r = new frmDelibery();
+                        frmRegistrarPedido r;
+                        r=new frmRegistrarPedido();
                         r.setVisible(true);
-                        frmDelibery.em=e;
-                        frmDelibery.lblnombre.setText(e.getNombre()+" "+e.getApellidop()+" "+e.getApellidom());
+                        frmRegistrarPedido.empl=e;
+//                        frmDelibery r;
+//                        r = new frmDelibery();
+//                        r.setVisible(true);
+//                        frmDelibery.em=e;
+//                        frmDelibery.lblnombre.setText(e.getNombre()+" "+e.getApellidop()+" "+e.getApellidom());
                         
 //                        frmAbrirCaja r;
 //                        r = new frmAbrirCaja();

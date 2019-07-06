@@ -144,4 +144,48 @@ public class daoPedido {
 
     }
 
+    public void pedido(empleado e, String mesa)
+    {
+        String idpedi;
+        Connection c;
+        CallableStatement cs;
+        Double monto=suma_platos();
+        ResultSet rs = null;
+        try {
+            //int rs;
+
+            c = new Conexion().getMysql();
+            c.setAutoCommit(false);
+            cs = c.prepareCall("{call sp_inse_pedi(?,?)}");
+            cs.setString(1, mesa);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.executeUpdate();
+            idpedi = cs.getString(2);
+            for (pedido p : obtenList()) {
+                
+                cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?)}");
+                cs.setString(1, idpedi);
+                cs.setString(2, p.getPLATO());
+                cs.setString(3, e.getId());
+                cs.setInt(4, p.getCANTIDAD());
+                cs.setString(5, p.getDESCRIPCION());
+
+                //cs.registerOutParameter(2, Types.VARCHAR);
+                rs=cs.executeQuery();
+            }
+            //respuestaRegistro=cs.getString(2);
+            
+            c.commit();
+            c.close();
+            c = null;
+            cs.close();
+            cs = null;
+            JOptionPane.showConfirmDialog(null, "Registro exitoso", "Confirmacion",2);
+            //System.out.println(respuestaRegistro);
+        } catch (SQLException ex) {
+            Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(null, "Registro fallido", "Confirmacion",2);
+
+        }
+    }
 }

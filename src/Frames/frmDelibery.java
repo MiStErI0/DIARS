@@ -112,7 +112,7 @@ public class frmDelibery extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Delibery");
+        jLabel1.setText("Delivery");
 
         jLabel2.setText("Categoria de Plato :");
 
@@ -434,6 +434,7 @@ public class frmDelibery extends javax.swing.JFrame {
         // TODO add your handling code here:
         String comprobante=cboComprobanteDePago.getSelectedItem().toString();
         dp.delibery(em, cl,comprobante, "DELIVERY", "EFECTIVO");
+        JOptionPane.showConfirmDialog(this,"Registro Exitoso", "Delivery",NORMAL);
     }//GEN-LAST:event_btnEnviActionPerformed
 
     /**
