@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -54,6 +55,10 @@ public class daoPedido {
         return ped.size();
     }
 
+    public void vaciar_lista_pedido() {
+        ped.clear();
+    }
+
     public ArrayList<pedido> obtenList() {
         return ped;
     }
@@ -79,21 +84,22 @@ public class daoPedido {
         }
 
     }
-    
-    public double suma_platos()
-    {
+
+    public double suma_platos() {
         double suma = 0;
         for (pedido p : ped) {
-                suma=suma+p.getIMPORTE();
-            }
-        return suma; 
+            suma = suma + p.getIMPORTE();
+        }
+        return suma;
     }
 
-    public void delibery(empleado e,cliente cl,String comprobante,String mesa,String tipo_pago) {
+    public void delibery(empleado e, cliente cl, String comprobante, String mesa, String tipo_pago) {
+        daoMesa me= new daoMesa();
         String idpedi;
         Connection c;
         CallableStatement cs;
-        Double monto=suma_platos();
+        Double monto = suma_platos();
+        String idmesa=me.get_idMesa(mesa);
         ResultSet rs;
         try {
             //int rs;
@@ -106,30 +112,26 @@ public class daoPedido {
             cs.executeUpdate();
             idpedi = cs.getString(2);
             for (pedido p : obtenList()) {
-                
-                cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?)}");
+
+                cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?,?)}");
                 cs.setString(1, idpedi);
-                System.out.println(idpedi);
                 cs.setString(2, p.getPLATO());
-                System.out.println(p.getPLATO());
                 cs.setString(3, e.getId());
-                System.out.println(e.getId());
                 cs.setInt(4, p.getCANTIDAD());
-                System.out.println(p.getCANTIDAD());
                 cs.setString(5, p.getDESCRIPCION());
-                System.out.println(p.getDESCRIPCION());
+                cs.setString(6, idmesa );
 
                 //cs.registerOutParameter(2, Types.VARCHAR);
-                rs=cs.executeQuery();
+                rs = cs.executeQuery();
             }
-            cs = c.prepareCall("{call sp_venta(?,?,?,?,?,?)}");
-            cs.setDouble(1,monto);
-            cs.setString(2,comprobante);
-            cs.setString(3,mesa);
-            cs.setString(4,tipo_pago);
-            cs.setString(5,e.getId());
-            cs.setString(6,cl.getId());
-            rs=cs.executeQuery();
+            cs = c.prepareCall("{call sp_venta(?,?,?,?,?)}");
+            cs.setDouble(1, monto);
+            cs.setString(2, comprobante);
+            cs.setString(3, mesa);
+            cs.setString(4, tipo_pago);
+            cs.setString(5, e.getId());
+            //cs.setString(6, cl.getId());
+            rs = cs.executeQuery();
             //respuestaRegistro=cs.getString(2);
 
             c.commit();
@@ -144,12 +146,13 @@ public class daoPedido {
 
     }
 
-    public void pedido(empleado e, String mesa)
-    {
+    public void pedido(empleado e, String mesa) {
+        daoMesa me= new daoMesa();
         String idpedi;
         Connection c;
         CallableStatement cs;
-        Double monto=suma_platos();
+        Double monto = suma_platos();
+        String idme=me.get_idMesa(mesa);
         ResultSet rs = null;
         try {
             //int rs;
@@ -162,30 +165,65 @@ public class daoPedido {
             cs.executeUpdate();
             idpedi = cs.getString(2);
             for (pedido p : obtenList()) {
-                
+
                 cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?)}");
                 cs.setString(1, idpedi);
                 cs.setString(2, p.getPLATO());
                 cs.setString(3, e.getId());
                 cs.setInt(4, p.getCANTIDAD());
                 cs.setString(5, p.getDESCRIPCION());
+                //cs.setString(6, idme);
 
                 //cs.registerOutParameter(2, Types.VARCHAR);
-                rs=cs.executeQuery();
+                rs = cs.executeQuery();
             }
             //respuestaRegistro=cs.getString(2);
-            
+
             c.commit();
             c.close();
             c = null;
             cs.close();
             cs = null;
-            JOptionPane.showConfirmDialog(null, "Registro exitoso", "Confirmacion",2);
+            JOptionPane.showMessageDialog(null, "Registro exitoso", "Confirmacion", 2);
             //System.out.println(respuestaRegistro);
         } catch (SQLException ex) {
             Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showConfirmDialog(null, "Registro fallido", "Confirmacion",2);
+            JOptionPane.showMessageDialog(null, "Registro fallido", "Confirmacion", 2);
 
+        }
+    }
+
+    public void pedido_mesa(String nombre) {
+        String sql = "select p.plato,dt.cantidad,dt.descripcion,p.precio,dt.cantidad*p.precio from detalle_pedido as dt\n"
+                + "inner join plato as p on p.idplato=dt.idplato\n"
+                + "inner join pedido as pe on dt.idpedido=pe.idpedido where pe.idmesa =? ;";
+        Connection c = null;
+        daoMesa me=new daoMesa();
+        String idMesa=me.get_idMesa(nombre);
+        try {
+            c = new Conexion().getMysql();
+            ResultSet rs = null;
+            PreparedStatement pst = c.prepareCall(sql);
+            pst.setString(1,idMesa);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                pedido e = new pedido(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5));
+                ped.add(e);
+            }
+            pst.close();
+            pst=null;
+            rs.close();
+            rs = null;
+            c.close();
+            c = null;
+        } catch (SQLException ex) {
+            Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                c.close();
+                c = null;
+            } catch (SQLException ex1) {
+                Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
 }

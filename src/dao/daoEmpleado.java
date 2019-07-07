@@ -177,16 +177,16 @@ public class daoEmpleado {
          return emple.size();
      }
      
-     public empleado obtener_cargo(String user)
+    public empleado obtener_cargo(String user)
     {
         empleado z=null;
-        String cargo=null;
+        //String cargo=null;
         usuario u=du.buscar(user);
         for(empleado e:emple)
         {
             if(u.getIdEmpleado().equals(e.getId()))
             {
-                cargo=e.getCargo();
+                //cargo=e.getCargo();
                 z=e;
                 break;
             }
@@ -226,4 +226,22 @@ public class daoEmpleado {
         
         return respuestaRegistro;
     }
+     
+    public empleado obtener_id(String nombre)
+    {
+        empleado z=null;
+        //String cargo=null;
+        
+        for(empleado e:emple)
+        {
+            if(nombre.equals(e.getNombre()))
+            {
+                //cargo=e.getCargo();
+                z=e;
+                break;
+            }
+        }
+        return z;
+    }
+
 }

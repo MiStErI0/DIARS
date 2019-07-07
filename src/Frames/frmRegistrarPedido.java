@@ -9,6 +9,7 @@ import ConexionBD.Conexion;
 import clases.empleado;
 import clases.pedido;
 import dao.daoCategoriaPlato;
+import dao.daoEmpleado;
 import dao.daoPlato;
 import dao.daoMesa;
 import dao.daoPedido;
@@ -56,6 +57,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         }
     };
     daoPedido dp = new daoPedido();
+    daoEmpleado depl = new daoEmpleado();
     public static empleado empl;
     public frmRegistrarPedido() {
         initComponents();
@@ -133,15 +135,6 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jLabel2.setText("Categoria de Plato :");
 
         cboCategoriaPlato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cboCategoriaPlato.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-                cboCategoriaPlatoPopupMenuWillBecomeInvisible(evt);
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-        });
         cboCategoriaPlato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboCategoriaPlatoActionPerformed(evt);
@@ -367,32 +360,19 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
             else{
                 String colormesa = "";
                 colormesa = jtMesa.getValueAt(filaseleccionada,1).toString();
-                System.out.println(colormesa);
-                if(colormesa.equals("0")){
-                    
-                    JOptionPane.showMessageDialog(this,"Se ha seleccionado \n"+ jtMesa.getValueAt(filaseleccionada,0).toString(),"Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if(colormesa.equals("1")){
-                    
-                    JOptionPane.showMessageDialog(this,"La mesa seleccionada ya cuenta con un registro\n" + "Por favor procesa a seleccionar otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if(colormesa.equals("2")){
-                    
-                    JOptionPane.showMessageDialog(this,"La mesa seleccionada ya cuenta con un registro\n" + "Por favor procesa a seleccionar otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else{
-                }
+                //System.out.println(colormesa);
+                JOptionPane.showMessageDialog(this,"Se ha seleccionado \n"+ jtMesa.getValueAt(filaseleccionada,0).toString(),"Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+                dp.pedido_mesa(jtMesa.getValueAt(filaseleccionada,0).toString());
+                dp.cargar_tabla_pedido(dtmPedido, jtPedido);
+                txtTotal.setText(String.valueOf(dp.suma_platos()));
+                dp.vaciar_lista_pedido();
                 
-                                            
+                
             }
         }catch (HeadlessException ex){
             JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jtMesaMouseClicked
-
-    private void cboCategoriaPlatoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
-   
-    }//GEN-LAST:event_cboCategoriaPlatoPopupMenuWillBecomeInvisible
 
     private void cboCategoriaPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoriaPlatoActionPerformed
         // TODO add your handling code here:
@@ -503,10 +483,14 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
 
     private void btnEnviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviActionPerformed
         // TODO add your handling code here:
+        
         int fila=jtMesa.getSelectedRow();
         String Mozo=cboMeseroPedido.getSelectedItem().toString();
-        dp.pedido(Mozo,jtMesa.getValueAt(fila, 0).toString());
-
+        empl=depl.obtener_id(Mozo);
+        String mesa=jtMesa.getValueAt(fila, 0).toString();
+        System.out.println(mesa);
+        dp.pedido(empl,mesa);
+        dispose();
     }//GEN-LAST:event_btnEnviActionPerformed
 
     /**
@@ -549,7 +533,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
        Connection con = null;
        try {
            con = conexion.getMysql();
-           String sql = "select e.IDEMPLEADO p.NOMBRE_RS from persona as p inner join empleado as e inner join cargo as c on e.idpersona=p.idpersona and e.IDCARGO=c.IDCARGO where e.IDCARGO='CA00003';";
+           String sql = "select  p.NOMBRE_RS from persona as p inner join empleado as e inner join cargo as c on e.idpersona=p.idpersona and e.IDCARGO=c.IDCARGO where e.IDCARGO='CA00003';";
             PreparedStatement ps = con.prepareCall(sql);
             ResultSet rs = null;
             rs = ps.executeQuery();

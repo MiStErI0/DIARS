@@ -103,6 +103,17 @@ public class daoMesa {
         cargar_tabla(dtmCabecera, tbl);
 
     }
+    
+    public String get_idMesa(String nombre){
+        for(Mesa m:me){
+            if(nombre.equals(m.getMesa()))
+            {
+                return m.getIdmesa();
+                
+            }
+        }
+        return null;
+    }
 
     public int tamaño() {
         return me.size();
