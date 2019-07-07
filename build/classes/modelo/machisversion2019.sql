@@ -44,7 +44,7 @@ CREATE TABLE `caja_chica` (
 
 LOCK TABLES `caja_chica` WRITE;
 /*!40000 ALTER TABLE `caja_chica` DISABLE KEYS */;
-INSERT INTO `caja_chica` VALUES ('CC00001',0.00,500.00,0.00,0.00,'2019-06-21 05:52:06',NULL,1,'EM00001');
+INSERT INTO `caja_chica` VALUES ('CC00001',10000.00,500.00,0.00,10500.00,'2019-06-21 05:52:06',NULL,1,'EM00001');
 /*!40000 ALTER TABLE `caja_chica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,6 +202,7 @@ CREATE TABLE `detalle_pedido` (
 
 LOCK TABLES `detalle_pedido` WRITE;
 /*!40000 ALTER TABLE `detalle_pedido` DISABLE KEYS */;
+INSERT INTO `detalle_pedido` VALUES ('DP00001','PD00001','PL00001','EM00001',2,1,'dd'),('DP00002','PD00002','PL00003','EM00004',2,1,'ddd');
 /*!40000 ALTER TABLE `detalle_pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,6 +233,7 @@ CREATE TABLE `detalle_plato` (
 
 LOCK TABLES `detalle_plato` WRITE;
 /*!40000 ALTER TABLE `detalle_plato` DISABLE KEYS */;
+INSERT INTO `detalle_plato` VALUES ('DL00001','PR00002','PL00003',1.000,0),('DL00002','PR00002','PL00003',5.000,1),('DL00003','PR00005','PL00004',4.000,1),('DL00004','PR00001','PL00004',5.000,1),('DL00005','PR00004','PL00003',40.000,1),('DL00006','PR00005','PL00003',4.000,1),('DL00007','PR00005','PL00003',4.000,1);
 /*!40000 ALTER TABLE `detalle_plato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,7 +373,7 @@ CREATE TABLE `mesa` (
 
 LOCK TABLES `mesa` WRITE;
 /*!40000 ALTER TABLE `mesa` DISABLE KEYS */;
-INSERT INTO `mesa` VALUES ('ME00001','MESA 1',1,0),('ME00002','MESA 2',1,0),('ME00003','MESA 3',1,0),('ME00004','DELIVERY',1,0);
+INSERT INTO `mesa` VALUES ('ME00001','MESA 1',1,0),('ME00002','MESA 2',1,1),('ME00003','MESA 3',1,0),('ME00004','DELIVERY',1,0);
 /*!40000 ALTER TABLE `mesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,6 +401,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
+INSERT INTO `pedido` VALUES ('PD00001','2019-07-06 10:57:47',1,'ME00004'),('PD00002','2019-07-07 01:53:50',1,'ME00002');
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,7 +461,7 @@ CREATE TABLE `plato` (
 
 LOCK TABLES `plato` WRITE;
 /*!40000 ALTER TABLE `plato` DISABLE KEYS */;
-INSERT INTO `plato` VALUES ('PL00001','pollo 1/2',25.00,1,'CP00001'),('PL00002','pollo entero',45.00,1,'CP00001'),('PL00003','POLLO3',15.00,1,'CP00002'),('PL00004','POLLO1',45.00,1,'CP00001'),('PL00005','POLLO1',45.00,1,'CP00001'),('PL00006','POLLITO BROASTER',15.00,1,'CP00001'),('PL00007','vino',50.00,1,'CP00002'),('PL00008','bisteck',10.00,1,'CP00003'),('PL00009','CORAZONCITO',25.00,1,'CP00001');
+INSERT INTO `plato` VALUES ('PL00001','pollo 1/2',25.00,1,'CP00001'),('PL00002','pollo entero',45.00,1,'CP00001'),('PL00003','POLLO3',15.00,1,'CP00002'),('PL00004','POLLO1',45.00,1,'CP00001'),('PL00005','POLLO1',45.00,1,'CP00001'),('PL00006','POLLITO BROASTER',15.00,1,'CP00001');
 /*!40000 ALTER TABLE `plato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +488,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES ('PR00001','POLLO',4.000,16.555,1),('PR00002','LECHUGA',6.000,22.000,0),('PR00003','PAPA BLANCA',6.000,50.555,1),('PR00004','LIMON',6.000,50.125,1);
+INSERT INTO `producto` VALUES ('PR00001','PAPA',5.000,31.000,0),('PR00002','LECHUGA',5.000,250.000,1),('PR00003','POLLO',5.000,150.000,1),('PR00004','TOMATE',5.000,40.000,1),('PR00005','PALTA',4.000,55.000,1);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -613,12 +616,50 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+INSERT INTO `venta` VALUES ('VE00001','2019-07-06','N001-000001',50.00,7.63,42.37,1,'CP00002','PD00001','TP00001','EM00001','CL00003','CC00001');
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'machis'
 --
+/*!50003 DROP FUNCTION IF EXISTS `fn_detalle_plato` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_detalle_plato`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE det VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from detalle_plato;
+    
+    if id < 9 then
+    set det=concat("DL0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set det=concat("DL000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set det=concat("DL00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set det=concat("DL0",id+1);
+    ELSE
+    set det=concat("DL",id+1);
+    end if;
+    
+    
+    return det;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP FUNCTION IF EXISTS `fn_idCajachica` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -636,7 +677,7 @@ BEGIN
     
     select count(*) into id from caja_chica;
     
-    if id < 10 then
+    if id < 9 then
     set cachi=concat("CC0000",id+1);
     ELSEIF id between 10 and 100 then
     set cachi=concat("CC000",id+1);
@@ -673,7 +714,7 @@ BEGIN
     
     select count(*) into id from cargo;
     
-    if id < 10 then
+    if id < 9 then
     set car=concat("CA0000",id+1);
     ELSEIF id between 10 and 100 then
     set car=concat("CA000",id+1);
@@ -710,7 +751,7 @@ BEGIN
     
     select count(IDCATEGORIA_PLATO) into id from categoria_plato;
     
-    if id < 10 then
+    if id < 9 then
     set pla=concat("CP0000",id+1);
     ELSEIF id between 10 and 100 then
     set pla=concat("CP000",id+1);
@@ -747,7 +788,7 @@ BEGIN
     
     select count(IDCLIENTE) into id from cliente;
     
-    if id < 10 then
+    if id < 9 then
     set cli=concat("CL0000",id+1);
     ELSEIF id between 10 and 100 then
     set cli=concat("CL000",id+1);
@@ -784,7 +825,7 @@ BEGIN
     
     select count(*) into id from detalle_pedido;
     
-    if id < 10 then
+    if id < 9 then
     set det=concat("DP0000",id+1);
     ELSEIF id between 10 and 100 then
     set det=concat("DP000",id+1);
@@ -794,43 +835,6 @@ BEGIN
     set det=concat("DP0",id+1);
     ELSE
     set det=concat("DP",id+1);
-    end if;
-    
-    
-    return det;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `fn_iddetaplat` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_iddetaplat`() RETURNS varchar(7) CHARSET utf8mb4
-BEGIN
-	DECLARE det VARCHAR(7);
-    DECLARE id int;
-    
-    select count(*) into id from detalle_plato;
-    
-    if id < 10 then
-    set det=concat("DL0000",id+1);
-    ELSEIF id between 10 and 100 then
-    set det=concat("DL000",id+1);
-    ELSEIF id between 100 and 1000 then
-    set det=concat("DL00",id+1);
-    ELSEIF id between 1000 and 10000 then
-    set det=concat("DL0",id+1);
-    ELSE
-    set det=concat("DL",id+1);
     end if;
     
     
@@ -858,7 +862,7 @@ DECLARE emple VARCHAR(7);
     
     select count(*) into id from empleado;
     
-    if id < 10 then
+    if id < 9 then
     set emple=concat("EM0000",id+1);
     ELSEIF id between 10 and 100 then
     set emple=concat("EM000",id+1);
@@ -872,6 +876,43 @@ DECLARE emple VARCHAR(7);
     
     
     return emple;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_idpedido` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idpedido`() RETURNS varchar(7) CHARSET utf8mb4
+BEGIN
+	DECLARE PED VARCHAR(7);
+    DECLARE id int;
+    
+    select count(*) into id from pedido;
+    
+    if id < 9 then
+    set PED=concat("PD0000",id+1);
+    ELSEIF id between 10 and 100 then
+    set PED=concat("PD000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set PED=concat("PD00",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set PED=concat("PD0",id+1);
+    ELSE
+    set PED=concat("PD",id+1);
+    end if;
+    
+    
+    return PED;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -895,7 +936,7 @@ BEGIN
     
     select count(*) into id from PERSONA;
     
-    if id < 10 then
+    if id < 9 then
     set PER=concat("PE0000",id+1);
     ELSEIF id between 10 and 100 then
     set PER=concat("PE000",id+1);
@@ -909,43 +950,6 @@ BEGIN
     
     
     return PER;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `fn_idplato` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `fn_idplato`() RETURNS varchar(7) CHARSET utf8mb4
-BEGIN
-	DECLARE det VARCHAR(7);
-    DECLARE id int;
-    
-    select count(*) into id from plato;
-    
-    if id < 10 then
-    set det=concat("PL0000",id+1);
-    ELSEIF id between 10 and 100 then
-    set det=concat("PL000",id+1);
-    ELSEIF id between 100 and 1000 then
-    set det=concat("PL00",id+1);
-    ELSEIF id between 1000 and 10000 then
-    set det=concat("PL0",id+1);
-    ELSE
-    set det=concat("PL",id+1);
-    end if;
-    
-    
-    return det;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -969,7 +973,7 @@ BEGIN
     
     select count(*) into id from producto;
     
-    if id < 10 then
+    if id < 9 then
     set PRO=concat("PR0000",id+1);
     ELSEIF id between 10 and 100 then
     set PRO=concat("PR000",id+1);
@@ -1006,7 +1010,7 @@ BEGIN
     
     select count(*) into id from usuario;
     
-    if id < 10 then
+    if id < 9 then
     set USU=concat("US0000",id+1);
     ELSEIF id between 10 and 100 then
     set USU=concat("US000",id+1);
@@ -1043,7 +1047,7 @@ BEGIN
     
     select count(*) into id from venta;
     
-    if id < 10 then
+    if id < 9 then
     set VEN=concat("VE0000",id+1);
     ELSEIF id between 10 and 100 then
     set VEN=concat("VE000",id+1);
@@ -1057,6 +1061,43 @@ BEGIN
     
     
     return VEN;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `fn_numeracion` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `fn_numeracion`(co_con varchar(7)) RETURNS varchar(20) CHARSET utf8mb4
+BEGIN
+    DECLARE NUM VARCHAR(20);
+    DECLARE id int;
+    
+    select count(*) into id from venta where idcomprobante=co_con;
+    
+    if id < 9 then
+    set NUM=concat("N001-00000",id+1);
+    ELSEIF id between 10 and 100 then
+    set NUM=concat("N001-0000",id+1);
+    ELSEIF id between 100 and 1000 then
+    set NUM=concat("N001-000",id+1);
+    ELSEIF id between 1000 and 10000 then
+    set NUM=concat("N001-00",id+1);
+    ELSE
+    set NUM=concat("N001-0",id+1);
+    end if;
+    
+    
+    return NUM;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1306,6 +1347,117 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_inser_deta_pedi` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_inser_deta_pedi`(cod_ped varchar(7),nm_plato varchar(50), idemple varchar(7),cant int, descri varchar(100) )
+BEGIN
+declare idpla varchar(7);
+select IDPLATO into idpla from plato where PLATO=nm_plato;
+insert into detalle_pedido values (fn_iddetapedi(),cod_ped,idpla,idemple,cant,1,descri);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_inser_pedi` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_inser_pedi`(in nm_mesa varchar(50),out idpedi varchar(7))
+BEGIN
+declare id varchar(7);
+select idmesa into id from mesa where nombre = nm_mesa;
+set idpedi=fn_idpedido();
+insert into pedido values (idpedi,now(),1,id);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_inse_pedi` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_inse_pedi`(in nm_mesa varchar(50), out idpedi varchar(7))
+BEGIN
+declare id varchar(7);
+declare idpe varchar(7);
+select IDMESA into id from mesa where nombre = nm_mesa;
+select pe.idpedido into idpe from pedido as pe inner join mesa as m on m.idmesa = pe.idmesa where pe.idmesa=id and m.estado>=1;
+	if idpe is null then
+		set idpedi=fn_idpedido();
+		insert into pedido values (idpedi,now(),1,id);
+        update mesa set color = 1 where idmesa=id;
+	else
+		set idpedi=idpe;
+	end if;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_venta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_venta`(monto DECIMAL(10,2),comprobante varchar(20),nm_mesa varchar(20),tipo varchar(20),idemp varchar(7),idcli varchar(7))
+BEGIN
+
+	declare idco varchar(7);
+    declare idme varchar(7);
+    declare idpe varchar(7);
+    declare idti varchar(7);
+    declare idcaj varchar(7);
+    declare igv DECIMAL(10,2);
+    declare sub_mon DECIMAL(10,2);
+    
+    select idcomprobante into  idco from comprobante_pago where nombre=comprobante;
+    select idmesa into idme from mesa where nombre=nm_mesa;
+    select idpedido into idpe from pedido where idmesa = idme and estado=1 order by idpedido desc  limit 1;
+    select idtipo into idti from tipo_pago where nombre=tipo;
+    select idcaja into idcaj from caja_chica where estado = 1;
+    set sub_mon=monto/1.18;
+    set igv=monto-sub_mon;
+    insert into venta values(fn_idventa(),now(),fn_numeracion(idco),monto,igv,sub_mon,1,idco,idpe,idti,idemp,idcli,idcaj);
+    
+	update mesa set color = 0 where idmesa=idme;
+
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1316,4 +1468,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-26  5:08:44
+-- Dump completed on 2019-07-07  4:15:57
