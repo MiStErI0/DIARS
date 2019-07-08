@@ -5,6 +5,9 @@
  */
 package Frames;
 
+import dao.daoMesa;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luigi
@@ -14,11 +17,14 @@ public class frmMesa extends javax.swing.JFrame {
     /**
      * Creates new form frmMesa
      */
+    
+    daoMesa daoMes = new daoMesa();
     public frmMesa() {
         initComponents();
         LlenaComboEstadoDeMesa();
         LlenaComboColorDeMesa();
         txtIdMesa.setVisible(false);
+        cboColorMesa.setEnabled(false);
     }
 
     /**
@@ -31,7 +37,6 @@ public class frmMesa extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         txtIdMesa = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtNombreMesa = new javax.swing.JTextField();
@@ -51,8 +56,6 @@ public class frmMesa extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Mesa");
 
-        jLabel2.setText("Id_Mesa :");
-
         jLabel3.setText("Nombre de Mesa :");
 
         jLabel4.setText("Estado de Mesa :");
@@ -64,12 +67,27 @@ public class frmMesa extends javax.swing.JFrame {
 
         btnAgregarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/add.png"))); // NOI18N
         btnAgregarMesa.setText("Agregar");
+        btnAgregarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarMesaActionPerformed(evt);
+            }
+        });
 
         btnActualizarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
         btnActualizarMesa.setText("Actualizar");
+        btnActualizarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarMesaActionPerformed(evt);
+            }
+        });
 
         btnBorrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/borrar.png"))); // NOI18N
         btnBorrarMesa.setText("Borrar");
+        btnBorrarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarMesaActionPerformed(evt);
+            }
+        });
 
         btnCancelarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
         btnCancelarMesa.setText("Cerrar");
@@ -91,7 +109,6 @@ public class frmMesa extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel2)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5))
                             .addGap(21, 21, 21)
@@ -117,9 +134,7 @@ public class frmMesa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -151,6 +166,47 @@ public class frmMesa extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarMesaActionPerformed
+
+    private void btnAgregarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMesaActionPerformed
+        // TODO add your handling code here:
+        String respuestaRegistro = daoMes.insertMesa(getNombreMesa(),getEstadoMesa(),getColorMesa());
+        if(respuestaRegistro != null){
+            JOptionPane.showMessageDialog(null, respuestaRegistro);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "REGISTRO ERRONEO.");
+        }
+    }//GEN-LAST:event_btnAgregarMesaActionPerformed
+
+    private void btnActualizarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarMesaActionPerformed
+        // TODO add your handling code here:
+        int rptaEdit = daoMes.editMesa(getIdMesa(),getNombreMesa());
+         if(rptaEdit > 0){
+            JOptionPane.showMessageDialog(null, "Edicion exitosa.");
+//            btnActualizar.setEnabled(false);
+//            btnBorrar.setEnabled(false);
+//            txtnombreCategoria.setEnabled(false);
+//            limpiar();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
+        }
+    }//GEN-LAST:event_btnActualizarMesaActionPerformed
+
+    private void btnBorrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarMesaActionPerformed
+        // TODO add your handling code here:
+        int rptaDelete = daoMes.deleteMesa(getIdMesa());
+         if(rptaDelete > 0){
+            JOptionPane.showMessageDialog(null, "Edicion exitosa.");
+//            btnActualizar.setEnabled(false);
+//            btnBorrar.setEnabled(false);
+//            txtnombreCategoria.setEnabled(false);
+//            limpiar();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No se realizo la edicion.");
+        } 
+    }//GEN-LAST:event_btnBorrarMesaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,8 +244,8 @@ public class frmMesa extends javax.swing.JFrame {
     }
     
     public void LlenaComboEstadoDeMesa(){
-        cboEstadoMesa.addItem("0");
-        cboEstadoMesa.addItem("1");
+        cboEstadoMesa.addItem("INACTIVO");
+        cboEstadoMesa.addItem("ACTIVO");
     }
     
     public void LlenaComboColorDeMesa(){
@@ -197,6 +253,24 @@ public class frmMesa extends javax.swing.JFrame {
         cboColorMesa.addItem("1");
         cboColorMesa.addItem("2");
     }
+    
+    public int getEstadoMesa(){
+        //return (int)cboEstadoPlato.getSelectedItem();
+        return cboEstadoMesa.getSelectedIndex();
+    }
+    
+    public int getColorMesa(){
+        return cboColorMesa.getSelectedIndex();
+    }
+    
+    public String getNombreMesa(){
+        return txtNombreMesa.getText();
+    }
+    
+    public String getIdMesa(){
+        return txtIdMesa.getText();
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btnActualizarMesa;
@@ -207,7 +281,6 @@ public class frmMesa extends javax.swing.JFrame {
     public static javax.swing.JComboBox<String> cboColorMesa;
     public static javax.swing.JComboBox<String> cboEstadoMesa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -40,7 +40,7 @@ public class daoPlato {
         Connection accesoDB;
         try {
             accesoDB = new Conexion().getMysql();
-            CallableStatement cs = accesoDB.prepareCall("{call sp_insertPlato(fn_idplato(),?,?,?,?)}");
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertPlato(fn_idPlato(),?,?,?,?)}");
             cs.setString(1, Plato);
             cs.setDouble(2, Precio);
             cs.setInt(3, Estado);
@@ -121,41 +121,39 @@ public class daoPlato {
 
     public int editPlato(String IdPlato, String Plato, double Precio, int Estado, String IdCategoriaPlato) {
         int numFA = 0;
+        Connection c;
         try {
-            Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_editPlato(fn_idplato(),?,?,?,?)}");
-            cs.setString(1, Plato);
-            cs.setDouble(2, Precio);
-            cs.setInt(3, Estado);
-            cs.setString(4, IdCategoriaPlato);
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editPLato(?,?,?,?,?)}");
+            cs.setString(1, IdPlato);
+            cs.setString(2, Plato);
+            cs.setDouble(3, Precio);
+            cs.setInt(4, Estado);
+            cs.setString(5, IdCategoriaPlato);
 
             numFA = cs.executeUpdate();
 
             cs.close();
 
             cs = null;
-            acceDB.close();
-            acceDB = null;
+            c.close();
+            c = null;
 
         } catch (Exception e) {
         }
         return numFA;
     }
 
-    public int deletePlato(String idPlato) {
+    public int deletePlato(String IdPlato){
         int numFA = 0;
+        Connection c;
         try {
-            Connection acceDB = conexion.getMysql();
-            CallableStatement cs = acceDB.prepareCall("{call sp_deletePlato(?)}");
-            cs.setString(1, idPlato);
-
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_deletePlato(?)}");
+            cs.setString(1, IdPlato);
+            
             numFA = cs.executeUpdate();
-            cs.close();
-
-            cs = null;
-            acceDB.close();
-            acceDB = null;
-
+            
         } catch (Exception e) {
         }
         return numFA;

@@ -140,14 +140,16 @@ public class daoMesa {
         return listaMesa;
     }
     
-    public String insertMesa(String IdMesa,String Nombre,int estado,int color){
+    public String insertMesa(String Nombre,int estado,int color){
         String respuestaRegistro = null;
         Connection c;
         try {
             c = new Conexion().getMysql();
-            CallableStatement cs = c.prepareCall("{call sp_insertMesa(fn_idcategoria_plato(),?)}");
+            CallableStatement cs = c.prepareCall("{call sp_insertMesa(fn_idMesa(),?,?,?)}");
             
-            cs.setString(1, IdMesa);
+            cs.setString(1, Nombre);
+            cs.setInt(2, estado);
+            cs.setInt(3, color);
             
             int numFAfectadas = cs.executeUpdate();
             if(numFAfectadas>0){

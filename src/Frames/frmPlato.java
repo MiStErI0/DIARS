@@ -57,7 +57,7 @@ public final class frmPlato extends javax.swing.JFrame {
         ddp.cargar_cabecera(dtmplato, tblprod);
         Ocultar_plato();
         activador(pnlPro, false);
-        txtIdPlato.setVisible(false);
+        //txtIdPlato.setVisible(false);
         
     }
     
@@ -123,7 +123,6 @@ public final class frmPlato extends javax.swing.JFrame {
         txtNombrePlato = new javax.swing.JTextField();
         cboCategoriaPlato = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         txtIdPlato = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         btnBusPla = new javax.swing.JButton();
@@ -284,9 +283,8 @@ public final class frmPlato extends javax.swing.JFrame {
 
         jLabel3.setText("Categoria :");
 
-        jLabel2.setText("Id_Plato :");
-
         txtIdPlato.setEditable(false);
+        txtIdPlato.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Plato");
@@ -310,8 +308,7 @@ public final class frmPlato extends javax.swing.JFrame {
                         .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(pnlPlatoLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(49, 49, 49)
+                                .addGap(96, 96, 96)
                                 .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)
                                 .addComponent(btnBusPla, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -348,9 +345,6 @@ public final class frmPlato extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(19, 19, 19)
                 .addGroup(pnlPlatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPlatoLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel2))
                     .addGroup(pnlPlatoLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(txtIdPlato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -457,6 +451,7 @@ public final class frmPlato extends javax.swing.JFrame {
     private void btnActualizarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPlatoActionPerformed
         // TODO add your handling code here:
         int rptaEdit = daoPla.editPlato(getIdPlato(), getNombrePlato(), getPrecioPlato(),getEstadoPlato(),getIdCategoriaPlato());
+        System.out.println(getIdPlato()+" " + getNombrePlato()+" " +  getPrecioPlato()+" " + getEstadoPlato()+" " + getIdCategoriaPlato());
          if(rptaEdit > 0){
             JOptionPane.showMessageDialog(null, "Edicion exitosa.");
         }
@@ -495,7 +490,7 @@ public final class frmPlato extends javax.swing.JFrame {
         } else {
             frBpla.setVisible(true);
         }
-        activador(pnlPlato, false);
+        //activador(pnlPlato, false);
     }//GEN-LAST:event_btnBusPlaActionPerformed
 
     private void btnBusProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBusProActionPerformed
@@ -512,6 +507,7 @@ public final class frmPlato extends javax.swing.JFrame {
 
     private void txtPrecioPlato1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioPlato1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtPrecioPlato1ActionPerformed
 
     private void btnRegProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegProActionPerformed
@@ -628,7 +624,6 @@ public final class frmPlato extends javax.swing.JFrame {
     public static javax.swing.JComboBox<String> cboEstadoPlato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
