@@ -143,6 +143,10 @@ public class frmPreCuenta extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    public void impresion()
+    {
+    }
+        
     /**
      * @param args the command line arguments
      */
