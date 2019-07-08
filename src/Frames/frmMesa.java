@@ -18,6 +18,7 @@ public class frmMesa extends javax.swing.JFrame {
         initComponents();
         LlenaComboEstadoDeMesa();
         LlenaComboColorDeMesa();
+        txtIdMesa.setVisible(false);
     }
 
     /**
@@ -45,6 +46,7 @@ public class frmMesa extends javax.swing.JFrame {
         cboColorMesa = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mantener Mesa");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Mesa");

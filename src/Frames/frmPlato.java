@@ -57,7 +57,7 @@ public final class frmPlato extends javax.swing.JFrame {
         ddp.cargar_cabecera(dtmplato, tblprod);
         Ocultar_plato();
         activador(pnlPro, false);
-        
+        txtIdPlato.setVisible(false);
         
     }
     
@@ -130,6 +130,7 @@ public final class frmPlato extends javax.swing.JFrame {
         btnCancelarPlato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mantener Plato");
 
         tblprod.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

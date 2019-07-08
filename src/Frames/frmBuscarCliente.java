@@ -6,6 +6,10 @@
 package Frames;
 
 import dao.daoCliente;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -18,7 +22,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
      */
     daoCliente cl = new daoCliente();
     public static String estados;
-
+    DefaultTableModel dtmCliente = new DefaultTableModel();
     public frmBuscarCliente() {
         initComponents();
         cl.cargar_cabecera(tblCliente);
@@ -34,7 +38,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscarCliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCliente = new javax.swing.JTable();
@@ -44,6 +48,12 @@ public class frmBuscarCliente extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Cliente");
+
+        txtBuscarCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarClienteKeyTyped(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
         jButton1.setText("Buscar");
@@ -84,7 +94,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(35, 35, 35)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1))
@@ -98,7 +108,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,7 +143,7 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 }
                 frmDelivery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
                 dispose();
-            }if (estados.equals("frmCuen")){
+            }else if (estados.equals("frmCuen")){
                 frmCuenta.cl.setId(tblCliente.getValueAt(fila, 0).toString());
                 frmCuenta.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
                 frmCuenta.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
@@ -147,10 +157,35 @@ public class frmBuscarCliente extends javax.swing.JFrame {
                 }
                 frmCuenta.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
                 dispose();
+            }else{
+                frmCliente.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+                frmCliente.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+                frmCliente.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+                frmCliente.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+                frmCliente.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+                frmCliente.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+                if (tblCliente.getValueAt(fila, 6).toString().equals("Activo")) {
+                    frmCuenta.cl.setEstado(1);
+                }else {
+                    frmCuenta.cl.setEstado(0);
+                }
+                frmCliente.txtIdCliente.setText(tblCliente.getValueAt(fila, 0).toString());
+                frmCliente.txtNombreCliente.setText(tblCliente.getValueAt(fila, 1).toString());
+                frmCliente.txtApellidoPatCliente.setText(tblCliente.getValueAt(fila, 2).toString());
+                frmCliente.txtApellidoMatCliente.setText(tblCliente.getValueAt(fila, 3).toString());
+                frmCliente.txtIdCliente.setText(tblCliente.getValueAt(fila, 4).toString());
+                frmCliente.txtIdCliente.setText(tblCliente.getValueAt(fila, 5).toString());
+                frmCliente.txtIdCliente.setText(tblCliente.getValueAt(fila, 6).toString());
+                dispose();
             }
         } else {
         }
     }//GEN-LAST:event_tblClienteMouseClicked
+
+    private void txtBuscarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarClienteKeyTyped
+        // TODO add your handling code here:
+        filtro("(?i)" + txtBuscarCliente.getText(), tblCliente);
+    }//GEN-LAST:event_txtBuscarClienteKeyTyped
 
     /**
      * @param args the command line arguments
@@ -187,13 +222,20 @@ public class frmBuscarCliente extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void filtro(String filtro, JTable jtableBuscar){
+        dtmCliente = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmCliente);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filtro));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblCliente;
+    private javax.swing.JTextField txtBuscarCliente;
     // End of variables declaration//GEN-END:variables
 }

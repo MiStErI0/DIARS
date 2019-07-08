@@ -7,6 +7,7 @@ package dao;
 
 import ConexionBD.Conexion;
 import clases.Mesa;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -137,6 +138,56 @@ public class daoMesa {
         } catch (Exception e) {
         }
         return listaMesa;
+    }
+    
+    public String insertMesa(String IdMesa,String Nombre,int estado,int color){
+        String respuestaRegistro = null;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_insertMesa(fn_idcategoria_plato(),?)}");
+            
+            cs.setString(1, IdMesa);
+            
+            int numFAfectadas = cs.executeUpdate();
+            if(numFAfectadas>0){
+                respuestaRegistro = "Registro Exitoso";
+            }
+        } catch (Exception e) {
+        }
+        
+        return respuestaRegistro;
+    }
+    
+    public int editMesa(String IdMesa,String Nombre){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editMesa(?,?)}");
+            cs.setString(1, IdMesa);
+            cs.setString(2, Nombre);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
+    
+    public int deleteMesa(String IdMesa){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_deleteMesa(?)}");
+            cs.setString(1, IdMesa);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
     }
 
 }

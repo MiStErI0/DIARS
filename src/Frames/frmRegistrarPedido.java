@@ -127,6 +127,8 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnEnvi = new javax.swing.JButton();
 
+        setTitle("Mantener Pedido");
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Registrar Pedido");
 

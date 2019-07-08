@@ -10,6 +10,10 @@ import dao.daoEmpleado;
 import dao.daousuarios;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -20,6 +24,7 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarUsuario
      */
+    DefaultTableModel dtmUsuario = new DefaultTableModel();
     daousuarios daoUsu = new daousuarios();
     int filaseleccionada;
     public static String estados;
@@ -38,7 +43,7 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscarUsuario = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtBuscarUsuario = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -47,6 +52,12 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Buscar Usuario");
+
+        txtBuscarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarUsuarioKeyTyped(evt);
+            }
+        });
 
         jtBuscarUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,6 +78,11 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtBuscarUsuario);
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +94,7 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
@@ -88,7 +104,7 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -130,6 +146,16 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtBuscarUsuarioMouseClicked
 
+    private void txtBuscarUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarUsuarioKeyTyped
+        // TODO add your handling code here:
+        filtro("(?i)" + txtBuscarUsuario.getText(), jtBuscarUsuario);
+    }//GEN-LAST:event_txtBuscarUsuarioKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -165,11 +191,18 @@ public class frmBuscarUsuario extends javax.swing.JFrame {
         });
     }
 
+    public void filtro(String filtro, JTable jtableBuscar){
+        dtmUsuario = (DefaultTableModel) jtableBuscar.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(dtmUsuario);
+        jtableBuscar.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(filtro));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable jtBuscarUsuario;
+    private javax.swing.JTextField txtBuscarUsuario;
     // End of variables declaration//GEN-END:variables
 }

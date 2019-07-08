@@ -10,6 +10,7 @@ import dao.daoDePrDis;
 import dao.daoEmpleado;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import modelo.Validar_todo;
 
 /**
  *
@@ -22,11 +23,19 @@ public class frmEmpleado extends javax.swing.JFrame {
      */
     dao.daoDePrDis dpd=new daoDePrDis();
     dao.daoEmpleado daoEmp=new daoEmpleado();
+    Validar_todo val = new Validar_todo();
     public frmEmpleado() {
         initComponents();
         dpd.cargarDepartame(cboDepartamentoEmpleado);
         daoEmp.cargarTipoDeCargo(cboTipoEmpleado);
         LlenaComboEstadoEmpleado();
+        txtIdEmpleado.setVisible(false);
+        val.SDNI(txtDniEmpleado);
+       val.SLetras(txtNombreEmpleado);
+       val.SLetras(txtApellidoMatEmpleado);
+       val.SLetras(txtApellidoPatEmpleado);
+       val.SNumeros(txtTelefonoEmpleado);
+       val.Email(txtCorreoEmpleado);
     }
 
     /**
@@ -74,6 +83,7 @@ public class frmEmpleado extends javax.swing.JFrame {
         cboEstadoEmpleado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mantener Empleado");
 
         btnCerrarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cerrar.png"))); // NOI18N
         btnCerrarEmpleado.setText("Cerrar");

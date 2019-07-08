@@ -111,9 +111,10 @@ public class daoCliente {
          return clien.size();
      }
 
-     public String insertCliente(String NombreCliente,String ApellidoPCliente,String ApellidoMCliente,String CorreoCliente,int TelefonoCliente,int DniRucCliente,String FechaNacCliente, int Estado, String Direccion,String IdDistrito){
+     public String insertCliente(String NombreCliente,String ApellidoPCliente,String ApellidoMCliente,String CorreoCliente,long TelefonoCliente,long DniRucCliente,String FechaNacCliente, int Estado, String Direccion,String IdDistrito){
         String respuestaRegistro = null;
         Connection accesoDB;
+        
         try {
             accesoDB = new Conexion().getMysql();
             CallableStatement cs = accesoDB.prepareCall("{call sp_insertCliente(fn_idcliente(),fn_idpersona(),?,?,?,?,?,?,?,?,fn_idDireccion(),?,?)}");
@@ -121,15 +122,15 @@ public class daoCliente {
             cs.setString(2, ApellidoPCliente);
             cs.setString(3, ApellidoMCliente);
             cs.setString(4, CorreoCliente);
-            cs.setInt(5, TelefonoCliente);
-            cs.setInt(6, DniRucCliente);
+            cs.setLong(5, TelefonoCliente);
+            cs.setLong(6, DniRucCliente);
             cs.setString(7, FechaNacCliente);
             cs.setInt(8, Estado);
             cs.setString(9, Direccion);
             cs.setString(10, IdDistrito);
             
-            int numFAfectadas = cs.executeUpdate();
-            if(numFAfectadas>0){
+            int  numFAfectadas= cs.executeUpdate();
+           if(numFAfectadas>0){
                 respuestaRegistro = "Registro Exitoso";
             }
             cs.close();
@@ -138,12 +139,27 @@ public class daoCliente {
             accesoDB.close();
             accesoDB = null;
         } catch (Exception e) {
+            System.out.println("Error");
         }
         
         return respuestaRegistro;
     }
     
-    
+    public int editCliente(String idCategoriaPlato,String nombreCategoria){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editCategoriaPlato(?,?)}");
+            cs.setString(1, idCategoriaPlato);
+            cs.setString(2, nombreCategoria);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
    
     
     

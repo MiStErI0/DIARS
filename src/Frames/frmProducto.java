@@ -53,7 +53,7 @@ public class frmProducto extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("mantener_producto");
+        setTitle("Mantener Producto");
         setName("mantener producto"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

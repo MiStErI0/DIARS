@@ -6,7 +6,6 @@
 package Frames;
 
 import clases.empleado;
-
 /**
  *
  * @author Luigi
@@ -17,6 +16,8 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
      * Creates new form frmPrincipalMenu
      */
     public empleado emp;
+    
+   
     
     public frmPrincipalMenu() {
         initComponents();
@@ -65,7 +66,6 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("MENU PRINCIPAL");
-        setUndecorated(true);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/Background.png"))); // NOI18N
 
@@ -216,6 +216,11 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         jMenu3.add(BuscarMesa);
 
         BuscarPlato.setText("Buscar Plato");
+        BuscarPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarPlatoActionPerformed(evt);
+            }
+        });
         jMenu3.add(BuscarPlato);
 
         BuscarProducto.setText("Buscar Producto");
@@ -227,6 +232,11 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         jMenu3.add(BuscarProducto);
 
         BuscarUsuario.setText("Buscar Usuario");
+        BuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarUsuarioActionPerformed(evt);
+            }
+        });
         jMenu3.add(BuscarUsuario);
 
         jMenuBar1.add(jMenu3);
@@ -236,9 +246,19 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         jMenu4.setPreferredSize(new java.awt.Dimension(80, 32));
 
         AbrirCaja.setText("Abrir Caja");
+        AbrirCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AbrirCajaActionPerformed(evt);
+            }
+        });
         jMenu4.add(AbrirCaja);
 
         CerrarCaja.setText("Cerrar Caja");
+        CerrarCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CerrarCajaActionPerformed(evt);
+            }
+        });
         jMenu4.add(CerrarCaja);
 
         jMenuBar1.add(jMenu4);
@@ -278,13 +298,16 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
 
     private void BuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarClienteActionPerformed
         // TODO add your handling code here:
-        frmProducto frmPro = new frmProducto();
+        frmBuscarCliente frmBusCli = new frmBuscarCliente();
         
-        frmPro.setVisible(true);
+        frmBusCli.setVisible(true);
     }//GEN-LAST:event_BuscarClienteActionPerformed
 
     private void BuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarProductoActionPerformed
         // TODO add your handling code here:
+        frmBuscarProducto frmBusPro = new frmBuscarProducto();
+        
+        frmBusPro.setVisible(true);
     }//GEN-LAST:event_BuscarProductoActionPerformed
 
     private void CuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CuentaMouseClicked
@@ -379,17 +402,45 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
 
     private void BuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarEmpleadoActionPerformed
         // TODO add your handling code here:
-        frmEmpleado frmEmp = new frmEmpleado();
+        frmBuscarEmpleado frmBusEmp = new frmBuscarEmpleado();
         
-        frmEmp.setVisible(true);
+        frmBusEmp.setVisible(true);
     }//GEN-LAST:event_BuscarEmpleadoActionPerformed
 
     private void BuscarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarMesaActionPerformed
         // TODO add your handling code here:
-        frmMesa frmMes= new frmMesa();
+        frmBuscarMesa frmBusMes = new frmBuscarMesa();
         
-        frmMes.setVisible(true);
+        frmBusMes.setVisible(true);
     }//GEN-LAST:event_BuscarMesaActionPerformed
+
+    private void BuscarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarPlatoActionPerformed
+        // TODO add your handling code here:
+        frmBuscarPlato frmBusPla = new frmBuscarPlato();
+        
+        frmBusPla.setVisible(true);
+    }//GEN-LAST:event_BuscarPlatoActionPerformed
+
+    private void BuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarUsuarioActionPerformed
+        // TODO add your handling code here:
+        frmBuscarUsuario frmBusUsu = new frmBuscarUsuario();
+        
+        frmBusUsu.setVisible(true);
+    }//GEN-LAST:event_BuscarUsuarioActionPerformed
+
+    private void AbrirCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirCajaActionPerformed
+        // TODO add your handling code here:
+        frmAbrirCaja frmAbrCaj = new frmAbrirCaja();
+        
+        frmAbrCaj.setVisible(true);
+    }//GEN-LAST:event_AbrirCajaActionPerformed
+
+    private void CerrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarCajaActionPerformed
+        // TODO add your handling code here:
+        frmCerrarCaja frmCerCaj = new frmCerrarCaja();
+        
+        frmCerCaj.setVisible(true);
+    }//GEN-LAST:event_CerrarCajaActionPerformed
 
     /**
      * @param args the command line arguments
