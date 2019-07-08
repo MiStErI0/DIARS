@@ -5,6 +5,7 @@
  */
 package Frames;
 import dao.daoEmpleado;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Luigi
@@ -14,7 +15,16 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
     /**
      * Creates new form frmBuscarTrabajador
      */
+    DefaultTableModel dtmEmpleado = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+    
+    
     daoEmpleado emple=new daoEmpleado();
+    public static String estados;
     public frmBuscarEmpleado() {
         initComponents();
         
@@ -55,6 +65,11 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEmpleadoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblEmpleado);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/buscar.png"))); // NOI18N
@@ -95,6 +110,45 @@ public class frmBuscarEmpleado extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEmpleadoMouseClicked
+        // TODO add your handling code here:
+        
+        int fila = tblEmpleado.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            if (estados.equals("frmUsu")) {
+                frmUsuario.emp.setId(tblEmpleado.getValueAt(fila, 0).toString());
+                frmUsuario.emp.setNombre(tblEmpleado.getValueAt(fila, 1).toString());
+                frmUsuario.emp.setCorreo(tblEmpleado.getValueAt(fila, 2).toString());
+                frmUsuario.emp.setTelefono(Long.parseLong(tblEmpleado.getValueAt(fila, 3).toString()));
+                frmUsuario.emp.setDni(Long.parseLong(tblEmpleado.getValueAt(fila, 4).toString()));
+                frmUsuario.emp.setFechaNac(tblEmpleado.getValueAt(fila, 5).toString());
+                if (tblEmpleado.getValueAt(fila, 6).toString().equals("ACTIVO")) {
+                    frmUsuario.emp.setEstado(1);
+                } else {
+                    frmUsuario.emp.setEstado(0);
+                }
+                frmUsuario.txtempleado.setText(tblEmpleado.getValueAt(fila, 1).toString());
+                frmUsuario.txtIdUsuario.setText(tblEmpleado.getValueAt(fila, 0).toString());
+                dispose();
+          } //if (estados.equals("frmCuen")){
+//                frmCuenta.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+//                frmCuenta.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+//                frmCuenta.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+//                frmCuenta.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+//                frmCuenta.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+//                frmCuenta.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+//                if (tblCliente.getValueAt(fila, 6).toString().equals("Activo")) {
+//                    frmCuenta.cl.setEstado(1);
+//                }else {
+//                    frmCuenta.cl.setEstado(0);
+//                }
+//                frmCuenta.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
+//                dispose();
+//            }
+        } else {
+        }
+    }//GEN-LAST:event_tblEmpleadoMouseClicked
 
     /**
      * @param args the command line arguments

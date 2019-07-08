@@ -132,6 +132,11 @@ public class frmCliente extends javax.swing.JFrame {
 
         btnActualizarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/actualizar.png"))); // NOI18N
         btnActualizarCliente.setText("Actualizar");
+        btnActualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarClienteActionPerformed(evt);
+            }
+        });
 
         btnBorrarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/borrar.png"))); // NOI18N
         btnBorrarCliente.setText("Borrar");
@@ -321,6 +326,10 @@ public class frmCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "REGISTRO ERRONEO.");
         }
     }//GEN-LAST:event_btnAgregarClienteActionPerformed
+
+    private void btnActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarClienteActionPerformed
 
     /**
      * @param args the command line arguments

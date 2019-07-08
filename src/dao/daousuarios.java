@@ -8,6 +8,7 @@ package dao;
 import ConexionBD.Conexion;
 import clases.empleado;
 import clases.usuario;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -106,7 +110,99 @@ public class daousuarios {
             }
         }
     }
-
     
+    public String insertUsuario(String Usuario, String Contraseña, empleado emp) {
+        String respuestaRegistro = null;
+        Connection accesoDB;
+        try {
+            accesoDB = new Conexion().getMysql();
+            CallableStatement cs = accesoDB.prepareCall("{call sp_insertUsuario(fn_idusuario(),?,?,?)}");
+            
+            cs.setString(1, Usuario);
+            cs.setString(2, Contraseña);
+            cs.setString(3, emp.getId());
+            
+            int numFAfectadas = cs.executeUpdate();
+            if(numFAfectadas>0){
+                respuestaRegistro = "Registro Exitoso";
+            }
+        } catch (Exception e) {
+        }
 
+        return respuestaRegistro;
+    }
+    
+    public void cargar_tabla(DefaultTableModel dtmtable,JTable jm) {
+        
+        if (tamaño()==0) {
+            JOptionPane.showMessageDialog(null,"Lista sin elementos!!!", "Validar", 2);
+        } else {
+            dtmtable.setRowCount(0);//Limpia las filas del JTable
+            for (usuario usu:ven) {
+                Object vec[] = new Object[4];
+                vec[0] = usu.getIdUsuario();
+                vec[1] = usu.getUsuario();
+                
+                if(usu.getEstado()==1)
+                    vec[2] = "Activo";
+                else
+                    vec[2] = "Desactivo";
+                
+                vec[3] = usu.getIdEmpleado();
+                //agregar al JTable
+                dtmtable.addRow(vec);
+            }
+            jm.setModel(dtmtable);
+        }
+    }
+    
+    public void cargar_cabecera(JTable tbl) {
+        DefaultTableModel dtmCabecera = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false; //To change body of generated methods, choose Tools | Templates.
+            }
+        };        
+        dtmCabecera.addColumn("IDUSUARIO");
+        dtmCabecera.addColumn("USUARIO");
+        
+        dtmCabecera.addColumn("ESTADO");
+        dtmCabecera.addColumn("IDEMPLEADO");
+        tbl.setModel(dtmCabecera);
+        
+         cargar_tabla(dtmCabecera, tbl);
+        
+    }
+    
+    public int deleteUsuario(String idUsuario){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_deleteUsuario(?)}");
+            cs.setString(1, idUsuario);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
+    
+    public int editUsuario(String idUsuario, String Contraseña){
+        int numFA = 0;
+        Connection c;
+        try {
+            c = new Conexion().getMysql();
+            CallableStatement cs = c.prepareCall("{call sp_editUsuario(?,?,?)}");
+            cs.setString(1, idUsuario);
+            cs.setString(2, Contraseña);
+            
+            numFA = cs.executeUpdate();
+            
+        } catch (Exception e) {
+        }
+        return numFA;
+    }
+    
 }
