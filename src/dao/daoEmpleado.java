@@ -159,7 +159,12 @@ public class daoEmpleado {
     }
     
      public void cargar_cabecera(JTable tbl) {
-        DefaultTableModel dtmCabecera = new DefaultTableModel();        
+        DefaultTableModel dtmCabecera = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //To change body of generated methods, choose Tools | Templates.
+            }
+        } ;      
         dtmCabecera.addColumn("IDEMPLEADO");
         dtmCabecera.addColumn("NOMBRE Y APELLIDOS/RAZON SOCIAL");
         dtmCabecera.addColumn("CORREO");
@@ -243,5 +248,21 @@ public class daoEmpleado {
         }
         return z;
     }
-
+    
+    public empleado obtenerEmpleado(String id)
+    {
+        empleado z=null;
+        //String cargo=null;
+        
+        for(empleado e:emple)
+        {
+            if(id.equals(e.getId()))
+            {
+                //cargo=e.getCargo();
+                z=e;
+                break;
+            }
+        }
+        return z;
+    }
 }
