@@ -22,7 +22,7 @@ import modelo.Colorear_filas;
  *
  * @author Luigi ga
  */
-public class frmDelibery extends javax.swing.JFrame {
+public class frmDelivery extends javax.swing.JFrame {
 
     /**
      * Creates new form frmRegistrarPedido
@@ -51,7 +51,7 @@ public class frmDelibery extends javax.swing.JFrame {
     public static empleado em ;
     daoComTip comb = new daoComTip();
 
-    public frmDelibery() {
+    public frmDelivery() {
         initComponents();
         cargarCabeceraTablePedido();
         dcp.cargarCategoriaPlato(cboCategoriaPlato);
@@ -454,14 +454,18 @@ public class frmDelibery extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmDelibery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDelivery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmDelibery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDelivery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmDelibery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDelivery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmDelibery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmDelivery.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -470,7 +474,7 @@ public class frmDelibery extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDelibery().setVisible(true);
+                new frmDelivery().setVisible(true);
             }
         });
     }

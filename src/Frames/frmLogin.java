@@ -140,10 +140,11 @@ public class frmLogin extends javax.swing.JFrame {
                     if (e.getCargo().equals("Cajero") || e.getCargo().equals("Administrador") ) {
                         ven.Sesion(v, "Iniciar");
                         JOptionPane.showMessageDialog(this, "Bienvenido " + v.getUsuario(), "BIENVENIDO", 1);
-                        frmRegistrarPedido r;
-                        r=new frmRegistrarPedido();
+                        frmPrincipalMenu r;
+                        r = new frmPrincipalMenu();
                         r.setVisible(true);
-                        frmRegistrarPedido.empl=e;
+                        r.emp=e;
+                        dispose();
 //                        frmDelibery r;
 //                        r = new frmDelibery();
 //                        r.setVisible(true);

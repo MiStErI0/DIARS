@@ -120,18 +120,18 @@ public class frmBuscarCliente extends javax.swing.JFrame {
         int fila = tblCliente.getSelectedRow();
         if (evt.getClickCount() == 2) {
             if (estados.equals("frmDeli")) {
-                frmDelibery.cl.setId(tblCliente.getValueAt(fila, 0).toString());
-                frmDelibery.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
-                frmDelibery.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
-                frmDelibery.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
-                frmDelibery.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
-                frmDelibery.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
+                frmDelivery.cl.setId(tblCliente.getValueAt(fila, 0).toString());
+                frmDelivery.cl.setNombre(tblCliente.getValueAt(fila, 1).toString());
+                frmDelivery.cl.setCorreo(tblCliente.getValueAt(fila, 2).toString());
+                frmDelivery.cl.setTelefono(Long.parseLong(tblCliente.getValueAt(fila, 3).toString()));
+                frmDelivery.cl.setDni(Long.parseLong(tblCliente.getValueAt(fila, 4).toString()));
+                frmDelivery.cl.setFechaNac(tblCliente.getValueAt(fila, 5).toString());
                 if (tblCliente.getValueAt(fila, 6).toString().equals("Activo")) {
-                    frmDelibery.cl.setEstado(1);
+                    frmDelivery.cl.setEstado(1);
                 } else {
-                    frmDelibery.cl.setEstado(0);
+                    frmDelivery.cl.setEstado(0);
                 }
-                frmDelibery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
+                frmDelivery.txtCliente.setText(tblCliente.getValueAt(fila, 1).toString());
                 dispose();
             }if (estados.equals("frmCuen")){
                 frmCuenta.cl.setId(tblCliente.getValueAt(fila, 0).toString());
