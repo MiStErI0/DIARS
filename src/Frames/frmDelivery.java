@@ -36,7 +36,7 @@ public class frmDelivery extends javax.swing.JFrame {
     int cantidad;
     DefaultTableModel dtmPlato = new DefaultTableModel(){
         @Override
-        public boolean isCellEditable(int i, int i1) {
+        public boolean isCellEditable(int i, int i1) { 
             return false; //To change body of generated methods, choose Tools | Templates.
         }
     };
