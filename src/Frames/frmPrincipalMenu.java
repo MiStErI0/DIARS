@@ -200,9 +200,19 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         jMenu3.add(BuscarCliente);
 
         BuscarEmpleado.setText("Buscar Empleado");
+        BuscarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarEmpleadoActionPerformed(evt);
+            }
+        });
         jMenu3.add(BuscarEmpleado);
 
         BuscarMesa.setText("Buscar Mesa");
+        BuscarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarMesaActionPerformed(evt);
+            }
+        });
         jMenu3.add(BuscarMesa);
 
         BuscarPlato.setText("Buscar Plato");
@@ -366,6 +376,20 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         
         frmBusCatPla.setVisible(true);
     }//GEN-LAST:event_BuscarCategoriaPlatoActionPerformed
+
+    private void BuscarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarEmpleadoActionPerformed
+        // TODO add your handling code here:
+        frmEmpleado frmEmp = new frmEmpleado();
+        
+        frmEmp.setVisible(true);
+    }//GEN-LAST:event_BuscarEmpleadoActionPerformed
+
+    private void BuscarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarMesaActionPerformed
+        // TODO add your handling code here:
+        frmMesa frmMes= new frmMesa();
+        
+        frmMes.setVisible(true);
+    }//GEN-LAST:event_BuscarMesaActionPerformed
 
     /**
      * @param args the command line arguments
