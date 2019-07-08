@@ -5,7 +5,21 @@
  */
 package Frames;
 
+import clases.pedido;
 import dao.daoMesa;
+import dao.daoPedido;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import static java.awt.print.Printable.NO_SUCH_PAGE;
+import static java.awt.print.Printable.PAGE_EXISTS;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.text.DecimalFormat;
+import java.util.StringTokenizer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import modelo.Colorear_filas;
@@ -27,6 +41,7 @@ public class frmPreCuenta extends javax.swing.JFrame {
             return false; //To change body of generated methods, choose Tools | Templates.
         }
     };
+    daoPedido dp = new daoPedido();
     public frmPreCuenta() {
         initComponents();
         me.cargar_cabecera(tblMesa);
@@ -58,7 +73,7 @@ public class frmPreCuenta extends javax.swing.JFrame {
         txtArea = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         btnCerrar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pre Cuenta");
@@ -78,8 +93,14 @@ public class frmPreCuenta extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblMesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMesaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMesa);
 
+        txtArea.setEditable(false);
         txtArea.setColumns(20);
         txtArea.setRows(5);
         jScrollPane2.setViewportView(txtArea);
@@ -94,8 +115,13 @@ public class frmPreCuenta extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/printer.png"))); // NOI18N
-        jButton2.setText("Imprimir");
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/printer.png"))); // NOI18N
+        btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,7 +139,7 @@ public class frmPreCuenta extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
@@ -131,7 +157,7 @@ public class frmPreCuenta extends javax.swing.JFrame {
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(btnImprimir)
                     .addComponent(btnCerrar))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -144,10 +170,47 @@ public class frmPreCuenta extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    public void impresion()
-    {
-    }
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        // TODO add your handling code here:
+        PaginationExample pagination = new PaginationExample();
+         pagination.imprimirnomina();
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void tblMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMesaMouseClicked
+        // TODO add your handling code here:
+        txtArea.setText("");
+        dp.vaciar_lista_pedido();
+        int fila=tblMesa.getSelectedRow();
+        Double total;
+        Double igv;
+        Double sub;
+        DecimalFormat df = new DecimalFormat("#.##");
+        dp.pedido_mesa(tblMesa.getValueAt(fila, 0).toString());
         
+        txtArea.append("\t                BIENVENIDOS\n");
+        txtArea.append("\t"+tblMesa.getValueAt(fila, 0).toString()+"\t POLLERIA MACHIS\n");
+        txtArea.append("\n\n PLATOS\t                PRECIO\t     IMPORTE");
+        txtArea.append("\n-------------------------------------------------------------------------------------\n");
+        for(pedido p:dp.obtenList())
+        {
+            txtArea.append("\n"+p.getCANTIDAD()+" "+p.getPLATO()+"\t"+p.getPRECIO()+"\t"+p.getIMPORTE()+"\n");
+        
+        }
+        
+        total=dp.suma_platos()*1.00;
+                    sub= total/1.18;
+                    igv=(total-sub);
+        txtArea.append("\nSUB-TOTAL: "+df.format(sub)+"\n");            
+        txtArea.append("\n      IGV: "+df.format(igv)+"\n");            
+        txtArea.append("\n    TOTAL: "+df.format(total)+"\n");            
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_tblMesaMouseClicked
+
+    
     /**
      * @param args the command line arguments
      */
@@ -183,10 +246,100 @@ public class frmPreCuenta extends javax.swing.JFrame {
             }
         });
     }
+    
+    public class PaginationExample implements Printable{
+       //Se obtienen las lineas de texto del JTextArea, la linea de texto finaliza cuando se encuentra el caracter de nueva linea \n
+       StringTokenizer lineasdetexto = new StringTokenizer(txtArea.getText(), "\n", true);
+       //Se obtiene el total de lineas de texto
+       int totallineas = lineasdetexto.countTokens();
+
+    int[] paginas;  // Arreglo de número de paginas que se necesitaran para imprimir todo el texto 
+
+    String[] textoLineas; //Lineas de texto que se imprimiran en cada hoja
+
+    //Metodo que se crea por default cuando una clase implementa a Printable
+    public int print(Graphics g, PageFormat pf, int pageIndex)
+             throws PrinterException {
+        //Se establece la fuente, el tipo, el tamaño, la metrica según la fuente asignada, 
+        //obtiene la altura de cada linea de texto para que todas queden iguales
+        Font font = new Font("Serif", Font.PLAIN, 8);
+        FontMetrics metrics = g.getFontMetrics(font);
+        int altodelinea = metrics.getHeight();
+        //Calcula el número de lineas por pagina y el total de paginas
+        if (paginas == null) {
+            initTextoLineas();
+            //Calcula las lineas que le caben a cada página dividiendo la altura imprimible entre la altura de la linea de texto
+            int lineasPorPagina = (int)(pf.getImageableHeight()/altodelinea);
+            //Calcula el numero de páginas dividiendo el total de lineas entre el numero de lineas por página
+            int numeroPaginas = (textoLineas.length-1)/lineasPorPagina;
+            paginas = new int[numeroPaginas];
+            for (int b=0; b<numeroPaginas; b++) {
+                paginas[b] = (b+1)*lineasPorPagina; 
+            }
+        }
+        //Si se recibe un indice de página mayor que el total de páginas calculadas entonces 
+        //retorna NO_SUCH_PAGE para indicar que tal pagina no existe 
+        if (pageIndex > paginas.length) {
+            return NO_SUCH_PAGE;
+        }
+        /*Por lo regular cuando dibujamos algun objeto lo coloca en la coordenada (0,0), esta coordenada 
+         * se encuentra fuera del área imprimible, por tal motivo se debe trasladar la posicion de las lineas de texto
+         * según el área imprimible del eje X y el eje Y 
+         */
+        
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.translate(pf.getImageableX(), pf.getImageableY());
+        /*Dibujamos cada línea de texto en cada página,
+         * se aumenta a la posición 'y' la altura de la línea a cada línea de texto para evitar la saturación de texto 
+         */
+
+        int y = 0; 
+        int start = (pageIndex == 0) ? 0 : paginas[pageIndex-1];
+        int end   = (pageIndex == paginas.length) ? textoLineas.length : paginas[pageIndex];
+        for (int line=start; line<end; line++) {
+            y += altodelinea;
+            g.drawString(textoLineas[line], 0, y);
+        }
+        /* Retorna PAGE_EXISTS para indicar al invocador que esta página es parte del documento impreso
+         */
+        return PAGE_EXISTS;
+    }
+    
+     /* Agrega las lineas de texto al arreglo */
+    public void initTextoLineas() {
+        if (textoLineas == null) {
+            int numLineas=totallineas;
+            textoLineas = new String[numLineas];
+            //Se llena el arreglo que contiene todas las lineas de texto
+            while(lineasdetexto.hasMoreTokens()){
+            for (int i=0;i<numLineas;i++) {
+                textoLineas[i] = lineasdetexto.nextToken();
+            }
+            }
+        }
+    }
+    
+    //Este metodo crea un objeto Printerjob el cual es inicializado y asociado con la impresora por default
+    public void imprimirnomina() {
+         PrinterJob job = PrinterJob.getPrinterJob();
+         job.setPrintable(this);
+         //Si el usuario presiona imprimir en el dialogo de impresión, 
+         //entonces intenta imprimir todas las lineas de texto
+         boolean ok = job.printDialog();
+         if (ok) {
+             try {
+                  job.print();
+             } catch (PrinterException ex) {
+              /* The job did not successfully complete */
+             }
+         }
+    }
+}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
