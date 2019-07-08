@@ -140,11 +140,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCerrarActionPerformed
 
     private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
-        // TODO add your handling code here:
-    frmRegistro fr = new frmRegistro();
-    fr.setVisible(true);
-    dispose();
-    
+   
     }//GEN-LAST:event_registrarActionPerformed
 
     private void facturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturasActionPerformed
@@ -152,8 +148,7 @@ public class frmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_facturasActionPerformed
 
     private void ayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ayudaMouseClicked
-    frmAyuda fa=new frmAyuda();
-    fa.setVisible(true);// TODO add your handling code here:
+    
     }//GEN-LAST:event_ayudaMouseClicked
 
     private void mnuCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuCerrarMouseClicked
