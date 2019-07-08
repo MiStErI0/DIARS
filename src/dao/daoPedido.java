@@ -99,11 +99,11 @@ public class daoPedido {
         Connection c;
         CallableStatement cs;
         Double monto = suma_platos();
-        String idmesa=me.get_idMesa(mesa);
+        //String idmesa=me.get_idMesa(mesa);
         ResultSet rs;
         try {
             //int rs;
-
+              
             c = new Conexion().getMysql();
             c.setAutoCommit(false);
             cs = c.prepareCall("{call sp_inse_pedi(?,?)}");
@@ -111,27 +111,30 @@ public class daoPedido {
             cs.registerOutParameter(2, Types.VARCHAR);
             cs.executeUpdate();
             idpedi = cs.getString(2);
+            
+            System.out.println("es:"+idpedi);
             for (pedido p : obtenList()) {
 
-                cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?,?)}");
+                cs = c.prepareCall("{call sp_inser_deta_pedi(?,?,?,?,?)}");
                 cs.setString(1, idpedi);
                 cs.setString(2, p.getPLATO());
                 cs.setString(3, e.getId());
                 cs.setInt(4, p.getCANTIDAD());
                 cs.setString(5, p.getDESCRIPCION());
-                cs.setString(6, idmesa );
-
                 //cs.registerOutParameter(2, Types.VARCHAR);
                 rs = cs.executeQuery();
+                rs.close();
             }
-            cs = c.prepareCall("{call sp_venta(?,?,?,?,?)}");
+            cs = c.prepareCall("{call sp_venta(?,?,?,?,?,?)}");
             cs.setDouble(1, monto);
             cs.setString(2, comprobante);
             cs.setString(3, mesa);
             cs.setString(4, tipo_pago);
             cs.setString(5, e.getId());
-            //cs.setString(6, cl.getId());
+            cs.setString(6, cl.getId());
             rs = cs.executeQuery();
+            rs.close();
+
             //respuestaRegistro=cs.getString(2);
 
             c.commit();
