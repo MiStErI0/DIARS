@@ -200,7 +200,7 @@ public class daoPedido {
         String sql = "select p.plato,dt.cantidad,dt.descripcion,p.precio,dt.cantidad*p.precio from detalle_pedido as dt\n" +
 "                inner join plato as p on p.idplato=dt.idplato\n" +
 "                inner join pedido as pe on dt.idpedido=pe.idpedido where pe.idmesa =? \n" +
-"                and pe.idpedido=(select idpedido from pedido where idmesa=? and estado=1 order by idpedido desc limit 1);;";
+"                and pe.idpedido=(select idpedido from pedido where idmesa=? and estado=1 order by idpedido desc limit 1);";
         Connection c = null;
         daoMesa me=new daoMesa();
         String idMesa=me.get_idMesa(nombre);

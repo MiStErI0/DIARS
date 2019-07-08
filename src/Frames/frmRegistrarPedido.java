@@ -365,7 +365,7 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
                 dp.pedido_mesa(jtMesa.getValueAt(filaseleccionada,0).toString());
                 dp.cargar_tabla_pedido(dtmPedido, jtPedido);
                 txtTotal.setText(String.valueOf(dp.suma_platos()));
-                dp.vaciar_lista_pedido();
+                
                 
                 
             }
@@ -404,29 +404,12 @@ public class frmRegistrarPedido extends javax.swing.JFrame {
 
     private void jtPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPlatoMouseClicked
         // TODO add your handling code here:
-        
-//        try {
-//            filaseleccionada = jtPlato.getSelectedRow();
-//            if(filaseleccionada == -1){
-//                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-//            }
-//            else{
-//                //dtmPedido.setRowCount(0);
-//                dtmPedido = (DefaultTableModel) jtPedido.getModel();
-//                String filaelemento[] = {
-//                    jtPlato.getValueAt(filaseleccionada, 0).toString(),
-//                    jtPlato.getValueAt(filaseleccionada, 0).toString(),
-//                    jtPlato.getValueAt(filaseleccionada, 0).toString()
-//                };
-//                dtmPedido.addRow(filaelemento);
-//                System.out.println(jtPlato.getValueAt(filaseleccionada, 0).toString());
-//            }
-//        } catch (Exception e) {
-//        }
+        dp.vaciar_lista_pedido();
     }//GEN-LAST:event_jtPlatoMouseClicked
 
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
         // TODO add your handling code here:
+        
         try {
             filaseleccionada = jtPlato.getSelectedRow();
             double importe;
