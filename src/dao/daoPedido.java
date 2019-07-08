@@ -156,7 +156,7 @@ public class daoPedido {
         CallableStatement cs;
         Double monto = suma_platos();
         String idme=me.get_idMesa(mesa);
-        ResultSet rs = null;
+        ResultSet rs;
         try {
             //int rs;
 
@@ -176,9 +176,9 @@ public class daoPedido {
                 cs.setInt(4, p.getCANTIDAD());
                 cs.setString(5, p.getDESCRIPCION());
                 //cs.setString(6, idme);
-
-                //cs.registerOutParameter(2, Types.VARCHAR);
                 rs = cs.executeQuery();
+                //cs.registerOutParameter(2, Types.VARCHAR);
+                rs.close();
             }
             //respuestaRegistro=cs.getString(2);
 
@@ -197,9 +197,10 @@ public class daoPedido {
     }
 
     public void pedido_mesa(String nombre) {
-        String sql = "select p.plato,dt.cantidad,dt.descripcion,p.precio,dt.cantidad*p.precio from detalle_pedido as dt\n"
-                + "inner join plato as p on p.idplato=dt.idplato\n"
-                + "inner join pedido as pe on dt.idpedido=pe.idpedido where pe.idmesa =? ;";
+        String sql = "select p.plato,dt.cantidad,dt.descripcion,p.precio,dt.cantidad*p.precio from detalle_pedido as dt\n" +
+"                inner join plato as p on p.idplato=dt.idplato\n" +
+"                inner join pedido as pe on dt.idpedido=pe.idpedido where pe.idmesa =? \n" +
+"                and pe.idpedido=(select idpedido from pedido where idmesa=? and estado=1 order by idpedido desc limit 1);;";
         Connection c = null;
         daoMesa me=new daoMesa();
         String idMesa=me.get_idMesa(nombre);
@@ -208,6 +209,7 @@ public class daoPedido {
             ResultSet rs = null;
             PreparedStatement pst = c.prepareCall(sql);
             pst.setString(1,idMesa);
+            pst.setString(2,idMesa);
             rs = pst.executeQuery();
             while (rs.next()) {
                 pedido e = new pedido(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5));
@@ -227,6 +229,36 @@ public class daoPedido {
             } catch (SQLException ex1) {
                 Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex1);
             }
+        }
+    }
+    
+    public void cuenta(String comprobante, String mesa,String tipo_pago,empleado e,cliente cl){
+    
+        
+            daoMesa me= new daoMesa();
+            String idpedi;
+            Connection c;
+            CallableStatement cs;
+            Double monto = suma_platos();
+            //String idmesa=me.get_idMesa(mesa);
+            ResultSet rs;
+        try {    
+            c = new Conexion().getMysql();
+            
+            cs = c.prepareCall("{call sp_venta(?,?,?,?,?,?)}");
+            cs.setDouble(1, monto);
+            cs.setString(2, comprobante);
+            cs.setString(3, mesa);
+            cs.setString(4, tipo_pago);
+            cs.setString(5, e.getId());
+            cs.setString(6, cl.getId());
+            rs = cs.executeQuery();
+            rs.close();
+            c.close();
+            cs.close();
+            JOptionPane.showMessageDialog(null, "VENTA EXITOSA", "INFORMACION",2);
+        } catch (SQLException ex) {
+            Logger.getLogger(daoPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

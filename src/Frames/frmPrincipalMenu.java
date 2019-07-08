@@ -297,6 +297,7 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         //me habia quedado jato
         frmCue.setVisible(true);
         frmCuenta.em=emp;
+        frmCuenta.txtCajero.setText(emp.getNombre()+" "+emp.getApellidop()+" "+emp.getApellidom());
         
     }//GEN-LAST:event_CuentaActionPerformed
 
@@ -306,20 +307,23 @@ public class frmPrincipalMenu extends javax.swing.JFrame {
         
         frmDel.setVisible(true);
         frmDelivery.em=emp;
+        frmDelivery.lblnombre.setText(emp.getNombre()+" "+emp.getApellidop()+" "+emp.getApellidom());
     }//GEN-LAST:event_DeliveryActionPerformed
 
     private void PreCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreCuentaActionPerformed
         // TODO add your handling code here:
         frmPreCuenta frmPreCue = new frmPreCuenta();
-        
         frmPreCue.setVisible(true);
+        
     }//GEN-LAST:event_PreCuentaActionPerformed
 
     private void PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PedidoActionPerformed
         // TODO add your handling code here:
-        frmRegistrarPedido frmPed = new frmRegistrarPedido();
-        
+        frmRegistrarPedido frmPed = new frmRegistrarPedido();       
         frmPed.setVisible(true);
+        frmRegistrarPedido.empl=emp;
+        
+        
     }//GEN-LAST:event_PedidoActionPerformed
 
     private void CategoriaPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriaPlatoActionPerformed

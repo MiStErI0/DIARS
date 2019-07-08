@@ -11,14 +11,18 @@ import clases.cliente;
 import clases.empleado;
 import dao.daoMesa;
 import dao.daoComTip;
+import dao.daoPedido;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
 /**
  *
  * @author Luigi
@@ -30,29 +34,35 @@ public class frmCuenta extends javax.swing.JFrame {
      */
     Conexion conexion;
     daoMesa dme = new daoMesa();
-    daoComTip cmt=new daoComTip();
+    daoComTip cmt = new daoComTip();
     Colorear_filas color_fila = new Colorear_filas();
     int filaseleccionada;
     public static cliente cl = new cliente();
-    public static empleado em ;
-    
-    
+    public static empleado em;
+    daoPedido dap= new daoPedido();
+    DefaultTableModel dtmPedido = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int i, int i1) {
+            return false; //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+
     public frmCuenta() {
         initComponents();
         dme.cargar_cabecera(jMesa);
         cmt.cargarCompro(cboComprobanteDePago);
         cmt.cargarMetodo(cboMetodoDePago);
-        jMesa.setDefaultRenderer(jMesa.getColumnClass(1),color_fila );
+        jMesa.setDefaultRenderer(jMesa.getColumnClass(1), color_fila);
         new Thread(new Hilo()).start();
         ocultar_Co();
         conexion = new Conexion();
+        cargarCabeceraTablePedido();
         //CargarComboMesero();
-        
+
         this.setLocationRelativeTo(null);
     }
-    
-    private void ocultar_Co()
-    {
+
+    private void ocultar_Co() {
         TableColumn columna = jMesa.getColumnModel().getColumn(1);
         columna.setMaxWidth(0);
         columna.setMinWidth(0);
@@ -72,7 +82,7 @@ public class frmCuenta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblfecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCajero = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -85,13 +95,13 @@ public class frmCuenta extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cboComprobanteDePago = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtSub = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtIgv = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPagar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         txtCliente = new javax.swing.JTextField();
         btnBusCli = new javax.swing.JButton();
@@ -106,6 +116,8 @@ public class frmCuenta extends javax.swing.JFrame {
         lblfecha.setText("FECHA Y TIEMPO");
 
         jLabel3.setText("Cajero :");
+
+        txtCajero.setEditable(false);
 
         jLabel4.setText("Cliente");
 
@@ -153,9 +165,9 @@ public class frmCuenta extends javax.swing.JFrame {
 
         jLabel10.setText("IGV :");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtIgv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtIgvActionPerformed(evt);
             }
         });
 
@@ -164,8 +176,13 @@ public class frmCuenta extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/receipt.png"))); // NOI18N
         jButton1.setText("PRE - CUENTA");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cash.png"))); // NOI18N
-        jButton2.setText("PAGAR");
+        btnPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cash.png"))); // NOI18N
+        btnPagar.setText("PAGAR");
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/machis/cancel.png"))); // NOI18N
         jButton3.setText("Cancelar");
@@ -212,7 +229,7 @@ public class frmCuenta extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCajero, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
@@ -228,20 +245,20 @@ public class frmCuenta extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSub, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIgv, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52)
                 .addComponent(jLabel11)
                 .addGap(36, 36, 36)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(94, 94, 94)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -270,7 +287,7 @@ public class frmCuenta extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(16, 16, 16)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel6))
@@ -286,9 +303,9 @@ public class frmCuenta extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIgv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,15 +319,15 @@ public class frmCuenta extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
-                            .addComponent(jButton2)))))
+                            .addComponent(btnPagar)))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtIgvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIgvActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtIgvActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -319,34 +336,40 @@ public class frmCuenta extends javax.swing.JFrame {
 
     private void jMesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMesaMouseClicked
         // TODO add your handling code here:
-        try{
-            filaseleccionada = jMesa.getSelectedRow();        
-            if(filaseleccionada == -1){
-                JOptionPane.showMessageDialog(this,"No se ha seleccionado ninguna fila","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-            }
-            else{
+        Double total;
+        Double igv;
+        Double sub;
+        DecimalFormat df = new DecimalFormat("#.##");
+        try {
+            
+            filaseleccionada = jMesa.getSelectedRow();
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+            } else {
                 String colormesa = "";
-                colormesa = jMesa.getValueAt(filaseleccionada,1).toString();
+                colormesa = jMesa.getValueAt(filaseleccionada, 1).toString();
                 System.out.println(colormesa);
-                if(colormesa.equals("0")){
+                if (colormesa.equals("0")) {
+
+                    JOptionPane.showMessageDialog(this, "La mesa seleccionada no cuenta con registros pendiente\n" + "Por favor elija otra mesa", "Mensaje del Sistema", JOptionPane.INFORMATION_MESSAGE);
+                } else if (colormesa.equals("1") || colormesa.equals("2")) {
+                    dap.pedido_mesa(jMesa.getValueAt(filaseleccionada,0).toString());
+                    dap.cargar_tabla_pedido(dtmPedido, tblprod);
+                    total=dap.suma_platos()*1.00;
+                    sub= total/1.18;
+                    igv=(total-sub);
+                    txtTotal.setText(df.format(total));
+                    txtIgv.setText(df.format(igv));
+                    txtSub.setText(df.format(sub));
+
                     
-                    JOptionPane.showMessageDialog(this,"La mesa seleccionada no cuenta con registros pendiente\n" + "Por favor elija otra mesa","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
                 }
-                else if(colormesa.equals("1")){
-                    
-                    JOptionPane.showMessageDialog(this,"La mesa seleccionada aun no se ha imprimido la precuenta\n" + "Por favor procesa a realizar la Pre-Cuenta","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if(colormesa.equals("2")){
-                    
-                    JOptionPane.showMessageDialog(this,"Se ha seleccionado \n"+ jMesa.getValueAt(filaseleccionada,0).toString()   +"\n" + "Se procede a mostrar sus pedidos","Mensaje del Sistema",JOptionPane.INFORMATION_MESSAGE);
-                }
-                else{
-                }
-                
-                                            
+
             }
-        }catch (HeadlessException ex){
-            JOptionPane.showMessageDialog(this,"Error" + ex + "\nPor favor inténtelo nuevamente","Mensaje del Sistema",JOptionPane.ERROR_MESSAGE);
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Error" + ex + "\nPor favor inténtelo nuevamente", "Mensaje del Sistema", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMesaMouseClicked
 
@@ -354,8 +377,16 @@ public class frmCuenta extends javax.swing.JFrame {
         // TODO add your handling code here:
         frmBuscarCliente bc = new frmBuscarCliente();
         bc.setVisible(true);
-        frmBuscarCliente.estados="frmCuen";
+        frmBuscarCliente.estados = "frmCuen";
     }//GEN-LAST:event_btnBusCliActionPerformed
+
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        // TODO add your handling code here:
+        String comprobante = cboComprobanteDePago.getSelectedItem().toString();
+        String tipo_pago = cboMetodoDePago.getSelectedItem().toString();
+        int fila= jMesa.getSelectedRow();
+        dap.cuenta(comprobante, jMesa.getValueAt(fila, 0).toString(), tipo_pago, em, cl);
+    }//GEN-LAST:event_btnPagarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,7 +423,7 @@ public class frmCuenta extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public class Hilo implements Runnable {
 
         @Override
@@ -407,31 +438,23 @@ public class frmCuenta extends javax.swing.JFrame {
             }).start();
         }
     }
-    
-   /*public void CargarComboMesero(){
-       Connection con = null;
-       try {
-           con = conexion.getMysql();
-           String sql = "select p.NOMBRE_RS from persona as p inner join empleado as e inner join cargo as c on e.idpersona=p.idpersona and e.IDCARGO=c.IDCARGO where e.IDCARGO='CA00003';";
-            PreparedStatement ps = con.prepareCall(sql);
-            ResultSet rs = null;
-            rs = ps.executeQuery();
-            cboMesero.removeAllItems();
-            while(rs.next()) {
-                cboMesero.addItem(rs.getString(1));
-            }
-            rs.close();
-       } catch (Exception e) {
-       }
-   }*/
-    
+
+    public void cargarCabeceraTablePedido(){ 
+        dtmPedido.addColumn("Plato");
+        dtmPedido.addColumn("Cantidad");
+        dtmPedido.addColumn("Descripcion");
+        dtmPedido.addColumn("Precio");
+        dtmPedido.addColumn("Importe");
+        tblprod.setModel(dtmPedido);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBusCli;
+    private javax.swing.JButton btnPagar;
     private javax.swing.JComboBox<String> cboComprobanteDePago;
     private javax.swing.JComboBox<String> cboMetodoDePago;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -446,12 +469,12 @@ public class frmCuenta extends javax.swing.JFrame {
     private javax.swing.JTable jMesa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lblfecha;
     private javax.swing.JTable tblprod;
+    public static javax.swing.JTextField txtCajero;
     public static javax.swing.JTextField txtCliente;
+    private javax.swing.JTextField txtIgv;
+    private javax.swing.JTextField txtSub;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
